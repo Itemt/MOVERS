@@ -1,12 +1,12 @@
 {
   "id": 1,
-  "title": "Movers Practice Test 1 (Sample Paper Vol 1)",
+  "title": "Movers Practice Test 1",
   "level": "A1 Movers",
   "grade": "4to Grado",
-  "durationMinutes": 30,
+  "durationMinutes": 45,
   "parts": {
     "part1": {
-      "title": "Part 1 - Look and read",
+      "title": "Part 1 – Look and read",
       "instruction": "Choose the correct words and write them on the lines. There is one example.",
       "wordBank": [
         { "word": "an island", "emoji": "🏝️" },
@@ -19,20 +19,20 @@
         { "word": "a field", "emoji": "🌾" }
       ],
       "example": {
-        "text": "The people in this group sometimes sing or play guitars.",
+        "text": "The people in this group sometimes sing and play guitars together on stage.",
         "answer": "a band"
       },
       "questions": [
-        { "id": "p1_q1", "num": 1, "text": "This person helps people who aren't well in hospital.", "answer": "a nurse" },
-        { "id": "p1_q2", "num": 2, "text": "Some people put milk or lemon in this drink.", "answer": "tea" },
-        { "id": "p1_q3", "num": 3, "text": "There are lots of cars, buses and people in this busy place.", "answer": "a city" },
-        { "id": "p1_q4", "num": 4, "text": "You can put cheese or meat between bread to make this.", "answer": "a sandwich" },
-        { "id": "p1_q5", "num": 5, "text": "This is part of a farm where you often see vegetable plants.", "answer": "a field" }
+        { "id": "p1_q1", "num": 1, "text": "This person works in a hospital and helps doctors take care of people who are sick or hurt.", "answer": "a nurse" },
+        { "id": "p1_q2", "num": 2, "text": "Some people like to put milk, sugar, or a slice of lemon into this hot drink.", "answer": "tea" },
+        { "id": "p1_q3", "num": 3, "text": "There are lots of tall buildings, cars, buses and thousands of people in this big, busy place.", "answer": "a city" },
+        { "id": "p1_q4", "num": 4, "text": "You make this food by putting cheese, meat, tomatoes or vegetables between two slices of bread.", "answer": "a sandwich" },
+        { "id": "p1_q5", "num": 5, "text": "This is a flat area of land on a farm where farmers grow vegetables, wheat or other crops.", "answer": "a field" }
       ]
     },
     "part2": {
-      "title": "Part 2 - Short Dialogues",
-      "instruction": "Read the text and choose the best answer (A, B or C). There is one example.",
+      "title": "Part 2 – Short Dialogues",
+      "instruction": "Read the dialogues and choose the best answer (A, B or C). There is one example.",
       "example": {
         "speaker": "Paul",
         "question": "What did you do last night, Daisy?",
@@ -45,70 +45,64 @@
       },
       "questions": [
         {
-          "id": "p2_q1",
-          "num": 1,
+          "id": "p2_q1", "num": 1,
           "speaker": "Paul",
-          "question": "Did you see the film about pirates?",
-          "options": ["A) Yes, so do I.", "B) Yes, it was great.", "C) Yes, that's him."],
+          "question": "Did you see the film about pirates on TV last night?",
+          "options": ["A) Yes, so do I.", "B) Yes, it was great!", "C) Yes, that's him."],
           "answer": "B"
         },
         {
-          "id": "p2_q2",
-          "num": 2,
+          "id": "p2_q2", "num": 2,
           "speaker": "Paul",
-          "question": "Which was your favourite pirate in the film?",
-          "options": ["A) I liked it best.", "B) She was a pirate.", "C) Ben Bluebeard."],
+          "question": "Which was your favourite pirate character in the film?",
+          "options": ["A) I liked it best.", "B) She was a pirate too.", "C) Ben Bluebeard was my favourite."],
           "answer": "C"
         },
         {
-          "id": "p2_q3",
-          "num": 3,
+          "id": "p2_q3", "num": 3,
           "speaker": "Paul",
-          "question": "Was he the one with long, curly hair?",
-          "options": ["A) No, he hasn't.", "B) Yes, that's right.", "C) He's got one."],
+          "question": "Was he the one with long, curly brown hair and a big hat?",
+          "options": ["A) No, he hasn't.", "B) Yes, that's exactly right!", "C) He's got one already."],
           "answer": "B"
         },
         {
-          "id": "p2_q4",
-          "num": 4,
+          "id": "p2_q4", "num": 4,
           "speaker": "Paul",
-          "question": "I like films which are funny.",
-          "options": ["A) Me too.", "B) It's all right.", "C) Do they?"],
+          "question": "I really like films that are very funny and make me laugh a lot.",
+          "options": ["A) Me too! Comedy is great.", "B) It's all right, I suppose.", "C) Do they like them?"],
           "answer": "A"
         },
         {
-          "id": "p2_q5",
-          "num": 5,
+          "id": "p2_q5", "num": 5,
           "speaker": "Paul",
-          "question": "How about going to see 'Treasure Train' at the cinema? That's very funny.",
-          "options": ["A) It's nice.", "B) What a good idea!", "C) Fine, thank you."],
+          "question": "How about going to see 'Treasure Train' at the cinema this weekend? I heard it's very funny.",
+          "options": ["A) It's a nice colour.", "B) What a great idea! Let's go!", "C) Fine, thank you very much."],
           "answer": "B"
         },
         {
-          "id": "p2_q6",
-          "num": 6,
+          "id": "p2_q6", "num": 6,
           "speaker": "Paul",
-          "question": "Let's ask Fred to go with us.",
-          "options": ["A) OK, we can phone him.", "B) OK, that's Fred's.", "C) OK, he can ask us."],
+          "question": "Should we ask Fred to come to the cinema with us too?",
+          "options": ["A) OK, we can phone him now.", "B) OK, that film is Fred's favourite.", "C) OK, he can ask us anytime."],
           "answer": "A"
         }
       ]
     },
     "part3": {
-      "title": "Part 3 - Complete the Story",
-      "instruction": "Read the story. Choose a word from the box. Write the correct word next to numbers 1-5. There is one example.",
+      "title": "Part 3 – Complete the Story",
+      "instruction": "Read the story. Choose a word from the box. Write the correct word next to numbers 1–5. There is one example.",
       "wordBox": [
         { "word": "library", "emoji": "📚" },
         { "word": "website", "emoji": "💻" },
         { "word": "frightened", "emoji": "😨" },
         { "word": "hopping", "emoji": "🦘" },
-        { "word": "address", "emoji": "✉️" },
-        { "word": "surprised", "emoji": "😮" },
         { "word": "cleverest", "emoji": "🧠" },
+        { "word": "surprised", "emoji": "😮" },
+        { "word": "ideas", "emoji": "💡" },
         { "word": "bounce", "emoji": "🏀" },
-        { "word": "ideas", "emoji": "💡" }
+        { "word": "address", "emoji": "✉️" }
       ],
-      "storyText": "Jane loves reading about different animals in her school [example: library]. Last Friday, Jane's teacher told the class to find pictures of animals. 'Look on the (1) ________ I told you about yesterday,' she said. 'Work with a friend. Choose a really strong animal but talk about your different (2) ________ first.' Jane worked with Paul. 'Bears are great,' Paul said. 'Let's find a picture of a bear in a river. They're really good at catching fish! Or a lion? People are (3) ________ of those. Let's find a picture of a lion with its mouth open! I like seeing its big teeth.' 'What about kangaroos?' Jane said. 'They have longer and stronger tails than bears or lions. It's their tails that make them really good at (4) ________ ! Their back legs are the strongest, too.' Paul looked at Jane. 'OK! You're right again, Jane!' he said. 'You're the (5) ________ girl in the class!'",
+      "storyText": "Jane loves reading about different animals in her school [example: library]. Last Friday, Jane's teacher told the class to find pictures of animals on the Internet. 'Look on the (1) ________ I told you about yesterday,' she said. 'Work with a friend. Choose a really strong animal, but talk about your different (2) ________ first before you decide.' Jane worked with Paul. 'Bears are great,' Paul said. 'Let's find a picture of a bear standing in a cold river. They are really good at catching slippery fish with their big paws! Or how about a lion? People are really (3) ________ of those because of their sharp teeth and loud roar!' 'What about kangaroos?' Jane said enthusiastically. 'They have longer and much stronger tails than bears or lions. It's their powerful tails that make them brilliant at (4) ________ across the Australian outback! Their huge back legs are the strongest of all.' Paul turned to look at Jane in admiration. 'OK! You're right again, Jane!' he said. 'You're definitely the (5) ________ girl in the whole class!'",
       "questions": [
         { "id": "p3_q1", "num": 1, "answer": "website" },
         { "id": "p3_q2", "num": 2, "answer": "ideas" },
@@ -129,14 +123,15 @@
       }
     },
     "part4": {
-      "title": "Part 4 - Factual Text",
+      "title": "Part 4 – Factual Text",
       "instruction": "Read the text. Choose the right words and write them on the lines.",
       "titleText": "🐬 Dolphins",
       "paragraphs": [
-        "Dolphins are part of the whale family. They are smaller (1) ________ most whales and they have small teeth.",
-        "Dolphins are very clever animals. They learn things very (2) ________ and a dolphin can make noises to 'talk' to another dolphin.",
-        "Dolphins live with their families. They like to play in the water and to jump (3) ________ of the water and back in again.",
-        "A lot of people (4) ________ sail boats say that dolphins like to be near people. They come very near to boats and sometimes they (5) ________ with the boats for days."
+        "Dolphins are part of the whale family. They are much smaller (1) ________ most whales and they have small, sharp teeth which they use to catch fish.",
+        "Dolphins are extremely clever animals. They learn new things very (2) ________ and can make a wide variety of noises and clicks to 'talk' and communicate with other dolphins in their group.",
+        "Dolphins live together with their families in groups called pods. They absolutely love to play in the water and to jump (3) ________ of the waves and splash back in again.",
+        "A lot of people (4) ________ sail boats across the ocean say that dolphins enjoy being near humans. The friendly dolphins often swim very close to boats and sometimes they (5) ________ alongside the boats for many days without stopping.",
+        "Scientists study dolphins because they are so intelligent. They can even recognise themselves in a mirror, which very (6) ________ animals in the world are able to do."
       ],
       "questions": [
         { "id": "p4_q1", "num": 1, "options": ["then", "that", "than"], "answer": "than" },
@@ -147,42 +142,42 @@
       ]
     },
     "part5": {
-      "title": "Part 5 - Complete Sentences about the Story",
-      "instruction": "Look at the pictures and read the story. Write 1, 2 or 3 words to complete the sentences.",
+      "title": "Part 5 – Complete Sentences about the Story",
+      "instruction": "Look at the pictures and read the story. Write 1, 2 or 3 words to complete the sentences about the story. You can use words from the story.",
       "storyTitle": "🌾 Daisy at the farm",
       "storyPassages": [
         {
-          "text": "Daisy's family lived in a flat in the city, but every weekend they drove to the countryside to see Daisy's grandparents. They lived on a farm. In the car, last Saturday, the family talked about the farm. 'It's so quiet there!' Daisy's mum said. 'I like working outside!' her father said. 'I love helping Grandpa with all the animals,' Daisy said. 'Look! Here we are!'"
+          "text": "Daisy's family lived in a flat in the centre of the city, but every single weekend they drove to the countryside to visit Daisy's grandparents. They lived on a large farm. In the car, last Saturday morning, the whole family talked about what they were going to do at the farm. 'It is so wonderfully quiet there!' Daisy's mum said happily. 'I love working outside in the fresh air,' her father added. 'I love helping Grandpa look after all the animals,' Daisy said with a big smile. 'Look! Here we are at last!'"
         },
         {
-          "text": "They were surprised when they saw six noisy trucks on the farm. And when they got out of the car, it started to rain. It was cold, too. 'Oh dear!' Daisy's mum said. 'It's very noisy here, today.' 'And I can't work outside in this rain,' Daisy's father said. 'Well, you two can sit and have tea with Grandma,' said Daisy. 'But I have to help Grandpa with the cows and sheep!'"
+          "text": "They were very surprised when they arrived and saw six enormous, noisy trucks parked on the farm. And when they stepped out of the car, it started to rain heavily. It was very cold, too. 'Oh dear!' said Daisy's mum unhappily. 'It's so noisy here today with all those trucks.' 'And I certainly can't work outside in this terrible rain,' Daisy's father complained. 'Well, you two should go inside and sit down and have a nice cup of hot tea with Grandma,' said Daisy firmly. 'But I absolutely have to go and help Grandpa feed the cows and wash the sheep!'"
         },
         {
-          "text": "Daisy worked all afternoon in the cold, wet weather. She gave the cows their dry grass, washed some sheep and carried vegetables. After dinner, Daisy was tired but happy. 'The best farmer in your family isn't your dad or your mum. It's you, Daisy!' her grandfather said. 'That's good because I want to be a farmer like you one day, Grandpa,' Daisy answered!"
+          "text": "Daisy worked very hard all afternoon outside in the cold and wet weather without complaining once. She gave the hungry cows their dry hay, carefully washed several muddy sheep, and carried heavy baskets of fresh vegetables from the garden to the barn. After a delicious dinner that evening, Daisy felt very tired but also extremely happy and proud. 'The best and hardest-working farmer in your whole family is not your dad or even your mum. It is definitely you, Daisy!' her grandfather said proudly. 'That is so good to hear, Grandpa, because I really want to be a farmer just like you one day!' Daisy answered with a huge smile."
         }
       ],
       "questions": [
-        { "id": "p5_q1", "num": 1, "text": "Daisy's mother liked the farm because it was a ________ place.", "acceptableAnswers": ["quiet", "very quiet", "so quiet"] },
-        { "id": "p5_q2", "num": 2, "text": "Daisy enjoyed working with ________ on the farm.", "acceptableAnswers": ["animals", "the animals", "all the animals"] },
-        { "id": "p5_q3", "num": 3, "text": "There were some ________ outside the house when they drove into the farm.", "acceptableAnswers": ["trucks", "noisy trucks", "six noisy trucks"] },
-        { "id": "p5_q4", "num": 4, "text": "Daisy's dad didn't want to ________ in the wet weather.", "acceptableAnswers": ["work", "work outside"] },
-        { "id": "p5_q5", "num": 5, "text": "Daisy told ________ to go and have tea with her grandmother.", "acceptableAnswers": ["her parents", "her mum and dad", "her mother and father"] },
-        { "id": "p5_q6", "num": 6, "text": "Daisy was ________ after all her work outside.", "acceptableAnswers": ["tired", "happy", "tired but happy", "happy and tired"] },
-        { "id": "p5_q7", "num": 7, "text": "Grandfather said Daisy was the ________ in her family!", "acceptableAnswers": ["best farmer"] }
+        { "id": "p5_q1", "num": 1, "text": "Daisy's mother liked visiting the farm because it was a very ________ place.", "acceptableAnswers": ["quiet", "very quiet", "so quiet", "wonderfully quiet"] },
+        { "id": "p5_q2", "num": 2, "text": "Daisy's father liked working ________ at the farm.", "acceptableAnswers": ["outside", "outdoors"] },
+        { "id": "p5_q3", "num": 3, "text": "Daisy enjoyed helping her grandfather take care of the ________.", "acceptableAnswers": ["animals", "farm animals"] },
+        { "id": "p5_q4", "num": 4, "text": "There were six large ________ at the farm when they arrived.", "acceptableAnswers": ["trucks", "noisy trucks", "enormous trucks"] },
+        { "id": "p5_q5", "num": 5, "text": "Daisy told her mum and dad to go inside and have tea with her ________.", "acceptableAnswers": ["grandmother", "grandma", "Grandma"] },
+        { "id": "p5_q6", "num": 6, "text": "Daisy felt tired but ________ after all her work that afternoon.", "acceptableAnswers": ["happy", "very happy", "extremely happy", "tired but happy"] },
+        { "id": "p5_q7", "num": 7, "text": "Daisy's grandfather said she was the best ________ in the whole family.", "acceptableAnswers": ["farmer", "best farmer"] }
       ]
     },
     "part6": {
-      "title": "Part 6 - Look and read and write",
-      "instruction": "Look at the picture and read the prompts. Write your answers on the lines.",
+      "title": "Part 6 – Look and read and write",
+      "instruction": "Look at the picture and read the questions. Write your answers on the lines. Write one or two words or a number or a date.",
       "imageUrl": "/images/part6_garden.png",
       "promptText": "Look carefully at the garden scene and answer all 6 questions.",
       "questions": [
         { "id": "p6_q1", "num": 1, "type": "complete", "text": "The boy on the bike is wearing grey ________.", "placeholder": "trousers / jeans" },
-        { "id": "p6_q2", "num": 2, "type": "complete", "text": "One dog is brown and one dog is ________.", "placeholder": "black and white" },
-        { "id": "p6_q3", "num": 3, "type": "answer", "text": "What's the girl in the black skirt doing?", "placeholder": "Write a full sentence..." },
-        { "id": "p6_q4", "num": 4, "type": "answer", "text": "Where are the flowers?", "placeholder": "Write a full sentence..." },
-        { "id": "p6_q5", "num": 5, "type": "sentence", "text": "Now write a sentence about the red car.", "placeholder": "Sentence 1..." },
-        { "id": "p6_q6", "num": 6, "type": "sentence", "text": "Now write another sentence about the picture.", "placeholder": "Sentence 2..." }
+        { "id": "p6_q2", "num": 2, "type": "complete", "text": "The car parked near the house is ________.", "placeholder": "red" },
+        { "id": "p6_q3", "num": 3, "type": "answer", "text": "What is the girl in the black skirt carrying or doing?", "placeholder": "Write a full sentence…" },
+        { "id": "p6_q4", "num": 4, "type": "answer", "text": "Where are the children jumping on the trampoline?", "placeholder": "Write a full sentence…" },
+        { "id": "p6_q5", "num": 5, "type": "sentence", "text": "Now write a sentence about the dog in the inflatable pool.", "placeholder": "Write your sentence here…" },
+        { "id": "p6_q6", "num": 6, "type": "sentence", "text": "Now write another sentence about what you can see in the garden.", "placeholder": "Write your sentence here…" }
       ]
     }
   }

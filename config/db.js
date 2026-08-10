@@ -2,80 +2,208 @@ const fs = require('fs');
 const path = require('path');
 
 // ============================================================
-// Motor de Base de Datos Movers A1
-// - En Vercel / Cloud con TURSO_DATABASE_URL: Conecta con Turso (libSQL)
-// - En Local sin Turso: Usa archivo de respaldo JSON local en /tmp
+// Motor de Base de Datos Movers A1 — Turso Cloud (libSQL)
+// Turso es el ÚNICO motor de persistencia. No hay fallback en
+// producción para evitar pérdida de datos en Vercel serverless.
+// Fallback JSON solo para desarrollo local sin TURSO_DATABASE_URL.
 // ============================================================
 
-let tursoClient = null;
+let _tursoClient = null;
+let _initPromise = null;
+let _initFailed = false;
 
-// Inicialización de Turso si existe variable de entorno
 async function getTursoClient() {
-  if (tursoClient) return tursoClient;
+  // Si ya está inicializado, devolverlo
+  if (_tursoClient) return _tursoClient;
+
+  // Si está en proceso de inicialización, esperar
+  if (_initPromise) return _initPromise;
+
   const tursoUrl = process.env.TURSO_DATABASE_URL;
   const tursoToken = process.env.TURSO_AUTH_TOKEN;
 
+  // Sin URL configurada → modo desarrollo local
   if (!tursoUrl) return null;
 
+  _initPromise = (async () => {
+    try {
+      const { createClient } = require('@libsql/client');
+      const client = createClient({
+        url: tursoUrl,
+        authToken: tursoToken || undefined
+      });
+
+      // Crear tablas si no existen (idempotente)
+      await client.batch([
+        {
+          sql: `CREATE TABLE IF NOT EXISTS students (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            first_name TEXT NOT NULL,
+            last_name TEXT NOT NULL,
+            grade TEXT NOT NULL,
+            username TEXT UNIQUE,
+            assigned_exam_id INTEGER DEFAULT 1,
+            last_login_at TEXT,
+            created_at TEXT DEFAULT (datetime('now'))
+          )`,
+          args: []
+        },
+        {
+          sql: `CREATE TABLE IF NOT EXISTS progress (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL,
+            exam_id INTEGER NOT NULL,
+            raw_answers_json TEXT NOT NULL DEFAULT '{}',
+            status TEXT DEFAULT 'in_progress',
+            updated_at TEXT DEFAULT (datetime('now')),
+            UNIQUE(username, exam_id)
+          )`,
+          args: []
+        },
+        {
+          sql: `CREATE TABLE IF NOT EXISTS submissions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL,
+            exam_id INTEGER NOT NULL,
+            auto_score INTEGER DEFAULT 0,
+            max_auto_score INTEGER DEFAULT 0,
+            raw_answers_json TEXT NOT NULL DEFAULT '{}',
+            status TEXT DEFAULT 'submitted',
+            submitted_at TEXT DEFAULT (datetime('now'))
+          )`,
+          args: []
+        }
+      ], 'write');
+
+      _tursoClient = client;
+      _initFailed = false;
+      console.log('✅ Turso (libSQL Cloud) conectado y listo.');
+      return _tursoClient;
+    } catch (err) {
+      _initPromise = null;
+      _initFailed = true;
+      console.error('❌ Error crítico conectando a Turso:', err.message);
+      throw err;
+    }
+  })();
+
+  return _initPromise;
+}
+
+// ============================================================
+// Fallback LOCAL solo para desarrollo (NODE_ENV !== 'production')
+// En Vercel esto NUNCA se usa porque TURSO_DATABASE_URL está set.
+// ============================================================
+
+const LOCAL_JSON_PATH = path.join(__dirname, '../data/movers_local_dev.json');
+
+function getInitialStudents() {
   try {
-    const { createClient } = require('@libsql/client');
-    tursoClient = createClient({
-      url: tursoUrl,
-      authToken: tursoToken || undefined
-    });
+    const p = path.join(__dirname, '../data/students_4to.json');
+    if (fs.existsSync(p)) return JSON.parse(fs.readFileSync(p, 'utf8'));
+  } catch (e) {}
+  return [];
+}
 
-    // Crear tablas en Turso si no existen
-    await tursoClient.execute(`
-      CREATE TABLE IF NOT EXISTS students (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        first_name TEXT NOT NULL,
-        last_name TEXT NOT NULL,
-        grade TEXT NOT NULL,
-        username TEXT UNIQUE,
-        assigned_exam_id INTEGER DEFAULT 1,
-        last_login_at TEXT,
-        created_at TEXT DEFAULT (datetime('now'))
-      );
-    `);
+function loadLocalStore() {
+  try {
+    if (fs.existsSync(LOCAL_JSON_PATH)) {
+      const parsed = JSON.parse(fs.readFileSync(LOCAL_JSON_PATH, 'utf8'));
+      if (parsed && Array.isArray(parsed.students)) return parsed;
+    }
+  } catch (e) {}
+  return { students: getInitialStudents(), progress: {}, submissions: [] };
+}
 
-    await tursoClient.execute(`
-      CREATE TABLE IF NOT EXISTS progress (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT NOT NULL,
-        exam_id INTEGER NOT NULL,
-        raw_answers_json TEXT NOT NULL DEFAULT '{}',
-        status TEXT DEFAULT 'in_progress',
-        updated_at TEXT DEFAULT (datetime('now')),
-        UNIQUE(username, exam_id)
-      );
-    `);
-
-    await tursoClient.execute(`
-      CREATE TABLE IF NOT EXISTS submissions (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT NOT NULL,
-        exam_id INTEGER NOT NULL,
-        auto_score INTEGER DEFAULT 0,
-        max_auto_score INTEGER DEFAULT 0,
-        raw_answers_json TEXT NOT NULL DEFAULT '{}',
-        status TEXT DEFAULT 'submitted',
-        submitted_at TEXT DEFAULT (datetime('now'))
-      );
-    `);
-
-    console.log('✅ Base de Datos Turso (libSQL Cloud) conectada y lista.');
-    return tursoClient;
-  } catch (err) {
-    console.error('⚠️ No se pudo conectar a Turso, usando motor de respaldo local:', err.message);
-    return null;
+function saveLocalStore(data) {
+  try {
+    fs.writeFileSync(LOCAL_JSON_PATH, JSON.stringify(data, null, 2), 'utf8');
+  } catch (e) {
+    console.warn('⚠️ No se pudo guardar el store local:', e.message);
   }
 }
 
-// Fallback Local JSON Store
-const tmpJsonPath = '/tmp/movers_data.json';
-const backupJsonPath = path.join(__dirname, '../data/movers_backup.json');
+// ============================================================
+// API pública del módulo
+// ============================================================
 
-global.moversMemoryStore = global.moversMemoryStore || null;
+/**
+ * Obtiene todos los datos del store.
+ * En producción: desde Turso. En desarrollo sin Turso: desde JSON local.
+ */
+async function fetchStore() {
+  const client = await getTursoClient().catch(() => null);
+
+  if (client) {
+    try {
+      const [resStudents, resProgress, resSubmissions] = await Promise.all([
+        client.execute('SELECT * FROM students ORDER BY grade ASC, last_name ASC'),
+        client.execute('SELECT * FROM progress'),
+        client.execute('SELECT * FROM submissions')
+      ]);
+
+      const students = resStudents.rows.map(r => ({
+        id: Number(r.id),
+        firstName: r.first_name,
+        lastName: r.last_name,
+        grade: r.grade,
+        username: r.username,
+        assignedExamId: Number(r.assigned_exam_id) || 1,
+        lastLogin: r.last_login_at
+      }));
+
+      const progress = {};
+      resProgress.rows.forEach(r => {
+        const key = `${r.username}_${r.exam_id}`;
+        try {
+          progress[key] = {
+            answers: JSON.parse(r.raw_answers_json || '{}'),
+            updatedAt: r.updated_at,
+            status: r.status
+          };
+        } catch (e) {}
+      });
+
+      const submissions = resSubmissions.rows.map(r => {
+        let answers = {};
+        try { answers = JSON.parse(r.raw_answers_json || '{}'); } catch (e) {}
+        return {
+          id: Number(r.id),
+          username: r.username,
+          examId: Number(r.exam_id),
+          autoScore: Number(r.auto_score),
+          maxAutoScore: Number(r.max_auto_score),
+          answers,
+          submittedAt: r.submitted_at,
+          status: r.status
+        };
+      });
+
+      return { students, progress, submissions };
+    } catch (err) {
+      console.error('❌ Error leyendo datos de Turso:', err.message);
+      throw err; // No silenciar en producción
+    }
+  }
+
+  // Solo en desarrollo local
+  console.warn('⚠️ Usando store JSON local (modo desarrollo).');
+  return loadLocalStore();
+}
+
+/**
+ * Guarda el store localmente (solo desarrollo).
+ * En producción con Turso, cada API escribe directamente a la DB.
+ */
+async function saveStore(data) {
+  const client = await getTursoClient().catch(() => null);
+  if (!client) {
+    saveLocalStore(data);
+  }
+  // Con Turso, las escrituras ocurren directamente en cada endpoint.
+}
+
+// Lock simple para evitar escrituras concurrentes en el JSON local
 global._moversLock = global._moversLock || Promise.resolve();
 
 async function withLock(fn) {
@@ -91,116 +219,11 @@ async function withLock(fn) {
   }
 }
 
-function getInitialStudents() {
-  try {
-    const studentsPath = path.join(__dirname, '../data/students_4to.json');
-    if (fs.existsSync(studentsPath)) {
-      return JSON.parse(fs.readFileSync(studentsPath, 'utf8'));
-    }
-  } catch (e) {
-    console.error('Error cargando lista inicial de alumnos:', e);
-  }
-  return [];
+// Inicializar Turso en background al arrancar el servidor
+if (process.env.TURSO_DATABASE_URL) {
+  getTursoClient().catch(err => {
+    console.error('❌ Fallo en inicialización inicial de Turso:', err.message);
+  });
 }
 
-async function fetchStore() {
-  const client = await getTursoClient();
-
-  if (client) {
-    // Cargar datos desde Turso
-    try {
-      const resStudents = await client.execute('SELECT * FROM students ORDER BY grade ASC, last_name ASC');
-      const resProgress = await client.execute('SELECT * FROM progress');
-      const resSubmissions = await client.execute('SELECT * FROM submissions');
-
-      const students = resStudents.rows.map(r => ({
-        id: r.id,
-        firstName: r.first_name,
-        lastName: r.last_name,
-        grade: r.grade,
-        username: r.username,
-        assignedExamId: r.assigned_exam_id || 1,
-        lastLogin: r.last_login_at
-      }));
-
-      const progressMap = {};
-      resProgress.rows.forEach(r => {
-        const key = `${r.username}_${r.exam_id}`;
-        try {
-          progressMap[key] = {
-            answers: JSON.parse(r.raw_answers_json || '{}'),
-            updatedAt: r.updated_at,
-            status: r.status
-          };
-        } catch (e) {}
-      });
-
-      const submissions = resSubmissions.rows.map(r => {
-        let answers = {};
-        try { answers = JSON.parse(r.raw_answers_json || '{}'); } catch (e) {}
-        return {
-          id: r.id,
-          username: r.username,
-          examId: r.exam_id,
-          autoScore: r.auto_score,
-          maxAutoScore: r.max_auto_score,
-          answers,
-          submittedAt: r.submitted_at,
-          status: r.status
-        };
-      });
-
-      return { students, progress: progressMap, submissions };
-    } catch (err) {
-      console.error('Error leyendo datos de Turso:', err.message);
-    }
-  }
-
-  // Fallback local en memoria / JSON
-  if (global.moversMemoryStore) {
-    return global.moversMemoryStore;
-  }
-
-  try {
-    if (fs.existsSync(tmpJsonPath)) {
-      const parsed = JSON.parse(fs.readFileSync(tmpJsonPath, 'utf8'));
-      if (parsed && Array.isArray(parsed.students)) {
-        global.moversMemoryStore = parsed;
-        return parsed;
-      }
-    }
-  } catch (e) {}
-
-  try {
-    if (fs.existsSync(backupJsonPath)) {
-      const parsed = JSON.parse(fs.readFileSync(backupJsonPath, 'utf8'));
-      if (parsed && Array.isArray(parsed.students)) {
-        global.moversMemoryStore = parsed;
-        return parsed;
-      }
-    }
-  } catch (e) {}
-
-  const initialData = {
-    students: getInitialStudents(),
-    progress: {},
-    submissions: []
-  };
-
-  global.moversMemoryStore = initialData;
-  return initialData;
-}
-
-async function saveStore(data) {
-  global.moversMemoryStore = data;
-
-  try { fs.writeFileSync(tmpJsonPath, JSON.stringify(data, null, 2), 'utf8'); } catch (e) {}
-  try { fs.writeFileSync(backupJsonPath, JSON.stringify(data, null, 2), 'utf8'); } catch (e) {}
-}
-
-module.exports = {
-  fetchStore,
-  saveStore,
-  withLock,
-  getTursoClient
-};
+module.exports = { fetchStore, saveStore, withLock, getTursoClient };

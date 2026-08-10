@@ -4,27 +4,33 @@ const db = require('../config/db');
 const fs = require('fs');
 const path = require('path');
 
-// Cargar examen por ID
+// Cachear exámenes en memoria para evitar lecturas de disco repetidas
+const _examCache = {};
 function loadExamData(examId) {
-  const file = `test${examId}.json`;
-  const p = path.join(__dirname, `../data/exams/${file}`);
+  if (_examCache[examId]) return _examCache[examId];
+  const p = path.join(__dirname, `../data/exams/test${examId}.json`);
   if (fs.existsSync(p)) {
-    return JSON.parse(fs.readFileSync(p, 'utf8'));
+    _examCache[examId] = JSON.parse(fs.readFileSync(p, 'utf8'));
+    return _examCache[examId];
   }
   return null;
 }
 
-// GET /api/students/list - Roster de alumnos de 4A y 4B
+// ────────────────────────────────────────────────────────
+// GET /api/students/list
+// ────────────────────────────────────────────────────────
 router.get('/students/list', async (req, res) => {
   try {
     const store = await db.fetchStore();
     res.json({ success: true, students: store.students });
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    res.status(500).json({ success: false, message: 'Error al cargar lista de alumnos.' });
   }
 });
 
-// POST /api/students/login - Login de estudiante
+// ────────────────────────────────────────────────────────
+// POST /api/students/login
+// ────────────────────────────────────────────────────────
 router.post('/students/login', async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -42,19 +48,14 @@ router.post('/students/login', async (req, res) => {
       return res.status(401).json({ success: false, message: 'Usuario o contraseña incorrectos.' });
     }
 
-    // Actualizar última conexión en Turso si está activo
-    const turso = await db.getTursoClient();
+    // Actualizar último login
     const nowIso = new Date().toISOString();
+    const turso = await db.getTursoClient().catch(() => null);
     if (turso) {
-      try {
-        await turso.execute({
-          sql: 'UPDATE students SET last_login_at = ? WHERE username = ?',
-          args: [nowIso, cleanUser]
-        });
-      } catch (e) {}
-    } else {
-      student.lastLogin = nowIso;
-      await db.saveStore(store);
+      await turso.execute({
+        sql: 'UPDATE students SET last_login_at = ? WHERE username = ?',
+        args: [nowIso, cleanUser]
+      }).catch(e => console.error('Error actualizando last_login:', e.message));
     }
 
     res.json({
@@ -70,13 +71,19 @@ router.post('/students/login', async (req, res) => {
       }
     });
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    console.error('Error en login:', err.message);
+    res.status(500).json({ success: false, message: 'Error en el servidor al iniciar sesión.' });
   }
 });
 
-// GET /api/exams/:id - Obtener preguntas de un examen (1, 2 o 3)
+// ────────────────────────────────────────────────────────
+// GET /api/exams/:id
+// ────────────────────────────────────────────────────────
 router.get('/exams/:id', (req, res) => {
   const examId = parseInt(req.params.id) || 1;
+  if (examId < 1 || examId > 3) {
+    return res.status(400).json({ success: false, message: 'ID de examen inválido.' });
+  }
   const exam = loadExamData(examId);
   if (!exam) {
     return res.status(404).json({ success: false, message: 'Examen no encontrado.' });
@@ -84,17 +91,45 @@ router.get('/exams/:id', (req, res) => {
   res.json({ success: true, exam });
 });
 
-// GET /api/progress/:username/:examId - Obtener progreso guardado
+// ────────────────────────────────────────────────────────
+// GET /api/progress/:username/:examId
+// Retorna el progreso guardado o el estado de submitted
+// ────────────────────────────────────────────────────────
 router.get('/progress/:username/:examId', async (req, res) => {
   try {
-    const { username, examId } = req.params;
-    const key = `${username.toLowerCase()}_${examId}`;
+    const username = req.params.username.trim().toLowerCase();
+    const examId = parseInt(req.params.examId);
 
-    const turso = await db.getTursoClient();
+    const turso = await db.getTursoClient().catch(() => null);
+
     if (turso) {
+      // Verificar primero si ya fue entregado
+      const resSub = await turso.execute({
+        sql: 'SELECT * FROM submissions WHERE username = ? AND exam_id = ? LIMIT 1',
+        args: [username, examId]
+      });
+      if (resSub.rows.length > 0) {
+        const row = resSub.rows[0];
+        let answers = {};
+        try { answers = JSON.parse(row.raw_answers_json || '{}'); } catch (e) {}
+        return res.json({
+          success: true,
+          hasProgress: true,
+          status: 'submitted',
+          progress: {
+            answers,
+            updatedAt: row.submitted_at,
+            status: 'submitted',
+            autoScore: Number(row.auto_score),
+            maxAutoScore: Number(row.max_auto_score)
+          }
+        });
+      }
+
+      // Buscar progreso en curso
       const resProg = await turso.execute({
-        sql: 'SELECT * FROM progress WHERE username = ? AND exam_id = ?',
-        args: [username.toLowerCase(), parseInt(examId)]
+        sql: 'SELECT * FROM progress WHERE username = ? AND exam_id = ? LIMIT 1',
+        args: [username, examId]
       });
       if (resProg.rows.length > 0) {
         const row = resProg.rows[0];
@@ -102,7 +137,8 @@ router.get('/progress/:username/:examId', async (req, res) => {
         try { answers = JSON.parse(row.raw_answers_json || '{}'); } catch (e) {}
         return res.json({
           success: true,
-          hasProgress: true,
+          hasProgress: Object.keys(answers).length > 0,
+          status: 'in_progress',
           progress: {
             answers,
             updatedAt: row.updated_at,
@@ -110,26 +146,41 @@ router.get('/progress/:username/:examId', async (req, res) => {
           }
         });
       }
+
+      return res.json({ success: true, hasProgress: false, status: 'new', progress: null });
     }
 
+    // Fallback local
     const store = await db.fetchStore();
-    const savedProgress = store.progress ? store.progress[key] : null;
+    const key = `${username}_${examId}`;
+    const sub = (store.submissions || []).find(s => s.username === username && s.examId === examId);
+    if (sub) {
+      return res.json({
+        success: true, hasProgress: true, status: 'submitted',
+        progress: { answers: sub.answers, updatedAt: sub.submittedAt, status: 'submitted', autoScore: sub.autoScore, maxAutoScore: sub.maxAutoScore }
+      });
+    }
+    const prog = store.progress ? store.progress[key] : null;
     res.json({
       success: true,
-      hasProgress: !!savedProgress,
-      progress: savedProgress || null
+      hasProgress: !!prog && Object.keys(prog.answers || {}).length > 0,
+      status: prog ? 'in_progress' : 'new',
+      progress: prog || null
     });
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    console.error('Error obteniendo progreso:', err.message);
+    res.status(500).json({ success: false, message: 'Error al obtener progreso.' });
   }
 });
 
-// POST /api/progress/save - GUARDAR PROGRESO (Turso + Local)
+// ────────────────────────────────────────────────────────
+// POST /api/progress/save
+// ────────────────────────────────────────────────────────
 router.post('/progress/save', async (req, res) => {
   try {
     const { username, examId, answers } = req.body;
     if (!username || !examId) {
-      return res.status(400).json({ success: false, message: 'Datos insuficientes para guardar progreso.' });
+      return res.status(400).json({ success: false, message: 'Datos insuficientes.' });
     }
 
     const cleanUser = username.trim().toLowerCase();
@@ -137,202 +188,164 @@ router.post('/progress/save', async (req, res) => {
     const answersJson = JSON.stringify(answers || {});
     const nowIso = new Date().toISOString();
 
-    const turso = await db.getTursoClient();
+    const turso = await db.getTursoClient().catch(() => null);
     if (turso) {
+      // No sobreescribir si ya fue entregado
+      const resSub = await turso.execute({
+        sql: 'SELECT id FROM submissions WHERE username = ? AND exam_id = ? LIMIT 1',
+        args: [cleanUser, eId]
+      });
+      if (resSub.rows.length > 0) {
+        return res.json({ success: false, alreadySubmitted: true, message: 'Este examen ya fue entregado.' });
+      }
+
       await turso.execute({
-        sql: `
-          INSERT INTO progress (username, exam_id, raw_answers_json, status, updated_at)
-          VALUES (?, ?, ?, 'in_progress', ?)
-          ON CONFLICT(username, exam_id) DO UPDATE SET
-            raw_answers_json = excluded.raw_answers_json,
-            status = 'in_progress',
-            updated_at = excluded.updated_at
-        `,
+        sql: `INSERT INTO progress (username, exam_id, raw_answers_json, status, updated_at)
+              VALUES (?, ?, ?, 'in_progress', ?)
+              ON CONFLICT(username, exam_id) DO UPDATE SET
+                raw_answers_json = excluded.raw_answers_json,
+                status = 'in_progress',
+                updated_at = excluded.updated_at`,
         args: [cleanUser, eId, answersJson, nowIso]
       });
-    }
-
-    // Guardar también en respaldo local
-    const key = `${cleanUser}_${eId}`;
-    await db.withLock(async () => {
+    } else {
+      // Fallback local
+      const key = `${cleanUser}_${eId}`;
       const store = await db.fetchStore();
       if (!store.progress) store.progress = {};
-      store.progress[key] = {
-        answers: answers || {},
-        updatedAt: nowIso,
-        status: 'in_progress'
-      };
+      store.progress[key] = { answers: answers || {}, updatedAt: nowIso, status: 'in_progress' };
       await db.saveStore(store);
-    });
+    }
 
-    res.json({ success: true, message: 'Progreso guardado exitosamente.' });
+    res.json({ success: true, message: 'Progreso guardado.' });
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    console.error('Error guardando progreso:', err.message);
+    res.status(500).json({ success: false, message: 'Error al guardar progreso.' });
   }
 });
 
-// POST /api/exams/submit - ENTREGAR EXAMEN (Turso + Local)
+// ────────────────────────────────────────────────────────
+// POST /api/exams/submit
+// ────────────────────────────────────────────────────────
 router.post('/exams/submit', async (req, res) => {
   try {
     const { username, examId, answers } = req.body;
     if (!username || !examId || !answers) {
-      return res.status(400).json({ success: false, message: 'Faltan respuestas para entregar el examen.' });
-    }
-
-    const exam = loadExamData(examId);
-    if (!exam) {
-      return res.status(404).json({ success: false, message: 'Examen no encontrado.' });
-    }
-
-    // Evaluación automática
-    let autoScore = 0;
-    let maxAutoScore = 0;
-
-    // Parte 1
-    if (exam.parts.part1 && exam.parts.part1.questions) {
-      exam.parts.part1.questions.forEach(q => {
-        maxAutoScore++;
-        const userAns = (answers[q.id] || '').trim().toLowerCase();
-        if (userAns === q.answer.toLowerCase()) autoScore++;
-      });
-    }
-
-    // Parte 2
-    if (exam.parts.part2 && exam.parts.part2.questions) {
-      exam.parts.part2.questions.forEach(q => {
-        maxAutoScore++;
-        const userAns = (answers[q.id] || '').trim().toLowerCase();
-        if (userAns === q.answer.toLowerCase()) autoScore++;
-      });
-    }
-
-    // Parte 3
-    if (exam.parts.part3 && exam.parts.part3.questions) {
-      exam.parts.part3.questions.forEach(q => {
-        maxAutoScore++;
-        const userAns = (answers[q.id] || '').trim().toLowerCase();
-        if (userAns === q.answer.toLowerCase()) autoScore++;
-      });
-      if (exam.parts.part3.titleQuestion) {
-        maxAutoScore++;
-        const userAns = (answers[exam.parts.part3.titleQuestion.id] || '').trim().toLowerCase();
-        if (userAns === exam.parts.part3.titleQuestion.answer.toLowerCase()) autoScore++;
-      }
-    }
-
-    // Parte 4
-    if (exam.parts.part4 && exam.parts.part4.questions) {
-      exam.parts.part4.questions.forEach(q => {
-        maxAutoScore++;
-        const userAns = (answers[q.id] || '').trim().toLowerCase();
-        if (userAns === q.answer.toLowerCase()) autoScore++;
-      });
-      if (exam.parts.part4.titleQuestion) {
-        maxAutoScore++;
-        const userAns = (answers[exam.parts.part4.titleQuestion.id] || '').trim().toLowerCase();
-        if (userAns === exam.parts.part4.titleQuestion.answer.toLowerCase()) autoScore++;
-      }
-    }
-
-    // Parte 5
-    if (exam.parts.part5 && exam.parts.part5.questions) {
-      exam.parts.part5.questions.forEach(q => {
-        maxAutoScore++;
-        const userAns = (answers[q.id] || '').trim().toLowerCase();
-        const acceptable = (q.acceptableAnswers || []).map(a => a.toLowerCase());
-        if (acceptable.includes(userAns)) autoScore++;
-      });
-    }
-
-    // Parte 6 (si es MCQ)
-    if (exam.parts.part6 && exam.parts.part6.questions && exam.parts.part6.questions[0].options) {
-      exam.parts.part6.questions.forEach(q => {
-        maxAutoScore++;
-        const userAns = (answers[q.id] || '').trim().toLowerCase();
-        if (userAns === q.answer.toLowerCase()) autoScore++;
-      });
+      return res.status(400).json({ success: false, message: 'Datos incompletos para entregar.' });
     }
 
     const cleanUser = username.trim().toLowerCase();
     const eId = parseInt(examId);
-    const answersJson = JSON.stringify(answers || {});
-    const nowIso = new Date().toISOString();
 
-    const turso = await db.getTursoClient();
+    // Verificar que no haya entregado ya
+    const turso = await db.getTursoClient().catch(() => null);
     if (turso) {
-      await turso.execute({
-        sql: 'DELETE FROM submissions WHERE username = ? AND exam_id = ?',
+      const resSub = await turso.execute({
+        sql: 'SELECT id FROM submissions WHERE username = ? AND exam_id = ? LIMIT 1',
         args: [cleanUser, eId]
       });
-      await turso.execute({
-        sql: `
-          INSERT INTO submissions (username, exam_id, auto_score, max_auto_score, raw_answers_json, status, submitted_at)
-          VALUES (?, ?, ?, ?, ?, 'submitted', ?)
-        `,
-        args: [cleanUser, eId, autoScore, maxAutoScore, answersJson, nowIso]
-      });
-      await turso.execute({
-        sql: `
-          INSERT INTO progress (username, exam_id, raw_answers_json, status, updated_at)
-          VALUES (?, ?, ?, 'submitted', ?)
-          ON CONFLICT(username, exam_id) DO UPDATE SET
-            raw_answers_json = excluded.raw_answers_json,
-            status = 'submitted',
-            updated_at = excluded.updated_at
-        `,
-        args: [cleanUser, eId, answersJson, nowIso]
+      if (resSub.rows.length > 0) {
+        return res.json({ success: false, alreadySubmitted: true, message: 'Este examen ya fue entregado anteriormente.' });
+      }
+    }
+
+    const exam = loadExamData(eId);
+    if (!exam) {
+      return res.status(404).json({ success: false, message: 'Examen no encontrado.' });
+    }
+
+    // ── Autocalificación ──────────────────────────────
+    let autoScore = 0;
+    let maxAutoScore = 0;
+
+    // Parte 1 — completar palabra del banco
+    (exam.parts.part1?.questions || []).forEach(q => {
+      maxAutoScore++;
+      if ((answers[q.id] || '').trim().toLowerCase() === q.answer.toLowerCase()) autoScore++;
+    });
+
+    // Parte 2 — MCQ diálogo
+    (exam.parts.part2?.questions || []).forEach(q => {
+      maxAutoScore++;
+      if ((answers[q.id] || '').trim().toUpperCase() === q.answer.toUpperCase()) autoScore++;
+    });
+
+    // Parte 3 — completar historia + título
+    (exam.parts.part3?.questions || []).forEach(q => {
+      maxAutoScore++;
+      if ((answers[q.id] || '').trim().toLowerCase() === q.answer.toLowerCase()) autoScore++;
+    });
+    if (exam.parts.part3?.titleQuestion) {
+      const tq = exam.parts.part3.titleQuestion;
+      maxAutoScore++;
+      if ((answers[tq.id] || '').trim().toLowerCase() === tq.answer.toLowerCase()) autoScore++;
+    }
+
+    // Parte 4 — texto factual MCQ
+    (exam.parts.part4?.questions || []).forEach(q => {
+      maxAutoScore++;
+      if ((answers[q.id] || '').trim().toLowerCase() === q.answer.toLowerCase()) autoScore++;
+    });
+
+    // Parte 5 — completar oraciones (respuestas aceptables)
+    (exam.parts.part5?.questions || []).forEach(q => {
+      maxAutoScore++;
+      const userAns = (answers[q.id] || '').trim().toLowerCase();
+      const acceptable = (q.acceptableAnswers || []).map(a => a.toLowerCase());
+      if (acceptable.includes(userAns)) autoScore++;
+    });
+
+    // Parte 6 — producción escrita (no se autocalifica, queda para el docente)
+
+    const nowIso = new Date().toISOString();
+    const answersJson = JSON.stringify(answers || {});
+
+    if (turso) {
+      // Insertar submission y marcar progress como submitted (batch atómico)
+      await turso.batch([
+        {
+          sql: `INSERT INTO submissions (username, exam_id, auto_score, max_auto_score, raw_answers_json, status, submitted_at)
+                VALUES (?, ?, ?, ?, ?, 'submitted', ?)`,
+          args: [cleanUser, eId, autoScore, maxAutoScore, answersJson, nowIso]
+        },
+        {
+          sql: `INSERT INTO progress (username, exam_id, raw_answers_json, status, updated_at)
+                VALUES (?, ?, ?, 'submitted', ?)
+                ON CONFLICT(username, exam_id) DO UPDATE SET
+                  raw_answers_json = excluded.raw_answers_json,
+                  status = 'submitted',
+                  updated_at = excluded.updated_at`,
+          args: [cleanUser, eId, answersJson, nowIso]
+        }
+      ], 'write');
+    } else {
+      // Fallback local
+      await db.withLock(async () => {
+        const store = await db.fetchStore();
+        store.submissions = (store.submissions || []).filter(
+          s => !(s.username === cleanUser && s.examId === eId)
+        );
+        store.submissions.push({ id: Date.now(), username: cleanUser, examId: eId, autoScore, maxAutoScore, answers, submittedAt: nowIso, status: 'submitted' });
+        if (!store.progress) store.progress = {};
+        store.progress[`${cleanUser}_${eId}`] = { answers, updatedAt: nowIso, status: 'submitted' };
+        await db.saveStore(store);
       });
     }
 
-    // Guardar en almacenamiento local
-    const key = `${cleanUser}_${eId}`;
-    const submissionId = Date.now();
-
-    await db.withLock(async () => {
-      const store = await db.fetchStore();
-      if (!store.submissions) store.submissions = [];
-
-      store.submissions = store.submissions.filter(s => !(s.username === cleanUser && s.examId === eId));
-
-      store.submissions.push({
-        id: submissionId,
-        username: cleanUser,
-        examId: eId,
-        autoScore,
-        maxAutoScore,
-        answers,
-        submittedAt: nowIso,
-        status: 'submitted'
-      });
-
-      if (!store.progress) store.progress = {};
-      store.progress[key] = {
-        answers,
-        updatedAt: nowIso,
-        status: 'submitted'
-      };
-
-      await db.saveStore(store);
-    });
-
-    res.json({
-      success: true,
-      autoScore,
-      maxAutoScore,
-      message: 'Examen entregado exitosamente.'
-    });
-
+    res.json({ success: true, autoScore, maxAutoScore, message: '¡Examen entregado exitosamente!' });
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    console.error('Error al entregar examen:', err.message);
+    res.status(500).json({ success: false, message: 'Error al entregar el examen. Intenta de nuevo.' });
   }
 });
 
-// GET /api/admin/submissions - Panel docente
+// ────────────────────────────────────────────────────────
+// GET /api/admin/submissions?pin=xxx
+// ────────────────────────────────────────────────────────
 router.get('/admin/submissions', async (req, res) => {
   try {
-    const pin = req.query.pin;
-    if (pin !== 'movers2026') {
-      return res.status(401).json({ success: false, message: 'PIN docente incorrecto.' });
+    if (req.query.pin !== 'movers2026') {
+      return res.status(401).json({ success: false, message: 'PIN incorrecto.' });
     }
 
     const store = await db.fetchStore();
@@ -340,21 +353,21 @@ router.get('/admin/submissions', async (req, res) => {
     const studentOverview = store.students.map(st => {
       const assignedId = st.assignedExamId || 1;
       const key = `${st.username}_${assignedId}`;
-      const prog = store.progress ? store.progress[key] : null;
+      const prog = store.progress?.[key];
       const sub = (store.submissions || []).find(s => s.username === st.username && s.examId === assignedId);
 
       let status = 'not_started';
       if (sub) status = 'submitted';
-      else if (prog && prog.status === 'in_progress') status = 'in_progress';
+      else if (prog?.answers && Object.keys(prog.answers).length > 0) status = 'in_progress';
 
       return {
         ...st,
         assignedExamId: assignedId,
         examStatus: status,
-        updatedAt: sub ? sub.submittedAt : (prog ? prog.updatedAt : null),
-        autoScore: sub ? sub.autoScore : null,
-        maxAutoScore: sub ? sub.maxAutoScore : null,
-        answers: sub ? sub.answers : (prog ? prog.answers : null)
+        updatedAt: sub?.submittedAt || prog?.updatedAt || null,
+        autoScore: sub?.autoScore ?? null,
+        maxAutoScore: sub?.maxAutoScore ?? null,
+        answers: sub?.answers || prog?.answers || null
       };
     });
 
@@ -363,9 +376,9 @@ router.get('/admin/submissions', async (req, res) => {
       students: studentOverview,
       totalSubmissions: (store.submissions || []).length
     });
-
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    console.error('Error en panel admin:', err.message);
+    res.status(500).json({ success: false, message: 'Error al cargar datos de administración.' });
   }
 });
 

@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Examen Cambridge Movers A1 - Reading & Writing</title>
+  <title>Examen Cambridge Movers A1 - Reading &amp; Writing</title>
+  <meta name="description" content="Examen oficial Cambridge English Movers A1 Reading and Writing para 4to grado.">
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✍️</text></svg>">
 </head>
@@ -15,7 +16,7 @@
         <div class="logo-icon">MOVERS</div>
         <div class="logo-text">
           <h1>Cambridge English: Movers (A1)</h1>
-          <p>Reading & Writing Test</p>
+          <p>Reading &amp; Writing Test</p>
         </div>
       </a>
 
@@ -31,13 +32,14 @@
 
   <main class="container" style="margin-top: 30px;">
 
-    <!-- Selector de los 3 exámenes -->
-    <div style="margin-bottom: 20px; text-align: center;">
-      <h3 style="font-size: 1.1rem; color: var(--dark); margin-bottom: 12px;">Selecciona la práctica de Examen:</h3>
-      <div class="test-selector-container">
-        <button type="button" class="test-tab-btn active" data-exam="1">📝 Practice Test 1</button>
-        <button type="button" class="test-tab-btn" data-exam="2">📝 Practice Test 2</button>
-        <button type="button" class="test-tab-btn" data-exam="3">📝 Practice Test 3</button>
+    <!-- Banner: Examen ya entregado (oculto por defecto) -->
+    <div id="submitted-banner" style="display:none; background: linear-gradient(135deg, #dcfce7, #bbf7d0); border: 2px solid #16a34a; border-radius: 14px; padding: 20px 28px; margin-bottom: 24px; text-align: center;">
+      <div style="font-size: 2.5rem; margin-bottom: 8px;">🎉</div>
+      <h2 style="font-size: 1.4rem; color: #15803d; font-weight: 800; margin-bottom: 6px;">¡Ya entregaste tu examen!</h2>
+      <p style="color: #166534; font-size: 0.95rem; margin-bottom: 10px;">Tu examen fue enviado exitosamente a tu profesor. Puedes revisar tus respuestas abajo.</p>
+      <div style="background: white; border-radius: 10px; padding: 14px 20px; display: inline-block;">
+        <span style="font-size: 1.1rem; font-weight: 700; color: #166534;">Puntaje automático: <span id="submitted-score">—</span></span>
+        <span style="font-size: 0.8rem; color: #6b7280; display: block; margin-top: 4px;">* La Parte 6 (escritura libre) la revisa tu profesor.</span>
       </div>
     </div>
 
@@ -45,24 +47,32 @@
     <div class="exam-meta-bar">
       <div>
         <h2 style="font-size: 1.15rem; font-weight: 800; color: var(--dark);" id="exam-title-text">
-          Cambridge A1 Movers - Practice Test 1
+          Cambridge A1 Movers
         </h2>
-        <span style="font-size: 0.85rem; color: var(--text-muted);">Reading & Writing (35 preguntas) • Se guarda automáticamente tu progreso.</span>
+        <span style="font-size: 0.85rem; color: var(--text-muted);">Reading &amp; Writing • Progreso guardado automáticamente cada 60 segundos.</span>
       </div>
 
       <div class="timer-box" id="timer-display">
-        ⏱️ <span id="timer-clock">30:00</span>
+        ⏱️ <span id="timer-clock">45:00</span>
       </div>
+    </div>
+
+    <!-- Banner de auto-guardado silencioso -->
+    <div id="autosave-bar" style="display:none; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 8px 16px; margin-bottom: 16px; font-size: 0.88rem; color: #15803d; text-align: center;">
+      💾 Progreso guardado automáticamente — <span id="autosave-time"></span>
     </div>
 
     <!-- CONTENEDOR PRINCIPAL DEL EXAMEN -->
     <form id="movers-exam-form">
       <div id="exam-questions-container">
-        <div style="text-align: center; padding: 40px; color: var(--text-muted);">Cargando preguntas del examen...</div>
+        <div style="text-align: center; padding: 60px; color: var(--text-muted);">
+          <div style="font-size: 2.5rem; margin-bottom: 12px;">📄</div>
+          Cargando preguntas del examen...
+        </div>
       </div>
 
       <!-- Barra flotante de acciones: Guardar y Entregar -->
-      <div class="action-bar-sticky">
+      <div class="action-bar-sticky" id="action-bar">
         <button type="button" id="btn-save-progress" class="btn btn-secondary" style="flex: 1; padding: 14px;">
           💾 Guardar Progreso
         </button>
@@ -74,8 +84,8 @@
 
   </main>
 
-  <!-- Mensaje flotante de notificación (Toast) -->
-  <div id="toast-msg" class="toast-msg">✅ Progreso guardado exitosamente.</div>
+  <!-- Toast de notificación -->
+  <div id="toast-msg" class="toast-msg">✅ Progreso guardado.</div>
 
   <!-- Modal de Resultados post-entrega -->
   <div id="results-modal" class="modal-overlay">
@@ -85,17 +95,17 @@
         ¡Examen Entregado!
       </h2>
       <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px;">
-        Tus respuestas de Reading & Writing han sido enviadas a tu profesor.
+        Tus respuestas de Reading &amp; Writing han sido enviadas a tu profesor.
       </p>
 
       <div style="background: var(--primary-light); border-radius: var(--radius-md); padding: 20px; margin-bottom: 24px; text-align: left; border: 1px solid #bae6fd;">
-        <h3 style="font-size: 1.1rem; color: var(--primary); margin-bottom: 12px;">Puntaje Automático (Partes 1-5):</h3>
+        <h3 style="font-size: 1.1rem; color: var(--primary); margin-bottom: 12px;">Puntaje Automático (Partes 1–5):</h3>
         <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 1.3rem; color: var(--dark);">
           <span>Total Correctas:</span>
-          <span id="res-total-score" style="color: var(--primary);">0/29</span>
+          <span id="res-total-score" style="color: var(--primary);">—</span>
         </div>
         <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px;">
-          * La Parte 6 (Writing) será revisada por tu profesor en el Panel Docente.
+          * La Parte 6 (escritura libre) será revisada por tu profesor en el Panel Docente.
         </p>
       </div>
 

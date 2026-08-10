@@ -1,0 +1,193 @@
+{
+  "id": 2,
+  "title": "Movers Practice Test 2 (Sample Paper Vol 2)",
+  "level": "A1 Movers",
+  "grade": "4to Grado",
+  "durationMinutes": 30,
+  "parts": {
+    "part1": {
+      "title": "Part 1 - Look and read",
+      "instruction": "Choose the correct words and write them on the lines. There is one example.",
+      "wordBank": [
+        { "word": "a whale", "emoji": "🐋" },
+        { "word": "coffee", "emoji": "☕" },
+        { "word": "a shoulder", "emoji": "💪" },
+        { "word": "an elephant", "emoji": "🐘" },
+        { "word": "soup", "emoji": "🍲" },
+        { "word": "a stomach", "emoji": "🧍" },
+        { "word": "milk", "emoji": "🥛" },
+        { "word": "a bat", "emoji": "🦇" }
+      ],
+      "example": {
+        "text": "This animal can fly and it comes out at night.",
+        "answer": "a bat"
+      },
+      "questions": [
+        { "id": "p1_q1", "num": 1, "text": "You can eat this from a bowl. Sometimes there are vegetables in it.", "answer": "soup" },
+        { "id": "p1_q2", "num": 2, "text": "This is the biggest animal in the world. It lives in the sea.", "answer": "a whale" },
+        { "id": "p1_q3", "num": 3, "text": "This is part of your body. All your food and drink goes here first.", "answer": "a stomach" },
+        { "id": "p1_q4", "num": 4, "text": "This big animal lives in hot countries and eats leaves and grass.", "answer": "an elephant" },
+        { "id": "p1_q5", "num": 5, "text": "This is between your neck and your arm.", "answer": "a shoulder" },
+        { "id": "p1_q6", "num": 6, "text": "Mothers give this white drink to their babies.", "answer": "milk" }
+      ]
+    },
+    "part2": {
+      "title": "Part 2 - Look and read",
+      "instruction": "Look at the picture and write yes or no. There are two examples.",
+      "imageUrl": "/images/part6_bears_bathroom.png",
+      "example": {
+        "text": "There are five white towels in the bathroom.",
+        "answer": "yes"
+      },
+      "questions": [
+        { "id": "p2_q1", "num": 1, "text": "A big brown bear is having a shower.", "answer": "yes" },
+        { "id": "p2_q2", "num": 2, "text": "There are some glasses below the mirror.", "answer": "yes" },
+        { "id": "p2_q3", "num": 3, "text": "The yellow bear is fatter than the blue bear.", "answer": "no" },
+        { "id": "p2_q4", "num": 4, "text": "There are four toys in the bath.", "answer": "yes" },
+        { "id": "p2_q5", "num": 5, "text": "There are lots of boxes in the cupboard.", "answer": "no" },
+        { "id": "p2_q6", "num": 6, "text": "The floor is wet and there is a toothbrush on it.", "answer": "yes" }
+      ]
+    },
+    "part3": {
+      "title": "Part 3 - Short Dialogues",
+      "instruction": "Read the text and choose the best answer (A, B or C). There is one example.",
+      "example": {
+        "speaker": "Jane",
+        "question": "Hello, Peter. How are you?",
+        "options": [
+          "A) I'm not very well.",
+          "B) I'm John's cousin.",
+          "C) I'm going outside."
+        ],
+        "answer": "A"
+      },
+      "questions": [
+        {
+          "id": "p3_q1",
+          "num": 1,
+          "speaker": "Jane",
+          "question": "What's the matter? Have you got a headache?",
+          "options": ["A) No, thank you. I don't want one.", "B) No, I've got toothache.", "C) No, I haven't got it."],
+          "answer": "B"
+        },
+        {
+          "id": "p3_q2",
+          "num": 2,
+          "speaker": "Jane",
+          "question": "Would you like to come to my house?",
+          "options": ["A) Yes, I went home quickly.", "B) No, thanks. I want to go home.", "C) Well, I like my house a lot."],
+          "answer": "B"
+        },
+        {
+          "id": "p3_q3",
+          "num": 3,
+          "speaker": "Jane",
+          "question": "Have you got a coat?",
+          "options": ["A) Yes, it does.", "B) OK, he's here.", "C) No, I haven't."],
+          "answer": "C"
+        },
+        {
+          "id": "p3_q4",
+          "num": 4,
+          "speaker": "Jane",
+          "question": "Do you want a drink of water?",
+          "options": ["A) Yes, please.", "B) Yes, it is.", "C) Yes, I had."],
+          "answer": "A"
+        },
+        {
+          "id": "p3_q5",
+          "num": 5,
+          "speaker": "Jane",
+          "question": "Shall I walk home with you?",
+          "options": ["A) He can walk there.", "B) I'd like that, thanks.", "C) I can go with her this evening."],
+          "answer": "B"
+        },
+        {
+          "id": "p3_q6",
+          "num": 6,
+          "speaker": "Jane",
+          "question": "Is your mum at home?",
+          "options": ["A) It's his new home.", "B) Next to the bus station.", "C) Only my dad's there today."],
+          "answer": "C"
+        }
+      ]
+    },
+    "part4": {
+      "title": "Part 4 - Complete the Story",
+      "instruction": "Read the story. Choose a word from the box. Write the correct word next to numbers 1-6. There is one example.",
+      "wordBox": [
+        { "word": "comics", "emoji": "📚" },
+        { "word": "blankets", "emoji": "🛋️" },
+        { "word": "ran", "emoji": "🏃" },
+        { "word": "children", "emoji": "👧" },
+        { "word": "cooked", "emoji": "🍳" },
+        { "word": "stars", "emoji": "⭐" },
+        { "word": "saw", "emoji": "👁️" },
+        { "word": "sat", "emoji": "🪑" },
+        { "word": "mountain", "emoji": "⛰️" }
+      ],
+      "storyText": "My name is Daisy. I like toys, but I like books and [example: comics] best. I love stories about men on the moon and about (1) ________ who live in different countries. I read a good story yesterday. In this story, a boy climbed a (2) ________. At the top, there was a lot of snow. It was evening, but the boy could see the forest below him. He (3) ________ down on a rock to have a drink and to look up at all the (4) ________. But then he (5) ________ something that he didn't understand. Something very big and round flew quietly behind a cloud. He (6) ________ home to his village because he was afraid.",
+      "questions": [
+        { "id": "p4_q1", "num": 1, "answer": "children" },
+        { "id": "p4_q2", "num": 2, "answer": "mountain" },
+        { "id": "p4_q3", "num": 3, "answer": "sat" },
+        { "id": "p4_q4", "num": 4, "answer": "stars" },
+        { "id": "p4_q5", "num": 5, "answer": "saw" },
+        { "id": "p4_q6", "num": 6, "answer": "ran" }
+      ],
+      "titleQuestion": {
+        "id": "p4_q7",
+        "num": 7,
+        "question": "Now choose the best name for the story. Tick one box.",
+        "options": [
+          "A boy that Daisy knows",
+          "A film that Daisy watched",
+          "A story that Daisy liked"
+        ],
+        "answer": "A story that Daisy liked"
+      }
+    },
+    "part5": {
+      "title": "Part 5 - Complete Sentences about the Story",
+      "instruction": "Look at the pictures and read the story. Write 1, 2 or 3 words to complete the sentences.",
+      "storyTitle": "🏖️ A family holiday",
+      "storyPassages": [
+        {
+          "text": "Vicky lives with her parents and her two brothers, Sam and Paul, in the city. Last week, they had a holiday by the sea. Sam is ten, Vicky is eight but Paul is only five. They went to the cinema on Wednesday because it rained all day. They saw a film about sharks. The sharks had very big teeth. Paul didn't like watching them and he closed his eyes."
+        },
+        {
+          "text": "On Thursday, Paul thought about the film. He didn't want to swim in the sea. He sat on the beach and watched Sam and Vicky. They played in the water. Mum gave Paul an ice cream but he didn't want it. Then Dad said, 'Come on Paul! Let's go for a swim.' But Paul didn't want to."
+        },
+        {
+          "text": "On Friday, the family ate breakfast in the garden because it was very sunny but Paul didn't want any. Then they all went to the beach again. The sea was very blue. There were three beautiful dolphins in the water! He ran to the sea and swam to them. Then Paul's dad threw a ball in the sea and the dolphins played with it. That evening, all the family went to the cinema again to see a film about a funny dolphin!"
+        }
+      ],
+      "questions": [
+        { "id": "p5_q1", "num": 1, "text": "The family had a holiday by ________.", "acceptableAnswers": ["the sea", "the seaside"] },
+        { "id": "p5_q2", "num": 2, "text": "It ________ all day on Wednesday and the family went to the cinema.", "acceptableAnswers": ["rained"] },
+        { "id": "p5_q3", "num": 3, "text": "Paul didn't enjoy seeing ________ in the film.", "acceptableAnswers": ["the sharks", "sharks", "sharks' teeth"] },
+        { "id": "p5_q4", "num": 4, "text": "Sam and Vicky ________ in the sea.", "acceptableAnswers": ["played", "swam"] },
+        { "id": "p5_q5", "num": 5, "text": "Paul didn't want the ice cream that his ________ gave him.", "acceptableAnswers": ["mum", "mother", "mummy"] },
+        { "id": "p5_q6", "num": 6, "text": "Dad wanted to go for ________ with Paul.", "acceptableAnswers": ["a swim", "swim"] },
+        { "id": "p5_q7", "num": 7, "text": "The family had breakfast in ________ on Friday.", "acceptableAnswers": ["the garden", "their garden"] },
+        { "id": "p5_q8", "num": 8, "text": "Paul saw ________ in the water.", "acceptableAnswers": ["three dolphins", "three beautiful dolphins", "some dolphins", "dolphins"] },
+        { "id": "p5_q9", "num": 9, "text": "Paul's dad threw ________ into the water.", "acceptableAnswers": ["a ball"] },
+        { "id": "p5_q10", "num": 10, "text": "All ________ enjoyed another film at the cinema on Friday evening.", "acceptableAnswers": ["the family", "Peter's family", "Vicky's family"] }
+      ]
+    },
+    "part6": {
+      "title": "Part 6 - Look and read and write",
+      "instruction": "Look at the picture and read the prompts. Write your answers on the lines.",
+      "imageUrl": "/images/part6_rainbow_wall.png",
+      "promptText": "Look carefully at the rainbow wall painting scene and answer all 6 questions.",
+      "questions": [
+        { "id": "p6_q1", "num": 1, "type": "complete", "text": "The boy on the ladder is painting a ________.", "placeholder": "rainbow / wall" },
+        { "id": "p6_q2", "num": 2, "type": "complete", "text": "The boy on the ground is taking a ________.", "placeholder": "photo / picture" },
+        { "id": "p6_q3", "num": 3, "type": "answer", "text": "What is the girl on the left carrying?", "placeholder": "Write a full sentence..." },
+        { "id": "p6_q4", "num": 4, "type": "answer", "text": "Where is the boy sitting?", "placeholder": "Write a full sentence..." },
+        { "id": "p6_q5", "num": 5, "type": "sentence", "text": "Write a sentence about the boy climbing the wall.", "placeholder": "Sentence 1..." },
+        { "id": "p6_q6", "num": 6, "type": "sentence", "text": "Write another sentence about what the children are doing.", "placeholder": "Sentence 2..." }
+      ]
+    }
+  }
+}

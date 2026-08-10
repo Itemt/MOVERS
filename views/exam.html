@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Examen Cambridge Movers A1 - Reading & Writing</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✍️</text></svg>">
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="container header-content">
+      <a href="/" class="logo-badge">
+        <div class="logo-icon">MOVERS</div>
+        <div class="logo-text">
+          <h1>Cambridge English: Movers (A1)</h1>
+          <p>Reading & Writing Test</p>
+        </div>
+      </a>
+
+      <div id="student-badge" class="student-info-tag">
+        <div class="student-avatar" id="avatar-initials">--</div>
+        <div>
+          <div class="student-name" id="student-display-name">Cargando...</div>
+          <div class="student-grade" id="student-display-grade">4to Grado</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="margin-top: 30px;">
+
+    <!-- Selector de los 3 exámenes -->
+    <div style="margin-bottom: 20px; text-align: center;">
+      <h3 style="font-size: 1.1rem; color: var(--dark); margin-bottom: 12px;">Selecciona la práctica de Examen:</h3>
+      <div class="test-selector-container">
+        <button type="button" class="test-tab-btn active" data-exam="1">📝 Practice Test 1</button>
+        <button type="button" class="test-tab-btn" data-exam="2">📝 Practice Test 2</button>
+        <button type="button" class="test-tab-btn" data-exam="3">📝 Practice Test 3</button>
+      </div>
+    </div>
+
+    <!-- Barra de Estado y Temporizador -->
+    <div class="exam-meta-bar">
+      <div>
+        <h2 style="font-size: 1.15rem; font-weight: 800; color: var(--dark);" id="exam-title-text">
+          Cambridge A1 Movers - Practice Test 1
+        </h2>
+        <span style="font-size: 0.85rem; color: var(--text-muted);">Reading & Writing (35 preguntas) • Se guarda automáticamente tu progreso.</span>
+      </div>
+
+      <div class="timer-box" id="timer-display">
+        ⏱️ <span id="timer-clock">30:00</span>
+      </div>
+    </div>
+
+    <!-- CONTENEDOR PRINCIPAL DEL EXAMEN -->
+    <form id="movers-exam-form">
+      <div id="exam-questions-container">
+        <div style="text-align: center; padding: 40px; color: var(--text-muted);">Cargando preguntas del examen...</div>
+      </div>
+
+      <!-- Barra flotante de acciones: Guardar y Entregar -->
+      <div class="action-bar-sticky">
+        <button type="button" id="btn-save-progress" class="btn btn-secondary" style="flex: 1; padding: 14px;">
+          💾 Guardar Progreso
+        </button>
+        <button type="button" id="btn-submit-exam" class="btn btn-primary" style="flex: 1; padding: 14px;">
+          📥 Entregar Examen
+        </button>
+      </div>
+    </form>
+
+  </main>
+
+  <!-- Mensaje flotante de notificación (Toast) -->
+  <div id="toast-msg" class="toast-msg">✅ Progreso guardado exitosamente.</div>
+
+  <!-- Modal de Resultados post-entrega -->
+  <div id="results-modal" class="modal-overlay">
+    <div class="modal-card" style="text-align: center; padding: 40px 30px;">
+      <div style="font-size: 3.5rem; margin-bottom: 10px;">🎉</div>
+      <h2 style="font-size: 1.8rem; font-weight: 800; color: var(--dark); margin-bottom: 10px;">
+        ¡Examen Entregado!
+      </h2>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px;">
+        Tus respuestas de Reading & Writing han sido enviadas a tu profesor.
+      </p>
+
+      <div style="background: var(--primary-light); border-radius: var(--radius-md); padding: 20px; margin-bottom: 24px; text-align: left; border: 1px solid #bae6fd;">
+        <h3 style="font-size: 1.1rem; color: var(--primary); margin-bottom: 12px;">Puntaje Automático (Partes 1-5):</h3>
+        <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 1.3rem; color: var(--dark);">
+          <span>Total Correctas:</span>
+          <span id="res-total-score" style="color: var(--primary);">0/29</span>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px;">
+          * La Parte 6 (Writing) será revisada por tu profesor en el Panel Docente.
+        </p>
+      </div>
+
+      <a href="/" class="btn btn-primary btn-block">
+        Regresar al Inicio
+      </a>
+    </div>
+  </div>
+
+  <script src="/js/exam.js"></script>
+</body>
+</html>

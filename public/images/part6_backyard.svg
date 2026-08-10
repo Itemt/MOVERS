@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="auto" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#bae6fd"/>
+    </linearGradient>
+    <linearGradient id="grass" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4ade80"/>
+      <stop offset="100%" stop-color="#16a34a"/>
+    </linearGradient>
+    <linearGradient id="carRed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#991b1b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sky & Ground -->
+  <rect width="800" height="280" fill="url(#sky)"/>
+  <rect y="280" width="800" height="220" fill="url(#grass)"/>
+
+  <!-- Clouds -->
+  <path d="M50 80 Q65 60 90 70 Q110 50 130 70 Q150 70 150 90 Q150 110 120 110 L60 110 Z" fill="#ffffff" opacity="0.9"/>
+  <path d="M600 60 Q615 40 640 50 Q660 30 680 50 Q700 50 700 70 Q700 90 670 90 L610 90 Z" fill="#ffffff" opacity="0.9"/>
+
+  <!-- House Wall on Left -->
+  <rect x="0" y="50" width="220" height="300" fill="#fde68a" stroke="#d97706" stroke-width="4"/>
+  <!-- Door -->
+  <rect x="30" y="200" width="60" height="120" fill="#0284c7" rx="4"/>
+  <circle cx="80" cy="260" r="5" fill="#fef08a"/>
+  <!-- Windows -->
+  <rect x="110" y="80" width="70" height="70" fill="#e0f2fe" stroke="#0284c7" stroke-width="4"/>
+  <line x1="145" y1="80" x2="145" y2="150" stroke="#0284c7" stroke-width="3"/>
+  <line x1="110" y1="115" x2="180" y2="115" stroke="#0284c7" stroke-width="3"/>
+
+  <rect x="110" y="180" width="70" height="70" fill="#e0f2fe" stroke="#0284c7" stroke-width="4"/>
+  <line x1="145" y1="180" x2="145" y2="250" stroke="#0284c7" stroke-width="3"/>
+  <line x1="110" y1="215" x2="180" y2="215" stroke="#0284c7" stroke-width="3"/>
+
+  <!-- Tree in Middle -->
+  <rect x="320" y="140" width="40" height="180" fill="#78350f" rx="6"/>
+  <circle cx="340" cy="130" r="70" fill="#15803d"/>
+  <circle cx="300" cy="150" r="50" fill="#16a34a"/>
+  <circle cx="380" cy="150" r="50" fill="#16a34a"/>
+
+  <!-- Trampoline in background -->
+  <ellipse cx="620" cy="220" rx="110" ry="30" fill="#1e3a8a" stroke="#94a3b8" stroke-width="6"/>
+  <line x1="530" y1="225" x2="520" y2="260" stroke="#64748b" stroke-width="5"/>
+  <line x1="710" y1="225" x2="720" y2="260" stroke="#64748b" stroke-width="5"/>
+  <line x1="620" y1="240" x2="620" y2="275" stroke="#64748b" stroke-width="5"/>
+  <!-- Kids jumping on trampoline -->
+  <!-- Boy jumping -->
+  <circle cx="580" cy="150" r="14" fill="#fde047"/> <!-- Head -->
+  <line x1="580" y1="164" x2="580" y2="190" stroke="#ef4444" stroke-width="8"/> <!-- Shirt -->
+  <line x1="580" y1="190" x2="565" y2="210" stroke="#15803d" stroke-width="6"/> <!-- Leg -->
+  <line x1="580" y1="190" x2="600" y2="205" stroke="#15803d" stroke-width="6"/> <!-- Leg -->
+
+  <!-- Girl jumping -->
+  <circle cx="660" cy="160" r="13" fill="#f472b6"/>
+  <line x1="660" y1="173" x2="660" y2="195" stroke="#38bdf8" stroke-width="8"/>
+  <line x1="660" y1="195" x2="645" y2="215" stroke="#a855f7" stroke-width="6"/>
+  <line x1="660" y1="195" x2="675" y2="215" stroke="#a855f7" stroke-width="6"/>
+
+  <!-- Paddling Pool with Brown Dog -->
+  <ellipse cx="500" cy="340" rx="90" ry="35" fill="#38bdf8" stroke="#c084fc" stroke-width="12"/>
+  <!-- Splash -->
+  <path d="M470 330 Q485 300 500 330 Q515 290 530 330" fill="none" stroke="#ffffff" stroke-width="4"/>
+  <!-- Dog head in pool -->
+  <circle cx="490" cy="325" r="18" fill="#b45309"/>
+  <ellipse cx="480" cy="320" rx="6" ry="10" fill="#78350f"/> <!-- Ear -->
+  <circle cx="496" cy="322" r="3" fill="#000000"/> <!-- Eye -->
+  <ellipse cx="500" cy="328" rx="5" ry="4" fill="#000000"/> <!-- Nose -->
+
+  <!-- Mother with hose on right -->
+  <circle cx="730" cy="290" r="16" fill="#fde047"/> <!-- Hair -->
+  <rect x="720" y="306" width="20" height="40" fill="#a855f7" rx="4"/> <!-- Shirt -->
+  <path d="M720 346 L710 410 M740 346 L750 410" stroke="#f472b6" stroke-width="8"/> <!-- Skirt/legs -->
+  <!-- Hose pipe spraying water -->
+  <path d="M720 330 Q630 320 560 335" fill="none" stroke="#0284c7" stroke-width="4"/>
+
+  <!-- Boy riding yellow bicycle in center foreground -->
+  <!-- Wheels -->
+  <circle cx="340" cy="420" r="30" fill="none" stroke="#334155" stroke-width="6"/>
+  <circle cx="440" cy="420" r="30" fill="none" stroke="#334155" stroke-width="6"/>
+  <!-- Frame -->
+  <path d="M340 420 L390 420 L420 380 L360 380 Z L440 420" fill="none" stroke="#eab308" stroke-width="6"/>
+  <!-- Boy on bike -->
+  <circle cx="380" cy="330" r="14" fill="#fde047"/> <!-- Helmet -->
+  <rect x="372" y="344" width="16" height="30" fill="#eab308" rx="4"/>
+  <line x1="380" y1="374" x2="360" y2="405" stroke="#475569" stroke-width="6"/>
+
+  <!-- Red Car in Foreground -->
+  <path d="M120 440 L160 380 L300 380 L350 440 Z" fill="#93c5fd" opacity="0.7"/> <!-- Windows -->
+  <path d="M80 430 Q90 360 160 360 L300 360 Q360 360 380 430 L380 460 Q380 470 370 470 L90 470 Q80 470 80 460 Z" fill="url(#carRed)"/>
+  <!-- Open boot lid -->
+  <path d="M340 370 L390 320" stroke="#ef4444" stroke-width="8" stroke-linecap="round"/>
+  <!-- Wheels -->
+  <circle cx="150" cy="470" r="26" fill="#1e293b" stroke="#94a3b8" stroke-width="6"/>
+  <circle cx="310" cy="470" r="26" fill="#1e293b" stroke="#94a3b8" stroke-width="6"/>
+
+  <!-- Girl carrying tray near door -->
+  <circle cx="210" cy="270" r="14" fill="#78350f"/>
+  <rect x="200" y="284" width="20" height="35" fill="#f59e0b"/>
+  <rect x="180" y="300" width="35" height="6" fill="#cbd5e1"/> <!-- Tray -->
+  <rect x="185" y="292" width="6" height="8" fill="#ef4444"/> <!-- Glass 1 -->
+  <rect x="195" y="292" width="6" height="8" fill="#eab308"/> <!-- Glass 2 -->
+  <rect x="205" y="292" width="6" height="8" fill="#3b82f6"/> <!-- Glass 3 -->
+</svg>

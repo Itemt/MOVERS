@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="auto" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+  <defs>
+    <linearGradient id="tileWall" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ccfbf1"/>
+      <stop offset="100%" stop-color="#5eead4"/>
+    </linearGradient>
+    <linearGradient id="floorTiles" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#cbd5e1"/>
+      <stop offset="100%" stop-color="#94a3b8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Wall & Floor -->
+  <rect width="800" height="340" fill="url(#tileWall)"/>
+  <!-- Tile Lines -->
+  <line x1="0" y1="100" x2="800" y2="100" stroke="#2dd4bf" stroke-width="2"/>
+  <line x1="0" y1="200" x2="800" y2="200" stroke="#2dd4bf" stroke-width="2"/>
+  <rect y="340" width="800" height="160" fill="url(#floorTiles)"/>
+
+  <!-- Shower Cubicle on Left -->
+  <rect x="30" y="40" width="160" height="300" fill="#38bdf8" opacity="0.4" stroke="#0284c7" stroke-width="4"/>
+  <path d="M70 60 Q110 50 150 60 L150 70 L70 70 Z" fill="#94a3b8"/> <!-- Shower head -->
+  <!-- Water drops -->
+  <circle cx="90" cy="90" r="3" fill="#0284c7"/>
+  <circle cx="110" cy="110" r="3" fill="#0284c7"/>
+  <circle cx="130" cy="95" r="3" fill="#0284c7"/>
+
+  <!-- Big Brown Bear showering inside -->
+  <circle cx="110" cy="160" r="35" fill="#78350f"/> <!-- Bear Head -->
+  <circle cx="85" cy="135" r="10" fill="#78350f"/> <!-- Ear -->
+  <circle cx="135" cy="135" r="10" fill="#78350f"/> <!-- Ear -->
+  <rect x="80" y="195" width="60" height="100" fill="#78350f" rx="20"/>
+
+  <!-- Blue Bear at Sink in center -->
+  <rect x="340" y="180" width="100" height="140" fill="#ffffff" stroke="#cbd5e1" stroke-width="4" rx="10"/> <!-- Sink -->
+  <circle cx="390" cy="130" r="38" fill="#0284c7"/> <!-- Head -->
+  <circle cx="365" cy="105" r="12" fill="#0284c7"/> <!-- Ear -->
+  <circle cx="415" cy="105" r="12" fill="#0284c7"/> <!-- Ear -->
+  <rect x="350" y="168" width="80" height="110" fill="#0284c7" rx="20"/>
+  <rect x="340" y="240" width="100" height="60" fill="#ffffff" stroke="#0284c7" stroke-width="2"/> <!-- White towel wrapped -->
+
+  <!-- Yellow Bear Standing Next to Sink -->
+  <circle cx="510" cy="200" r="28" fill="#eab308"/> <!-- Head -->
+  <circle cx="490" cy="180" r="9" fill="#eab308"/>
+  <circle cx="530" cy="180" r="9" fill="#eab308"/>
+  <rect x="490" y="228" width="40" height="70" fill="#eab308" rx="15"/>
+
+  <!-- Bathtub on Right with Toys -->
+  <path d="M600 240 L760 240 C780 240 780 340 760 340 L600 340 C580 340 580 240 600 240 Z" fill="#ffffff" stroke="#cbd5e1" stroke-width="6"/>
+  <!-- Water in tub -->
+  <ellipse cx="680" cy="280" rx="75" ry="30" fill="#38bdf8"/>
+  <!-- Toy boat -->
+  <path d="M640 280 L680 280 L670 295 L650 295 Z" fill="#ef4444"/>
+  <path d="M660 280 L660 260 L675 270 Z" fill="#fde047"/>
+  <!-- Toy ducks -->
+  <circle cx="710" cy="275" r="8" fill="#facc15"/>
+  <circle cx="730" cy="280" r="7" fill="#facc15"/>
+
+  <!-- Two Little Bears on Floor playing -->
+  <circle cx="370" cy="400" r="22" fill="#b45309"/> <!-- Bear 1 -->
+  <circle cx="440" cy="400" r="22" fill="#b45309"/> <!-- Bear 2 -->
+
+  <!-- Wet Floor Puddles & Toothbrush -->
+  <ellipse cx="280" cy="420" rx="50" ry="12" fill="#7dd3fc" opacity="0.7"/>
+  <ellipse cx="500" cy="440" rx="40" ry="10" fill="#7dd3fc" opacity="0.7"/>
+  <!-- Toothbrush on floor -->
+  <rect x="470" y="425" width="30" height="4" fill="#ef4444" rx="2" transform="rotate(15 470 425)"/>
+
+  <!-- Mirror on Wall -->
+  <rect x="330" y="40" width="120" height="90" fill="#f0f9ff" stroke="#94a3b8" stroke-width="6" rx="4"/>
+  <!-- Shelf with glasses -->
+  <rect x="320" y="135" width="140" height="8" fill="#e2e8f0"/>
+  <circle cx="360" cy="125" r="8" fill="none" stroke="#0284c7" stroke-width="3"/>
+  <circle cx="380" cy="125" r="8" fill="none" stroke="#0284c7" stroke-width="3"/>
+  <line x1="368" y1="125" x2="372" y2="125" stroke="#0284c7" stroke-width="3"/>
+</svg>

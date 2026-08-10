@@ -1,0 +1,188 @@
+{
+  "id": 3,
+  "title": "Movers Practice Test 3 (Official Cambridge Practice)",
+  "level": "A1 Movers",
+  "grade": "4to Grado",
+  "durationMinutes": 30,
+  "parts": {
+    "part1": {
+      "title": "Part 1 - Look and read",
+      "instruction": "Choose the correct words and write them on the lines. There is one example.",
+      "wordBank": [
+        { "word": "a supermarket", "emoji": "🏪" },
+        { "word": "a farmer", "emoji": "👨‍🌾" },
+        { "word": "a cinema", "emoji": "🍿" },
+        { "word": "a kangaroo", "emoji": "🦘" },
+        { "word": "pancakes", "emoji": "🥞" },
+        { "word": "a coat", "emoji": "🧥" },
+        { "word": "a waterfall", "emoji": "🌊" },
+        { "word": "a teacher", "emoji": "👩‍🏫" }
+      ],
+      "example": {
+        "text": "This person helps children learn mathematics, English and science at school.",
+        "answer": "a teacher"
+      },
+      "questions": [
+        { "id": "p1_q1", "num": 1, "text": "This person works outdoors on a farm taking care of cows, sheep and crops.", "answer": "a farmer" },
+        { "id": "p1_q2", "num": 2, "text": "You go to this big building to buy food, fruits and things for your house.", "answer": "a supermarket" },
+        { "id": "p1_q3", "num": 3, "text": "This warm piece of clothing is worn over your clothes when it is cold outdoors.", "answer": "a coat" },
+        { "id": "p1_q4", "num": 4, "text": "This wild animal from Australia can jump high on two legs and carry its baby in a pouch.", "answer": "a kangaroo" },
+        { "id": "p1_q5", "num": 5, "text": "You go to this dark place to sit in comfortable seats and watch movies on a big screen.", "answer": "a cinema" }
+      ]
+    },
+    "part2": {
+      "title": "Part 2 - Short Dialogues",
+      "instruction": "Read the text and choose the best answer (A, B or C). There is one example.",
+      "example": {
+        "speaker": "Sally",
+        "question": "Did you enjoy your birthday party yesterday, Fred?",
+        "options": [
+          "A) Yes, it was fantastic!",
+          "B) I am nine today.",
+          "C) At four o'clock."
+        ],
+        "answer": "A"
+      },
+      "questions": [
+        {
+          "id": "p2_q1",
+          "num": 1,
+          "speaker": "Sally",
+          "question": "How many friends came to your party?",
+          "options": ["A) About eight friends.", "B) Yes, they did.", "C) They were happy."],
+          "answer": "A"
+        },
+        {
+          "id": "p2_q2",
+          "num": 2,
+          "speaker": "Sally",
+          "question": "What kind of cake did your mum make?",
+          "options": ["A) A big chocolate cake.", "B) Yes, she can cook.", "C) It is on the table."],
+          "answer": "A"
+        },
+        {
+          "id": "p2_q3",
+          "num": 3,
+          "speaker": "Sally",
+          "question": "Did you get lots of nice presents?",
+          "options": ["A) Yes, I got a new bike!", "B) No, it isn't mine.", "C) I like presents."],
+          "answer": "A"
+        },
+        {
+          "id": "p2_q4",
+          "num": 4,
+          "speaker": "Sally",
+          "question": "Who gave you that cool red helmet?",
+          "options": ["A) My grandparents did.", "B) He is my uncle.", "C) Yes, it's very red."],
+          "answer": "A"
+        },
+        {
+          "id": "p2_q5",
+          "num": 5,
+          "speaker": "Sally",
+          "question": "Can I ride your new bike this afternoon?",
+          "options": ["A) Yes, after we do our homework.", "B) No, it was yellow.", "C) I rode my bike."],
+          "answer": "A"
+        },
+        {
+          "id": "p2_q6",
+          "num": 6,
+          "speaker": "Sally",
+          "question": "Great! See you at three o'clock then.",
+          "options": ["A) Bye! See you later!", "B) Yes, I do.", "C) Thank you very much."],
+          "answer": "A"
+        }
+      ]
+    },
+    "part3": {
+      "title": "Part 3 - Complete the Story",
+      "instruction": "Read the story. Choose a word from the box. Write the correct word next to numbers 1-5. There is one example.",
+      "wordBox": [
+        { "word": "kitchen", "emoji": "🍳" },
+        { "word": "flour", "emoji": "🌾" },
+        { "word": "mess", "emoji": "🧹" },
+        { "word": "tasty", "emoji": "😋" },
+        { "word": "surprised", "emoji": "😮" },
+        { "word": "cleaning", "emoji": "🧼" },
+        { "word": "birthday", "emoji": "🎂" }
+      ],
+      "storyText": "Yesterday morning, Charlie wanted to make surprise pancakes for his mum's birthday. He went into the [example: kitchen] very quietly while Mum was sleeping. He found milk, eggs and a bag of white (1) ________ in the cupboard. But when he mixed them in a bowl, he accidentally dropped the spoon and made a big (2) ________ on the floor! Charlie was worried, so he quickly started (3) ________ the table and floor with a towel. Just then, Mum walked in and looked (4) ________! 'Happy Birthday, Mum!' Charlie said. They laughed together and made the most (5) ________ pancakes!",
+      "questions": [
+        { "id": "p3_q1", "num": 1, "answer": "flour" },
+        { "id": "p3_q2", "num": 2, "answer": "mess" },
+        { "id": "p3_q3", "num": 3, "answer": "cleaning" },
+        { "id": "p3_q4", "num": 4, "answer": "surprised" },
+        { "id": "p3_q5", "num": 5, "answer": "tasty" }
+      ],
+      "titleQuestion": {
+        "id": "p3_q6",
+        "num": 6,
+        "question": "Now choose the best name for the story. Tick one box.",
+        "options": [
+          "A surprise breakfast for Mum",
+          "Charlie's new school bag",
+          "A trip to the supermarket"
+        ],
+        "answer": "A surprise breakfast for Mum"
+      }
+    },
+    "part4": {
+      "title": "Part 4 - Factual Text",
+      "instruction": "Read the text. Choose the right words and write them on the lines.",
+      "titleText": "🐘 Elephants",
+      "paragraphs": [
+        "Elephants are the largest land animals in the world. They live in places (1) ________ Africa and Asia.",
+        "An elephant has a very long nose called a trunk. Elephants use (2) ________ trunks to pick up food, drink water and even wash themselves!",
+        "They eat plants, leaves and fruit, but they (3) ________ eat meat. They spend many hours every day looking for food.",
+        "Elephants love playing in mud and water because it helps keep their skin cool (4) ________ hot days.",
+        "Baby elephants are called calves, and they stay near (5) ________ mothers for many years to learn how to live in the wild."
+      ],
+      "questions": [
+        { "id": "p4_q1", "num": 1, "options": ["like", "with", "from"], "answer": "like" },
+        { "id": "p4_q2", "num": 2, "options": ["their", "them", "they"], "answer": "their" },
+        { "id": "p4_q3", "num": 3, "options": ["never", "always", "sometimes"], "answer": "never" },
+        { "id": "p4_q4", "num": 4, "options": ["on", "at", "in"], "answer": "on" },
+        { "id": "p4_q5", "num": 5, "options": ["their", "his", "her"], "answer": "their" }
+      ]
+    },
+    "part5": {
+      "title": "Part 5 - Complete Sentences about the Story",
+      "instruction": "Look at the pictures and read the story. Write 1, 2 or 3 words to complete the sentences.",
+      "storyTitle": "🦒 Ben's trip to the zoo",
+      "storyPassages": [
+        {
+          "text": "Last Tuesday, Ben and his class took a big blue bus to the city zoo with their teacher Miss Green. Ben was very excited because he wanted to see the tall giraffes."
+        },
+        {
+          "text": "First, they visited the monkey house. A funny little brown monkey jumped down and tried to take Ben's yellow banana from his bag! Everyone laughed loudly."
+        },
+        {
+          "text": "Next, Miss Green took a group photograph of the children in front of the lion enclosure. At the end of the afternoon, Ben bought a small toy giraffe at the zoo shop to take home."
+        }
+      ],
+      "questions": [
+        { "id": "p5_q1", "num": 1, "text": "Ben and his class went to the zoo on a ________.", "acceptableAnswers": ["big blue bus", "blue bus", "bus"] },
+        { "id": "p5_q2", "num": 2, "text": "Their teacher's name was ________.", "acceptableAnswers": ["Miss Green", "Miss green"] },
+        { "id": "p5_q3", "num": 3, "text": "The first place they visited was the ________.", "acceptableAnswers": ["monkey house", "monkeys"] },
+        { "id": "p5_q4", "num": 4, "text": "A little brown monkey tried to take Ben's ________.", "acceptableAnswers": ["yellow banana", "banana"] },
+        { "id": "p5_q5", "num": 5, "text": "The monkey was funny and ________.", "acceptableAnswers": ["little brown", "little", "brown"] },
+        { "id": "p5_q6", "num": 6, "text": "Miss Green took a ________ of all the children.", "acceptableAnswers": ["group photograph", "photograph", "photo"] },
+        { "id": "p5_q7", "num": 7, "text": "Ben bought a ________ at the zoo shop.", "acceptableAnswers": ["small toy giraffe", "toy giraffe", "giraffe toy"] }
+      ]
+    },
+    "part6": {
+      "title": "Part 6 - Look and read and write",
+      "instruction": "Look at the picture and read the prompts. Write your answers on the lines.",
+      "imageUrl": "/images/part6_bears_bathroom.png",
+      "promptText": "Look carefully at the bathroom scene with the bears and answer all 6 questions.",
+      "questions": [
+        { "id": "p6_q1", "num": 1, "type": "complete", "text": "A big brown bear is having a ________.", "placeholder": "shower" },
+        { "id": "p6_q2", "num": 2, "type": "complete", "text": "The blue bear is standing next to the ________.", "placeholder": "sink / washbasin" },
+        { "id": "p6_q3", "num": 3, "type": "answer", "text": "What are the two smallest bears doing on the floor?", "placeholder": "Write a full sentence..." },
+        { "id": "p6_q4", "num": 4, "type": "answer", "text": "What toys are inside the bathtub?", "placeholder": "Write a full sentence..." },
+        { "id": "p6_q5", "num": 5, "type": "sentence", "text": "Write a sentence about the yellow bear.", "placeholder": "Sentence 1..." },
+        { "id": "p6_q6", "num": 6, "type": "sentence", "text": "Write another sentence about the wet bathroom floor.", "placeholder": "Sentence 2..." }
+      ]
+    }
+  }
+}

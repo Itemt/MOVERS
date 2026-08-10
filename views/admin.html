@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Docente - Cambridge English Movers (A1)</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>">
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="container header-content">
+      <a href="/" class="logo-badge">
+        <div class="logo-icon">MOVERS</div>
+        <div class="logo-text">
+          <h1>Panel de Control Docente</h1>
+          <p>Supervisión de 4to A y 4to B</p>
+        </div>
+      </a>
+      <a href="/" class="btn btn-outline" style="font-size: 0.85rem; padding: 8px 16px;">
+        🏠 Ir al Inicio
+      </a>
+    </div>
+  </header>
+
+  <main class="container" style="margin-top: 30px;">
+
+    <!-- Pantalla de Login PIN Docente -->
+    <div id="admin-auth-card" class="card" style="max-width: 450px; margin: 40px auto; padding: 30px; text-align: center;">
+      <div style="font-size: 3rem; margin-bottom: 12px;">🔑</div>
+      <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--dark); margin-bottom: 8px;">
+        Acceso Docente
+      </h2>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">
+        Ingresa el PIN docente para revisar los exámenes de 4to A y 4to B.
+      </p>
+
+      <form id="admin-pin-form">
+        <div style="margin-bottom: 16px;">
+          <input type="password" id="admin-pin-input" class="input-field" placeholder="Ingresa el PIN" style="text-align: center; font-size: 1.1rem; letter-spacing: 2px;" required>
+        </div>
+        <div id="pin-error-msg" style="color: var(--danger); font-size: 0.85rem; font-weight: 700; display: none; margin-bottom: 12px;"></div>
+        <button type="submit" class="btn btn-primary btn-block">
+          Ingresar al Panel
+        </button>
+      </form>
+    </div>
+
+    <!-- Panel de Resultados de la Clase -->
+    <div id="admin-dashboard-content" style="display: none;">
+      
+      <div class="card" style="padding: 24px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--dark);">Monitoreo de 4to Grado</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Visualiza por curso las entregas y el progreso guardado de cada alumno.</p>
+          </div>
+          <button id="btn-refresh-admin" class="btn btn-outline" style="font-size: 0.9rem; padding: 10px 18px;">
+            🔄 Actualizar Estado
+          </button>
+        </div>
+      </div>
+
+      <!-- Tabs de Navegación por Curso -->
+      <div style="display: flex; gap: 12px; margin-bottom: 20px;">
+        <button type="button" id="tab-grade-4a" class="btn btn-primary" style="flex: 1; padding: 12px;">
+          🏫 GRADO 4to A (18 Alumnos)
+        </button>
+        <button type="button" id="tab-grade-4b" class="btn btn-outline" style="flex: 1; padding: 12px;">
+          🏫 GRADO 4to B (18 Alumnos)
+        </button>
+      </div>
+
+      <!-- Tabla Roster de Estudiantes -->
+      <div class="card" style="padding: 0; overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.95rem;">
+          <thead>
+            <tr style="background: #f8fafc; border-bottom: 2px solid var(--border);">
+              <th style="padding: 16px; color: var(--dark);">Estudiante</th>
+              <th style="padding: 16px; color: var(--dark); text-align: center;">Examen Asignado</th>
+              <th style="padding: 16px; color: var(--dark); text-align: center;">Estado de la Prueba</th>
+              <th style="padding: 16px; color: var(--dark); text-align: center;">Puntaje Auto</th>
+            </tr>
+          </thead>
+          <tbody id="students-table-body">
+            <tr>
+              <td colspan="4" style="text-align: center; padding: 30px; color: var(--text-muted);">Cargando reporte de estudiantes...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>

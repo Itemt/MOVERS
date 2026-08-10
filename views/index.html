@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceso Estudiantes - Cambridge English Movers (A1 - 4to Grado)</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦘</text></svg>">
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="container header-content">
+      <a href="/" class="logo-badge">
+        <div class="logo-icon">MOVERS</div>
+        <div class="logo-text">
+          <h1>Cambridge English: Young Learners</h1>
+          <p>A1 Movers - 4to A y 4to B</p>
+        </div>
+      </a>
+      <a href="/admin" class="btn btn-outline" style="font-size: 0.85rem; padding: 8px 16px;">
+        🔒 Panel Docente
+      </a>
+    </div>
+  </header>
+
+  <main class="container" style="margin-top: 40px;">
+    <div style="max-width: 600px; margin: 0 auto;">
+      
+      <div class="card" style="padding: 40px 30px;">
+        <div style="text-align: center; margin-bottom: 24px;">
+          <div style="font-size: 3.5rem; margin-bottom: 8px;">🇬🇧 🦘 📝</div>
+          <h2 style="font-size: 1.8rem; font-weight: 800; color: var(--dark); margin-bottom: 8px;">
+            Plataforma de Simulacro Movers A1
+          </h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">
+            Busca tu nombre en la lista oficial de <strong>4to A</strong> o <strong>4to B</strong>.
+          </p>
+        </div>
+
+        <form id="student-login-form">
+          <!-- Selector rápido de estudiante organizado por 4A y 4B -->
+          <div style="margin-bottom: 20px;">
+            <label for="studentSelect" style="display: block; font-weight: 700; margin-bottom: 8px; color: var(--dark);">
+              1. Selecciona tu Nombre completo:
+            </label>
+            <select id="studentSelect" class="input-field" style="cursor: pointer;">
+              <option value="">-- Cargar lista de alumnos 4A / 4B --</option>
+            </select>
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <label for="username" style="display: block; font-weight: 700; margin-bottom: 8px; color: var(--dark);">
+              2. Usuario *
+            </label>
+            <input type="text" id="username" class="input-field" placeholder="Ej. miguelsantiagobohorquez" required autocomplete="username">
+          </div>
+
+          <div style="margin-bottom: 24px;">
+            <label for="password" style="display: block; font-weight: 700; margin-bottom: 8px; color: var(--dark);">
+              3. Contraseña *
+            </label>
+            <input type="password" id="password" class="input-field" placeholder="Mismo usuario" required autocomplete="current-password">
+          </div>
+
+          <div id="login-error-msg" style="color: var(--danger); font-size: 0.9rem; font-weight: 700; margin-bottom: 16px; display: none; text-align: center;"></div>
+
+          <button type="submit" class="btn btn-primary btn-block" style="padding: 16px; font-size: 1.15rem;">
+            🚀 Iniciar mi Examen Asignado
+          </button>
+        </form>
+
+        <div style="margin-top: 30px; padding: 18px; background: var(--primary-light); border-radius: var(--radius-md); font-size: 0.85rem; color: var(--primary); border: 1px solid #bae6fd;">
+          ℹ️ <strong>Información importante:</strong>
+          <ul style="margin-top: 8px; padding-left: 20px; line-height: 1.6;">
+            <li>Cada alumno tiene asignado un examen específico (Test 1, Test 2 o Test 3).</li>
+            <li>Puedes hacer clic en <strong>"Guardar progreso"</strong> en cualquier momento y cerrar tu sesión para continuar después.</li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <script src="/js/login.js"></script>
+</body>
+</html>

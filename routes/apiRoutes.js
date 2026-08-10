@@ -5,13 +5,10 @@ const fs = require('fs');
 const path = require('path');
 
 // Cachear exámenes en memoria para evitar lecturas de disco repetidas
-const _examCache = {};
 function loadExamData(examId) {
-  if (_examCache[examId]) return _examCache[examId];
   const p = path.join(__dirname, `../data/exams/test${examId}.json`);
   if (fs.existsSync(p)) {
-    _examCache[examId] = JSON.parse(fs.readFileSync(p, 'utf8'));
-    return _examCache[examId];
+    return JSON.parse(fs.readFileSync(p, 'utf8'));
   }
   return null;
 }

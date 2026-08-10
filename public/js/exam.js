@@ -124,7 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Temporizador ─────────────────────────────────────────────
   function startTimer() {
-    let remaining = TIMER_SECONDS;
+    const durationMins = examData?.durationMinutes || 80;
+    let remaining = durationMins * 60;
     const display = document.getElementById('timer-clock');
 
     function updateDisplay() {

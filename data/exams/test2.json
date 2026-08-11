@@ -20,7 +20,9 @@
         { "word": "a shoulder", "emoji": "🦴" },
         { "word": "an elephant", "emoji": "🐘" },
         { "word": "a stomach", "emoji": "🫄" },
-        { "word": "coffee", "emoji": "☕" }
+        { "word": "coffee", "emoji": "☕" },
+        { "word": "a bat", "emoji": "🦇" },
+        { "word": "milk", "emoji": "🥛" }
       ],
       "example": {
         "text": "This person flies planes and is in charge of taking passengers safely to different countries.",
@@ -34,7 +36,9 @@
         { "id": "p1_q5", "num": 5, "text": "You can buy fresh fruit, vegetables, meat and flowers at this busy outdoor market place.", "answer": "a market" },
         { "id": "p1_q6", "num": 6, "text": "You eat this hot food from a bowl with a spoon. It often has vegetables, chicken or noodles in it.", "answer": "soup" },
         { "id": "p1_q7", "num": 7, "text": "This part of your body is between your neck and your arm.", "answer": "a shoulder" },
-        { "id": "p1_q8", "num": 8, "text": "This very big grey animal lives in hot countries in Africa and Asia. It has a long nose called a trunk.", "answer": "an elephant" }
+        { "id": "p1_q8", "num": 8, "text": "This very big grey animal lives in hot countries in Africa and Asia. It has a long nose called a trunk.", "answer": "an elephant" },
+        { "id": "p1_q9", "num": 9, "text": "This small flying mammal sleeps upside down during the day and comes out at night.", "answer": "a bat" },
+        { "id": "p1_q10", "num": 10, "text": "Mothers give this healthy white drink to their babies, and it comes from cows or goats.", "answer": "milk" }
       ]
     },
     "part2": {
@@ -106,12 +110,26 @@
           "question": "What are you going to do after dinner this evening?",
           "options": ["A) I'm going to read my new comic book.", "B) I went to bed early.", "C) Yes, it was fun."],
           "answer": "A"
+        },
+        {
+          "id": "p2_q9", "num": 9,
+          "speaker": "Mum",
+          "question": "Did you remember to feed your pet goldfish today?",
+          "options": ["A) Oh, I forgot! I'll feed them right now.", "B) Yes, fish swim in water.", "C) Fish is on the plate."],
+          "answer": "A"
+        },
+        {
+          "id": "p2_q10", "num": 10,
+          "speaker": "Mum",
+          "question": "Have a good night's sleep, Tom!",
+          "options": ["A) Good night Mum, see you tomorrow!", "B) Yes, I am sleeping.", "C) Night was dark."],
+          "answer": "A"
         }
       ]
     },
     "part3": {
       "title": "Part 3 – Complete the Story",
-      "instruction": "Read the story. Choose a word from the box. Write the correct word next to numbers 1–7. There is one example.",
+      "instruction": "Read the story. Choose a word from the box. Write the correct word next to numbers 1–10. There is one example.",
       "wordBox": [
         { "word": "comics", "emoji": "🗞️" },
         { "word": "blankets", "emoji": "🛋️" },
@@ -121,21 +139,27 @@
         { "word": "stars", "emoji": "⭐" },
         { "word": "saw", "emoji": "👀" },
         { "word": "sat", "emoji": "🪑" },
-        { "word": "mountain", "emoji": "🏔️" }
+        { "word": "mountain", "emoji": "🏔️" },
+        { "word": "afraid", "emoji": "😨" },
+        { "word": "village", "emoji": "🏡" },
+        { "word": "climbed", "emoji": "🧗" }
       ],
-      "storyText": "My name is Daisy. I like toys, but I like books and [example: comics] best. I love stories about astronauts on the moon and about (1) ________ who live in different countries around the world. I read a good story yesterday. In this story, a brave young boy climbed a high (2) ________. At the top, there was a lot of cold white snow. It was evening, but the boy could see the giant forest far below him. He (3) ________ down on a large rock to have a drink of water and to look up at all the shining (4) ________ in the dark sky. But then he (5) ________ something strange that he didn't understand. Something very big and round flew quietly and quickly behind a silver cloud! What was it? The boy didn't know and he didn't wait to see it again. He (6) ________ down the path as fast as he could home to his village because he was very afraid! Warm (7) ________ were waiting for him in his bed at home.",
+      "storyText": "My name is Daisy. I like toys, but I like books and [example: comics] best. I love stories about astronauts on the moon and about (1) ________ who live in different countries around the world. I read a good story yesterday. In this story, a brave young boy (2) ________ a high (3) ________. At the top, there was a lot of cold white snow. It was evening, but the boy could see the giant forest far below him. He (4) ________ down on a large rock to have a drink of water and to look up at all the bright (5) ________ in the dark sky. But then he (6) ________ something strange that he didn't understand. Something very big and round flew quietly and quickly behind a silver cloud! What was it? The boy didn't know and he felt very (7) ________. He didn't wait to see it again. He (8) ________ down the path as fast as he could home to his (9) ________ because he was scared. Warm (10) ________ were waiting for him in his cozy bed at home.",
       "questions": [
         { "id": "p3_q1", "num": 1, "answer": "children" },
-        { "id": "p3_q2", "num": 2, "answer": "mountain" },
-        { "id": "p3_q3", "num": 3, "answer": "sat" },
-        { "id": "p3_q4", "num": 4, "answer": "stars" },
-        { "id": "p3_q5", "num": 5, "answer": "saw" },
-        { "id": "p3_q6", "num": 6, "answer": "ran" },
-        { "id": "p3_q7", "num": 7, "answer": "blankets" }
+        { "id": "p3_q2", "num": 2, "answer": "climbed" },
+        { "id": "p3_q3", "num": 3, "answer": "mountain" },
+        { "id": "p3_q4", "num": 4, "answer": "sat" },
+        { "id": "p3_q5", "num": 5, "answer": "stars" },
+        { "id": "p3_q6", "num": 6, "answer": "saw" },
+        { "id": "p3_q7", "num": 7, "answer": "afraid" },
+        { "id": "p3_q8", "num": 8, "answer": "ran" },
+        { "id": "p3_q9", "num": 9, "answer": "village" },
+        { "id": "p3_q10", "num": 10, "answer": "blankets" }
       ],
       "titleQuestion": {
-        "id": "p3_q8",
-        "num": 8,
+        "id": "p3_q11",
+        "num": 11,
         "question": "Now choose the best name for the story. Tick one box.",
         "options": [
           "A boy that Daisy knows",
@@ -156,7 +180,10 @@
         "Lions don't live in jungles; they prefer open grasslands. Some people go and see lions and tigers at the zoo.",
         "A lot of people have small cats in (4) ________ homes. These cats are pets. People (5) ________ them because they are cute and gentle.",
         "Pet cats like sleeping in warm places. They (6) ________ drink milk or water and eat special cat food.",
-        "When cats are happy, they make a soft sound called purring. They can sleep for more (7) ________ twelve hours every day!"
+        "When cats are happy, they make a soft sound called purring. They can sleep for more (7) ________ twelve hours every day!",
+        "Kittens are baby cats. They are born with (8) ________ eyes closed and start opening them after one week.",
+        "Cats use their long whiskers to feel (9) ________ around them when moving in the dark.",
+        "That is why cats are such (10) ________ amazing pets for families around the world."
       ],
       "questions": [
         { "id": "p4_q1", "num": 1, "options": ["All", "Every", "Any"], "answer": "All" },
@@ -165,7 +192,10 @@
         { "id": "p4_q4", "num": 4, "options": ["your", "their", "our"], "answer": "their" },
         { "id": "p4_q5", "num": 5, "options": ["like", "liking", "likes"], "answer": "like" },
         { "id": "p4_q6", "num": 6, "options": ["often", "never", "always"], "answer": "often" },
-        { "id": "p4_q7", "num": 7, "options": ["than", "then", "that"], "answer": "than" }
+        { "id": "p4_q7", "num": 7, "options": ["than", "then", "that"], "answer": "than" },
+        { "id": "p4_q8", "num": 8, "options": ["their", "his", "her"], "answer": "their" },
+        { "id": "p4_q9", "num": 9, "options": ["things", "thing", "think"], "answer": "things" },
+        { "id": "p4_q10", "num": 10, "options": ["an", "a", "the"], "answer": "an" }
       ]
     },
     "part5": {
@@ -192,24 +222,28 @@
         { "id": "p5_q6", "num": 6, "text": "Dad wanted to go for a ________ with Paul in the sea.", "acceptableAnswers": ["swim", "a swim"] },
         { "id": "p5_q7", "num": 7, "text": "The family enjoyed eating breakfast in their ________ on Friday.", "acceptableAnswers": ["garden", "the garden"] },
         { "id": "p5_q8", "num": 8, "text": "Paul saw three beautiful ________ swimming in the water.", "acceptableAnswers": ["dolphins", "beautiful dolphins"] },
-        { "id": "p5_q9", "num": 9, "text": "Paul's dad threw a ________ into the sea for the dolphins.", "acceptableAnswers": ["ball", "red ball", "a ball"] },
-        { "id": "p5_q10", "num": 10, "text": "On Friday evening, Vicky's whole family went to the ________ again.", "acceptableAnswers": ["cinema", "the cinema"] }
+        { "id": "p5_q9", "num": 9, "text": "Paul ran into the sea and ________ towards the dolphins.", "acceptableAnswers": ["swam"] },
+        { "id": "p5_q10", "num": 10, "text": "Paul's dad threw a ________ into the sea for the dolphins.", "acceptableAnswers": ["ball", "red ball", "a ball"] },
+        { "id": "p5_q11", "num": 11, "text": "The film on Friday evening was about a funny ________.", "acceptableAnswers": ["dolphin"] },
+        { "id": "p5_q12", "num": 12, "text": "On Friday evening, Vicky's whole family went to the ________ again.", "acceptableAnswers": ["cinema", "the cinema"] }
       ]
     },
     "part6": {
       "title": "Part 6 – Look and read and write",
       "instruction": "Look at the picture and answer the questions. Write full sentences or short descriptions on the lines.",
       "imageUrl": "/images/part6_bears_bathroom.png",
-      "promptText": "Look closely at the bear family in the bathroom and answer the questions.",
+      "promptText": "Look closely at the bear family in the bathroom and answer all 10 questions.",
       "questions": [
         { "id": "p6_q1", "num": 1, "type": "complete", "text": "There are five white ________ hanging in the bathroom.", "placeholder": "towels" },
         { "id": "p6_q2", "num": 2, "type": "complete", "text": "The blue bear is drying his face with a small ________.", "placeholder": "towel" },
         { "id": "p6_q3", "num": 3, "type": "answer", "text": "What is the big brown bear doing behind the blue shower curtain?", "placeholder": "He is having a warm shower." },
         { "id": "p6_q4", "num": 4, "type": "answer", "text": "What is on the bathroom shelf under the rectangular mirror?", "placeholder": "There are two clear drinking glasses and a red toothbrush." },
-        { "id": "p6_q5", "num": 5, "type": "answer", "text": "How many toy yellow ducks are floating in the bathtub?", "placeholder": "There are two yellow ducks in the tub." },
+        { "id": "p6_q5", "num": 5, "type": "answer", "text": "How many yellow toy ducks are floating in the bathtub?", "placeholder": "There are two yellow ducks in the tub." },
         { "id": "p6_q6", "num": 6, "type": "answer", "text": "What are the two smallest bear cubs doing on the tiled floor?", "placeholder": "They are brushing their teeth with toothbrushes." },
-        { "id": "p6_q7", "num": 7, "type": "sentence", "text": "Write a full sentence describing the toys in the bathtub.", "placeholder": "There is a red toy sailboat and two yellow ducks floating in the water." },
-        { "id": "p6_q8", "num": 8, "type": "sentence", "text": "Write another sentence about what is on the floor in front of the sink.", "placeholder": "The floor has puddles of water and a red toothbrush lying on it." }
+        { "id": "p6_q7", "num": 7, "type": "answer", "text": "What color is the mat under the blue bear's feet?", "placeholder": "The mat is blue." },
+        { "id": "p6_q8", "num": 8, "type": "answer", "text": "What is floating in the bathtub next to the ducks?", "placeholder": "There is a red toy sailboat and a blue toy dolphin." },
+        { "id": "p6_q9", "num": 9, "type": "sentence", "text": "Write a full sentence describing the toys floating in the bathtub.", "placeholder": "There is a red toy sailboat, two yellow ducks and a dolphin in the bath." },
+        { "id": "p6_q10", "num": 10, "type": "sentence", "text": "Write another sentence about what is on the bathroom floor.", "placeholder": "The floor is wet with water puddles and there is a toothbrush lying on it." }
       ]
     }
   }

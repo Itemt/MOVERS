@@ -20,7 +20,9 @@
         { "word": "a hospital", "emoji": "🏥" },
         { "word": "a picnic", "emoji": "🧺" },
         { "word": "a rainbow", "emoji": "🌈" },
-        { "word": "a parrot", "emoji": "🦜" }
+        { "word": "a parrot", "emoji": "🦜" },
+        { "word": "a camera", "emoji": "📸" },
+        { "word": "a mountain", "emoji": "🏔️" }
       ],
       "example": {
         "text": "This person works outside on a large piece of land, growing crops and looking after farm animals.",
@@ -34,7 +36,9 @@
         { "id": "p1_q5", "num": 5, "text": "This special doctor checks and cleans your teeth to keep your mouth healthy and strong.", "answer": "a dentist" },
         { "id": "p1_q6", "num": 6, "text": "You look at this paper drawing or online image to find streets, cities or countries when travelling.", "answer": "a map" },
         { "id": "p1_q7", "num": 7, "text": "This colorful arc of light appears in the sky when sun shines while it is raining.", "answer": "a rainbow" },
-        { "id": "p1_q8", "num": 8, "text": "This colorful tropical bird has bright feathers and can sometimes copy human words.", "answer": "a parrot" }
+        { "id": "p1_q8", "num": 8, "text": "This colorful tropical bird has bright feathers and can sometimes copy human words.", "answer": "a parrot" },
+        { "id": "p1_q9", "num": 9, "text": "You use this small device to take pictures or record videos of family and friends.", "answer": "a camera" },
+        { "id": "p1_q10", "num": 10, "text": "This is a very high land mass that is much taller than a hill, often with snow on top.", "answer": "a mountain" }
       ]
     },
     "part2": {
@@ -106,12 +110,26 @@
           "question": "Don't forget to wear your warm jacket because it's windy outside!",
           "options": ["A) Thanks for telling me, I'll put it on now!", "B) Yes, I remembered my bike.", "C) Jacket is hanging in room."],
           "answer": "A"
+        },
+        {
+          "id": "p2_q9", "num": 9,
+          "speaker": "Sally",
+          "question": "Shall we bring some apples and water bottles with us?",
+          "options": ["A) Yes, that's a great idea!", "B) Water is cold.", "C) No, I haven't got apples."],
+          "answer": "A"
+        },
+        {
+          "id": "p2_q10", "num": 10,
+          "speaker": "Sally",
+          "question": "See you at the park entrance at four o'clock then!",
+          "options": ["A) See you later, Sally! Bye!", "B) Yes, park is open.", "C) I went to the park."],
+          "answer": "A"
         }
       ]
     },
     "part3": {
       "title": "Part 3 – Complete the Story",
-      "instruction": "Read the story. Choose a word from the box. Write the correct word next to numbers 1–7. There is one example.",
+      "instruction": "Read the story. Choose a word from the box. Write the correct word next to numbers 1–10. There is one example.",
       "wordBox": [
         { "word": "rainbow", "emoji": "🌈" },
         { "word": "ladder", "emoji": "🪜" },
@@ -121,21 +139,27 @@
         { "word": "tired", "emoji": "😴" },
         { "word": "wall", "emoji": "🧱" },
         { "word": "painting", "emoji": "🎨" },
-        { "word": "curly", "emoji": "👩" }
+        { "word": "curly", "emoji": "👩" },
+        { "word": "playground", "emoji": "🛝" },
+        { "word": "holding", "emoji": "🤝" },
+        { "word": "admire", "emoji": "👀" }
       ],
-      "storyText": "Yesterday was a special day at school. All the children worked together in the playground. They decided to create a huge, beautiful painting on the school garden [example: wall]. John was standing on a wooden box because he was painting a giant bright (1) ________ with red, yellow, green and blue paint. Sally was helping John by holding his tray of paints. She is the girl standing next to him with long (2) ________ hair. Peter was using green paint to paint all the green (3) ________ on a big brown tree. Another boy named Jim wasn't painting with brushes. He loved taking (4) ________ of all his friends with his camera! Daisy came out into the garden carrying a large box of cold (5) ________ because all the children were getting hot and thirsty. Her friend Jane was sitting on a bench feeling hot and (6) ________ after painting for two hours. They all stepped back to admire their wonderful wall (7) ________!",
+      "storyText": "Yesterday was a special day at school. All the children worked together in the (1) ________. They decided to create a huge, colorful picture on the school garden [example: wall]. John was standing on a wooden box because he was painting a giant bright (2) ________ with red, yellow, green and blue paint. Sally was helping John by (3) ________ his tray of paints for him. She is the girl standing next to him with long (4) ________ hair. Peter was using green paint to paint all the green (5) ________ on a big brown tree. Another boy named Jim wasn't painting with brushes. He loved taking (6) ________ of all his friends with his camera! Daisy came out into the garden carrying a large box of cold (7) ________ because all the children were getting hot and thirsty. Her friend Jane was sitting on a bench feeling hot and (8) ________ after painting for two hours. They all stepped back to (9) ________ their wonderful wall (10) ________!",
       "questions": [
-        { "id": "p3_q1", "num": 1, "answer": "rainbow" },
-        { "id": "p3_q2", "num": 2, "answer": "curly" },
-        { "id": "p3_q3", "num": 3, "answer": "leaves" },
-        { "id": "p3_q4", "num": 4, "answer": "photos" },
-        { "id": "p3_q5", "num": 5, "answer": "drinks" },
-        { "id": "p3_q6", "num": 6, "answer": "tired" },
-        { "id": "p3_q7", "num": 7, "answer": "painting" }
+        { "id": "p3_q1", "num": 1, "answer": "playground" },
+        { "id": "p3_q2", "num": 2, "answer": "rainbow" },
+        { "id": "p3_q3", "num": 3, "answer": "holding" },
+        { "id": "p3_q4", "num": 4, "answer": "curly" },
+        { "id": "p3_q5", "num": 5, "answer": "leaves" },
+        { "id": "p3_q6", "num": 6, "answer": "photos" },
+        { "id": "p3_q7", "num": 7, "answer": "drinks" },
+        { "id": "p3_q8", "num": 8, "answer": "tired" },
+        { "id": "p3_q9", "num": 9, "answer": "admire" },
+        { "id": "p3_q10", "num": 10, "answer": "painting" }
       ],
       "titleQuestion": {
-        "id": "p3_q8",
-        "num": 8,
+        "id": "p3_q11",
+        "num": 11,
         "question": "Now choose the best name for the story. Tick one box.",
         "options": [
           "A day at the zoo",
@@ -156,7 +180,10 @@
         "Some intelligent parrots can learn to imitate human speech. People who have parrots as pets are often (4) ________ when their bird says 'Hello!' or repeats simple words.",
         "Wild parrots love flying fast across the sky in pairs or family groups. They communicate by making loud, high squeaks (5) ________ calls.",
         "In the wild, parrots build nests in hollow holes high up inside old tree trunks. This keeps their small eggs safe (6) ________ snakes and other dangerous climbing animals.",
-        "Scientists believe that parrots are among the (7) ________ birds on Earth because they can solve complex puzzles to get food!"
+        "Scientists believe that parrots are among the (7) ________ birds on Earth because they can solve complex puzzles to get food!",
+        "Parrots can live for a very long time. Small parrots live for 15 years, (8) ________ large parrots can live for more than 50 years!",
+        "When parrots eat, they (9) ________ hold their food with one foot while eating with their beak.",
+        "They are truly (10) ________ wonderful creatures to watch in nature."
       ],
       "questions": [
         { "id": "p4_q1", "num": 1, "options": ["in", "at", "on"], "answer": "in" },
@@ -165,7 +192,10 @@
         { "id": "p4_q4", "num": 4, "options": ["surprised", "surprise", "surprising"], "answer": "surprised" },
         { "id": "p4_q5", "num": 5, "options": ["and", "but", "so"], "answer": "and" },
         { "id": "p4_q6", "num": 6, "options": ["from", "out", "than"], "answer": "from" },
-        { "id": "p4_q7", "num": 7, "options": ["cleverest", "clever", "cleverer"], "answer": "cleverest" }
+        { "id": "p4_q7", "num": 7, "options": ["cleverest", "clever", "cleverer"], "answer": "cleverest" },
+        { "id": "p4_q8", "num": 8, "options": ["but", "so", "or"], "answer": "but" },
+        { "id": "p4_q9", "num": 9, "options": ["can", "must", "should"], "answer": "can" },
+        { "id": "p4_q10", "num": 10, "options": ["the", "a", "some"], "answer": "the" }
       ]
     },
     "part5": {
@@ -186,21 +216,23 @@
       "questions": [
         { "id": "p5_q1", "num": 1, "text": "Mrs White and her school class visited the zoo on ________ morning.", "acceptableAnswers": ["Tuesday", "last Tuesday"] },
         { "id": "p5_q2", "num": 2, "text": "The children travelled all the way to the zoo by ________.", "acceptableAnswers": ["train", "by train"] },
-        { "id": "p5_q3", "num": 3, "text": "The zoo book said there were 89 different ________ of animals.", "acceptableAnswers": ["kinds", "kinds of animals"] },
-        { "id": "p5_q4", "num": 4, "text": "Ben thought the huge ________ were the biggest animals at the zoo.", "acceptableAnswers": ["elephants", "grey elephants"] },
-        { "id": "p5_q5", "num": 5, "text": "The children were allowed to feed fresh ________ to the parrots.", "acceptableAnswers": ["fruit", "fresh fruit"] },
-        { "id": "p5_q6", "num": 6, "text": "Paul said that colorful ________ were his favourite animals.", "acceptableAnswers": ["parrots", "the parrots"] },
-        { "id": "p5_q7", "num": 7, "text": "The children ate their packed lunch next to the zoo ________.", "acceptableAnswers": ["café", "park café"] },
-        { "id": "p5_q8", "num": 8, "text": "In the evening, Mrs White bought everyone hot ________ and lemonade.", "acceptableAnswers": ["burgers", "hamburgers"] },
-        { "id": "p5_q9", "num": 9, "text": "The children drank cold ________ with their evening meal.", "acceptableAnswers": ["lemonade"] },
-        { "id": "p5_q10", "num": 10, "text": "The class returned back home safely on the ________.", "acceptableAnswers": ["train"] }
+        { "id": "p5_q3", "num": 3, "text": "Paul and Ben sat together next to the ________ on the train.", "acceptableAnswers": ["window", "the window"] },
+        { "id": "p5_q4", "num": 4, "text": "The zoo book said there were 89 different ________ of animals.", "acceptableAnswers": ["kinds", "kinds of animals"] },
+        { "id": "p5_q5", "num": 5, "text": "Ben thought the huge ________ were the biggest animals at the zoo.", "acceptableAnswers": ["elephants", "grey elephants"] },
+        { "id": "p5_q6", "num": 6, "text": "The children were allowed to feed fresh ________ to the parrots.", "acceptableAnswers": ["fruit", "fresh fruit"] },
+        { "id": "p5_q7", "num": 7, "text": "Paul said that colorful ________ were his favourite animals.", "acceptableAnswers": ["parrots", "the parrots"] },
+        { "id": "p5_q8", "num": 8, "text": "The children ate their packed lunch next to the zoo ________.", "acceptableAnswers": ["café", "park café"] },
+        { "id": "p5_q9", "num": 9, "text": "In the evening, Mrs White bought everyone hot ________ and lemonade.", "acceptableAnswers": ["burgers", "hamburgers"] },
+        { "id": "p5_q10", "num": 10, "text": "The children drank cold ________ with their evening meal.", "acceptableAnswers": ["lemonade"] },
+        { "id": "p5_q11", "num": 11, "text": "Mrs White's class went back home on the ________ in the evening.", "acceptableAnswers": ["train", "the train"] },
+        { "id": "p5_q12", "num": 12, "text": "All the children had a ________ day at the zoo.", "acceptableAnswers": ["wonderful", "perfect", "exciting"] }
       ]
     },
     "part6": {
       "title": "Part 6 – Look and read and write",
       "instruction": "Look at the picture and answer the questions. Write full sentences or short descriptions on the lines.",
       "imageUrl": "/images/part6_rainbow_wall.png",
-      "promptText": "Look carefully at the school garden painting scene and answer the questions.",
+      "promptText": "Look carefully at the school garden painting scene and answer all 10 questions.",
       "questions": [
         { "id": "p6_q1", "num": 1, "type": "complete", "text": "The boy painting the rainbow on the box has got blond ________.", "placeholder": "hair" },
         { "id": "p6_q2", "num": 2, "type": "complete", "text": "The girl in the blue t-shirt and pink skirt is holding a paint ________.", "placeholder": "tray / palette" },
@@ -208,8 +240,10 @@
         { "id": "p6_q4", "num": 4, "type": "answer", "text": "What color t-shirt is the boy painting green leaves wearing?", "placeholder": "He is wearing a blue t-shirt and jeans." },
         { "id": "p6_q5", "num": 5, "type": "answer", "text": "What is the girl with curly brown hair carrying on a tray?", "placeholder": "She is bringing a box of drinks / cups of juice." },
         { "id": "p6_q6", "num": 6, "type": "answer", "text": "Where is the wooden ladder standing in the garden scene?", "placeholder": "It is standing against the brick wall." },
-        { "id": "p6_q7", "num": 7, "type": "sentence", "text": "Write a full sentence about what the children are painting on the brick wall.", "placeholder": "The children are painting a large bright rainbow and a green tree on the wall." },
-        { "id": "p6_q8", "num": 8, "type": "sentence", "text": "Write another sentence describing what the girl sitting down on the box is feeling.", "placeholder": "The girl with brown hair is sitting down because she feels hot and tired after painting." }
+        { "id": "p6_q7", "num": 7, "type": "answer", "text": "What is the girl in the pink top sitting on the box doing?", "placeholder": "She is resting / watching her friends paint." },
+        { "id": "p6_q8", "num": 8, "type": "answer", "text": "What colors are painted in the rainbow on the brick wall?", "placeholder": "Red, yellow, green and blue." },
+        { "id": "p6_q9", "num": 9, "type": "sentence", "text": "Write a full sentence about what the children are painting on the brick wall.", "placeholder": "The children are painting a large bright rainbow and a green tree on the wall." },
+        { "id": "p6_q10", "num": 10, "type": "sentence", "text": "Write another sentence describing what the girl sitting down on the box is feeling.", "placeholder": "The girl with brown hair is sitting down because she feels hot and tired after painting." }
       ]
     }
   }

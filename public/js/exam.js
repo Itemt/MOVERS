@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           ${p.titleQuestion ? `
             <div class="question-row" style="background:#f8fafc;">
-              <div class="question-text"><strong>(6) ${p.titleQuestion.question}</strong></div>
+              <div class="question-text"><strong>(${p.titleQuestion.num || (p.questions.length + 1)}) ${p.titleQuestion.question}</strong></div>
               <div class="mcq-options">
                 ${p.titleQuestion.options.map(opt => `
                   <label class="mcq-option-label">

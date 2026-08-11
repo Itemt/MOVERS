@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function autoSaveProgress(silent = false) {
     const answers = collectAnswers();
-    if (Object.keys(answers).length === 0) return;
+    if (Object.keys(answers).length === 0 && silent) return;
 
     try {
       const res = await fetch('/api/progress/save', {
@@ -184,20 +184,30 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data.alreadySubmitted) {
         clearInterval(autoSaveInterval);
         clearInterval(timerInterval);
+        if (!silent) showToast('ℹ️ Este examen ya fue entregado anteriormente.');
         return;
       }
 
-      if (!silent && data.success) {
-        showToast('💾 Progreso guardado.');
-      } else if (silent && data.success) {
-        // Mostrar barra sutil de autosave
-        const bar = document.getElementById('autosave-bar');
-        document.getElementById('autosave-time').textContent = new Date().toLocaleTimeString('es-CO');
-        bar.style.display = 'block';
-        setTimeout(() => { bar.style.display = 'none'; }, 4000);
+      if (data.success) {
+        if (!silent) {
+          showToast('💾 ¡Progreso guardado correctamente!');
+        } else {
+          // Mostrar barra sutil de autosave
+          const bar = document.getElementById('autosave-bar');
+          document.getElementById('autosave-time').textContent = new Date().toLocaleTimeString('es-CO');
+          bar.style.display = 'block';
+          setTimeout(() => { bar.style.display = 'none'; }, 4000);
+        }
+      } else {
+        if (!silent) {
+          showToast('⚠️ Error al guardar: ' + (data.message || 'Intenta de nuevo.'));
+        }
       }
     } catch (err) {
       console.error('Error en autosave:', err);
+      if (!silent) {
+        showToast('❌ Error de conexión al guardar el progreso.');
+      }
     }
   }
 

@@ -172,6 +172,31 @@ router.get('/progress/:username/:examId', async (req, res) => {
 });
 
 // ────────────────────────────────────────────────────────
+// Normalización y tolerancia para respuestas escritas
+// ────────────────────────────────────────────────────────
+function normalizeAnswer(str) {
+  if (!str) return '';
+  let clean = String(str).trim().toLowerCase();
+  clean = clean.replace(/[.,!?;:]+$/g, '').trim();
+  clean = clean.replace(/^(a|an|the)\s+/i, '').trim();
+  return clean;
+}
+
+function checkAnswer(userAns, expectedAns, acceptableAnswers = []) {
+  if (!userAns) return false;
+  const normUser = normalizeAnswer(userAns);
+  if (!normUser) return false;
+
+  const targets = [expectedAns, ...(acceptableAnswers || [])].filter(Boolean);
+  return targets.some(target => {
+    const normTarget = normalizeAnswer(target);
+    const rawTarget = String(target).trim().toLowerCase();
+    const rawUser = String(userAns).trim().toLowerCase();
+    return normUser === normTarget || rawUser === rawTarget;
+  });
+}
+
+// ────────────────────────────────────────────────────────
 // POST /api/progress/save
 // ────────────────────────────────────────────────────────
 router.post('/progress/save', async (req, res) => {
@@ -197,15 +222,17 @@ router.post('/progress/save', async (req, res) => {
         return res.json({ success: false, alreadySubmitted: true, message: 'Este examen ya fue entregado.' });
       }
 
-      await turso.execute({
-        sql: `INSERT INTO progress (username, exam_id, raw_answers_json, status, updated_at)
-              VALUES (?, ?, ?, 'in_progress', ?)
-              ON CONFLICT(username, exam_id) DO UPDATE SET
-                raw_answers_json = excluded.raw_answers_json,
-                status = 'in_progress',
-                updated_at = excluded.updated_at`,
-        args: [cleanUser, eId, answersJson, nowIso]
-      });
+      await turso.batch([
+        {
+          sql: 'DELETE FROM progress WHERE username = ? AND exam_id = ?',
+          args: [cleanUser, eId]
+        },
+        {
+          sql: `INSERT INTO progress (username, exam_id, raw_answers_json, status, updated_at)
+                VALUES (?, ?, ?, 'in_progress', ?)`,
+          args: [cleanUser, eId, answersJson, nowIso]
+        }
+      ], 'write');
     } else {
       // Fallback local
       const key = `${cleanUser}_${eId}`;
@@ -252,14 +279,14 @@ router.post('/exams/submit', async (req, res) => {
       return res.status(404).json({ success: false, message: 'Examen no encontrado.' });
     }
 
-    // ── Autocalificación ──────────────────────────────
+    // ── Autocalificación con tolerancia ──────────────
     let autoScore = 0;
     let maxAutoScore = 0;
 
     // Parte 1 — completar palabra del banco
     (exam.parts.part1?.questions || []).forEach(q => {
       maxAutoScore++;
-      if ((answers[q.id] || '').trim().toLowerCase() === q.answer.toLowerCase()) autoScore++;
+      if (checkAnswer(answers[q.id], q.answer)) autoScore++;
     });
 
     // Parte 2 — MCQ diálogo
@@ -271,26 +298,24 @@ router.post('/exams/submit', async (req, res) => {
     // Parte 3 — completar historia + título
     (exam.parts.part3?.questions || []).forEach(q => {
       maxAutoScore++;
-      if ((answers[q.id] || '').trim().toLowerCase() === q.answer.toLowerCase()) autoScore++;
+      if (checkAnswer(answers[q.id], q.answer)) autoScore++;
     });
     if (exam.parts.part3?.titleQuestion) {
       const tq = exam.parts.part3.titleQuestion;
       maxAutoScore++;
-      if ((answers[tq.id] || '').trim().toLowerCase() === tq.answer.toLowerCase()) autoScore++;
+      if (checkAnswer(answers[tq.id], tq.answer)) autoScore++;
     }
 
     // Parte 4 — texto factual MCQ
     (exam.parts.part4?.questions || []).forEach(q => {
       maxAutoScore++;
-      if ((answers[q.id] || '').trim().toLowerCase() === q.answer.toLowerCase()) autoScore++;
+      if (checkAnswer(answers[q.id], q.answer)) autoScore++;
     });
 
     // Parte 5 — completar oraciones (respuestas aceptables)
     (exam.parts.part5?.questions || []).forEach(q => {
       maxAutoScore++;
-      const userAns = (answers[q.id] || '').trim().toLowerCase();
-      const acceptable = (q.acceptableAnswers || []).map(a => a.toLowerCase());
-      if (acceptable.includes(userAns)) autoScore++;
+      if (checkAnswer(answers[q.id], q.answer, q.acceptableAnswers)) autoScore++;
     });
 
     // Parte 6 — producción escrita (no se autocalifica, queda para el docente)
@@ -299,7 +324,7 @@ router.post('/exams/submit', async (req, res) => {
     const answersJson = JSON.stringify(answers || {});
 
     if (turso) {
-      // Insertar submission y marcar progress como submitted (batch atómico)
+      // Insertar submission y actualizar progress como submitted (batch atómico)
       await turso.batch([
         {
           sql: `INSERT INTO submissions (username, exam_id, auto_score, max_auto_score, raw_answers_json, status, submitted_at)
@@ -307,12 +332,12 @@ router.post('/exams/submit', async (req, res) => {
           args: [cleanUser, eId, autoScore, maxAutoScore, answersJson, nowIso]
         },
         {
+          sql: 'DELETE FROM progress WHERE username = ? AND exam_id = ?',
+          args: [cleanUser, eId]
+        },
+        {
           sql: `INSERT INTO progress (username, exam_id, raw_answers_json, status, updated_at)
-                VALUES (?, ?, ?, 'submitted', ?)
-                ON CONFLICT(username, exam_id) DO UPDATE SET
-                  raw_answers_json = excluded.raw_answers_json,
-                  status = 'submitted',
-                  updated_at = excluded.updated_at`,
+                VALUES (?, ?, ?, 'submitted', ?)`,
           args: [cleanUser, eId, answersJson, nowIso]
         }
       ], 'write');

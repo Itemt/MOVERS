@@ -56,9 +56,13 @@
             <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--dark);">Monitoreo de 4to Grado</h2>
             <p style="color: var(--text-muted); font-size: 0.9rem;">Visualiza por curso las entregas y el progreso guardado de cada alumno.</p>
           </div>
-          <button id="btn-refresh-admin" class="btn btn-outline" style="font-size: 0.9rem; padding: 10px 18px;">
-            🔄 Actualizar Estado
-          </button>
+          <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
+            <button id="btn-refresh-admin" class="btn btn-outline" style="font-size: 0.9rem; padding: 10px 18px;">
+              🔄 Actualizar Estado
+            </button>
+            <span id="refresh-countdown" style="font-size: 0.78rem; color: var(--text-muted);">Actualizando en 20s…</span>
+            <span id="last-refreshed" style="font-size: 0.78rem; color: #10b981; font-weight: 600;"></span>
+          </div>
         </div>
       </div>
 

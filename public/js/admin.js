@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let allStudentsData = [];
   let currentGradeFilter = '4to A';
   const examsCache = {};
+  let autoRefreshInterval = null;
+  let nextRefreshIn = 20;
 
   // Normalización y tolerancia para comprobación en vista admin
   function normalizeAnswer(str) {
@@ -68,7 +70,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   refreshBtn.addEventListener('click', () => {
-    if (currentPin) loadDashboard(currentPin);
+    if (currentPin) {
+      nextRefreshIn = 20;
+      loadDashboard(currentPin);
+    }
   });
 
   tab4A.addEventListener('click', () => {
@@ -105,15 +110,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === answersModal) closeModal();
   });
 
-  async function loadDashboard(pin) {
-    errorMsg.style.display = 'none';
+  async function loadDashboard(pin, silent = false) {
+    if (!silent) errorMsg.style.display = 'none';
     try {
-      const res = await fetch(`/api/admin/submissions?pin=${encodeURIComponent(pin)}`);
+      const res = await fetch(`/api/admin/submissions?pin=${encodeURIComponent(pin)}&t=${Date.now()}`);
       const data = await res.json();
 
       if (!data.success) {
-        errorMsg.textContent = data.message || 'PIN incorrecto.';
-        errorMsg.style.display = 'block';
+        if (!silent) {
+          errorMsg.textContent = data.message || 'PIN incorrecto.';
+          errorMsg.style.display = 'block';
+        }
         return;
       }
 
@@ -121,13 +128,45 @@ document.addEventListener('DOMContentLoaded', () => {
       dashboardContent.style.display = 'block';
       allStudentsData = data.students || [];
       renderTable();
+      updateLastRefreshed();
+
+      // Iniciar auto-refresh si no está corriendo
+      if (!autoRefreshInterval) {
+        startAutoRefresh();
+      }
 
     } catch (err) {
       console.error('Error en admin:', err);
-      errorMsg.textContent = 'Error de conexión.';
-      errorMsg.style.display = 'block';
+      if (!silent) {
+        errorMsg.textContent = 'Error de conexión.';
+        errorMsg.style.display = 'block';
+      }
     }
   }
+
+  function updateLastRefreshed() {
+    const el = document.getElementById('last-refreshed');
+    if (el) el.textContent = `Última actualización: ${new Date().toLocaleTimeString('es-CO')}`;
+    nextRefreshIn = 20;
+  }
+
+  function startAutoRefresh() {
+    const countdownEl = document.getElementById('refresh-countdown');
+    nextRefreshIn = 20;
+
+    autoRefreshInterval = setInterval(() => {
+      nextRefreshIn--;
+      if (countdownEl) countdownEl.textContent = `Actualizando en ${nextRefreshIn}s…`;
+      if (nextRefreshIn <= 0) {
+        nextRefreshIn = 20;
+        loadDashboard(currentPin, true);
+      }
+    }, 1000);
+  }
+
+  window.addEventListener('beforeunload', () => {
+    if (autoRefreshInterval) clearInterval(autoRefreshInterval);
+  });
 
   function renderTable() {
     const filtered = allStudentsData.filter(st => (st.grade || '4to A') === currentGradeFilter);

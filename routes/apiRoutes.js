@@ -420,4 +420,51 @@ router.get('/admin/submissions', async (req, res) => {
   }
 });
 
+// ────────────────────────────────────────────────────────
+// GET /api/admin/debug?pin=xxx
+// Diagnóstico: muestra los datos crudos de Turso
+// ────────────────────────────────────────────────────────
+router.get('/admin/debug', async (req, res) => {
+  try {
+    if (req.query.pin !== 'movers2026') {
+      return res.status(401).json({ success: false, message: 'PIN incorrecto.' });
+    }
+
+    const turso = await db.getTursoClient().catch(() => null);
+    if (!turso) {
+      return res.json({ success: false, message: 'Sin conexión a Turso. Usando fallback local.', tursoConnected: false });
+    }
+
+    const [resStudents, resProgress, resSubmissions] = await Promise.all([
+      turso.execute('SELECT id, username, assigned_exam_id FROM students ORDER BY id LIMIT 40'),
+      turso.execute('SELECT id, username, exam_id, status, updated_at FROM progress ORDER BY id DESC LIMIT 40'),
+      turso.execute('SELECT id, username, exam_id, auto_score, max_auto_score, status, submitted_at FROM submissions ORDER BY id DESC LIMIT 40')
+    ]);
+
+    res.json({
+      success: true,
+      tursoConnected: true,
+      counts: {
+        students: resStudents.rows.length,
+        progress: resProgress.rows.length,
+        submissions: resSubmissions.rows.length
+      },
+      students: resStudents.rows.map(r => ({
+        id: String(r.id), username: r.username, assignedExamId: String(r.assigned_exam_id)
+      })),
+      progress: resProgress.rows.map(r => ({
+        id: String(r.id), username: r.username, examId: String(r.exam_id), status: r.status, updatedAt: r.updated_at
+      })),
+      submissions: resSubmissions.rows.map(r => ({
+        id: String(r.id), username: r.username, examId: String(r.exam_id),
+        autoScore: String(r.auto_score), maxAutoScore: String(r.max_auto_score),
+        status: r.status, submittedAt: r.submitted_at
+      }))
+    });
+  } catch (err) {
+    console.error('Error en debug admin:', err.message);
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
 module.exports = router;

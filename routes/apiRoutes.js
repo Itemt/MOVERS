@@ -172,27 +172,74 @@ router.get('/progress/:username/:examId', async (req, res) => {
 });
 
 // ────────────────────────────────────────────────────────
-// Normalización y tolerancia para respuestas escritas
+// ────────────────────────────────────────────────────────
+// Normalización y tolerancia avanzada para respuestas escritas
 // ────────────────────────────────────────────────────────
 function normalizeAnswer(str) {
   if (!str) return '';
   let clean = String(str).trim().toLowerCase();
-  clean = clean.replace(/[.,!?;:]+$/g, '').trim();
-  clean = clean.replace(/^(a|an|the)\s+/i, '').trim();
+  clean = clean.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // quitar tildes
+  clean = clean.replace(/[\s.,!?;:'"/\-\\_()+]+/g, ' ').trim(); // quitar puntuación
+  clean = clean.replace(/\b(a|an|the|to|of|in|on|at|by|with|for|it|is|are)\b/gi, '').replace(/\s+/g, ' ').trim();
   return clean;
+}
+
+function levenshteinDistance(a, b) {
+  if (a === b) return 0;
+  if (!a) return b ? b.length : 0;
+  if (!b) return a ? a.length : 0;
+  const matrix = [];
+  for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+  for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+  for (let i = 1; i <= b.length; i++) {
+    for (let j = 1; j <= a.length; j++) {
+      if (b.charAt(i - 1) === a.charAt(j - 1)) {
+        matrix[i][j] = matrix[i - 1][j - 1];
+      } else {
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1,
+          matrix[i][j - 1] + 1,
+          matrix[i - 1][j] + 1
+        );
+      }
+    }
+  }
+  return matrix[b.length][a.length];
+}
+
+function stripPlural(str) {
+  if (!str || str.length <= 3) return str;
+  if (str.endsWith('ies') && str.length > 4) return str.slice(0, -3) + 'y';
+  if (str.endsWith('es') && str.length > 4) return str.slice(0, -2);
+  if (str.endsWith('s') && !str.endsWith('ss')) return str.slice(0, -1);
+  return str;
 }
 
 function checkAnswer(userAns, expectedAns, acceptableAnswers = []) {
   if (!userAns) return false;
   const normUser = normalizeAnswer(userAns);
-  if (!normUser) return false;
+  const rawUser = String(userAns).trim().toLowerCase();
+  if (!normUser && !rawUser) return false;
 
   const targets = [expectedAns, ...(acceptableAnswers || [])].filter(Boolean);
   return targets.some(target => {
     const normTarget = normalizeAnswer(target);
     const rawTarget = String(target).trim().toLowerCase();
-    const rawUser = String(userAns).trim().toLowerCase();
-    return normUser === normTarget || rawUser === rawTarget;
+
+    // 1. Coincidencia exacta o normalizada
+    if (rawUser === rawTarget || normUser === normTarget) return true;
+
+    // 2. Coincidencia de plurales ('s' / 'es')
+    if (normUser && normTarget && stripPlural(normUser) === stripPlural(normTarget)) return true;
+
+    // 3. Tolerancia a errores de tipeo (Levenshtein)
+    if (normUser && normTarget) {
+      const dist = levenshteinDistance(normUser, normTarget);
+      const maxAllowedDist = normTarget.length >= 7 ? 2 : (normTarget.length >= 4 ? 1 : 0);
+      if (dist <= maxAllowedDist) return true;
+    }
+
+    return false;
   });
 }
 
@@ -416,6 +463,57 @@ router.get('/admin/submissions', async (req, res) => {
   } catch (err) {
     console.error('Error en panel admin:', err.message);
     res.status(500).json({ success: false, message: 'Error al cargar datos de administración.' });
+  }
+});
+
+// ────────────────────────────────────────────────────────
+// POST /api/admin/reset-student
+// Borra las entregas y progreso de un alumno en la base de datos
+// ────────────────────────────────────────────────────────
+router.post('/admin/reset-student', async (req, res) => {
+  try {
+    const { pin, username, examId } = req.body;
+    if (pin !== 'movers2026') {
+      return res.status(401).json({ success: false, message: 'PIN incorrecto.' });
+    }
+    if (!username) {
+      return res.status(400).json({ success: false, message: 'Se requiere username.' });
+    }
+
+    const cleanUser = username.trim().toLowerCase();
+    const eId = examId ? parseInt(examId) : null;
+
+    const turso = await db.getTursoClient().catch(() => null);
+    if (turso) {
+      if (eId) {
+        await turso.execute({ sql: 'DELETE FROM submissions WHERE username = ? AND exam_id = ?', args: [cleanUser, eId] });
+        await turso.execute({ sql: 'DELETE FROM progress WHERE username = ? AND exam_id = ?', args: [cleanUser, eId] });
+      } else {
+        await turso.execute({ sql: 'DELETE FROM submissions WHERE username = ?', args: [cleanUser] });
+        await turso.execute({ sql: 'DELETE FROM progress WHERE username = ?', args: [cleanUser] });
+      }
+    } else {
+      await db.withLock(async () => {
+        const store = await db.fetchStore();
+        if (eId) {
+          store.submissions = (store.submissions || []).filter(s => !(s.username === cleanUser && s.examId === eId));
+          if (store.progress) delete store.progress[`${cleanUser}_${eId}`];
+        } else {
+          store.submissions = (store.submissions || []).filter(s => s.username !== cleanUser);
+          if (store.progress) {
+            Object.keys(store.progress).forEach(k => {
+              if (k.startsWith(`${cleanUser}_`)) delete store.progress[k];
+            });
+          }
+        }
+        await db.saveStore(store);
+      });
+    }
+
+    res.json({ success: true, message: `Examen borrado exitosamente para ${cleanUser}.` });
+  } catch (err) {
+    console.error('Error al resetear examen:', err.message);
+    res.status(500).json({ success: false, message: 'Error al borrar examen de la base de datos.' });
   }
 });
 

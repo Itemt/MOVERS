@@ -119,44 +119,12 @@ document.addEventListener('DOMContentLoaded', () => {
       el.disabled = true;
     });
     document.getElementById('action-bar').style.display = 'none';
-    document.getElementById('timer-display').style.display = 'none';
+    document.getElementById('timer-display')?.style.setProperty('display', 'none');
   }
 
-  // ── Temporizador ─────────────────────────────────────────────
+  // ── Temporizador (Desactivado) ─────────────────────────────
   function startTimer() {
-    const durationMins = examData?.durationMinutes || EXAM_DURATION_FALLBACK_MINS;
-    let remaining = durationMins * 60;
-    const display = document.getElementById('timer-clock');
-
-    function updateDisplay() {
-      const m = Math.floor(remaining / 60).toString().padStart(2, '0');
-      const s = (remaining % 60).toString().padStart(2, '0');
-      display.textContent = `${m}:${s}`;
-
-      const box = document.getElementById('timer-display');
-      if (remaining <= 300) { // últimos 5 min
-        box.style.background = '#fef2f2';
-        box.style.color = '#dc2626';
-        box.style.borderColor = '#fca5a5';
-      } else if (remaining <= 600) { // últimos 10 min
-        box.style.background = '#fff7ed';
-        box.style.color = '#d97706';
-      }
-    }
-
-    updateDisplay();
-    timerInterval = setInterval(() => {
-      remaining--;
-      updateDisplay();
-      if (remaining <= 0) {
-        clearInterval(timerInterval);
-        display.textContent = '00:00';
-        // Guardar progreso automáticamente cuando se acaba el tiempo
-        autoSaveProgress().then(() => {
-          showToast('⏰ ¡Tiempo agotado! Tu progreso fue guardado. Puedes retomarlo luego.');
-        });
-      }
-    }, 1000);
+    // Contador de tiempo desactivado a petición
   }
 
   // ── Auto-guardado cada 60 segundos ──────────────────────────

@@ -25,26 +25,64 @@ document.addEventListener('DOMContentLoaded', () => {
   let autoRefreshInterval = null;
   let nextRefreshIn = 20;
 
-  // Normalización y tolerancia para comprobación en vista admin
+  // Normalización y tolerancia avanzada para comprobación en vista admin
   function normalizeAnswer(str) {
     if (!str) return '';
     let clean = String(str).trim().toLowerCase();
-    clean = clean.replace(/[.,!?;:]+$/g, '').trim();
-    clean = clean.replace(/^(a|an|the)\s+/i, '').trim();
+    clean = clean.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    clean = clean.replace(/[\s.,!?;:'"/\-\\_()+]+/g, ' ').trim();
+    clean = clean.replace(/\b(a|an|the|to|of|in|on|at|by|with|for|it|is|are)\b/gi, '').replace(/\s+/g, ' ').trim();
     return clean;
+  }
+
+  function levenshteinDistance(a, b) {
+    if (a === b) return 0;
+    if (!a) return b ? b.length : 0;
+    if (!b) return a ? a.length : 0;
+    const matrix = [];
+    for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+    for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+    for (let i = 1; i <= b.length; i++) {
+      for (let j = 1; j <= a.length; j++) {
+        if (b.charAt(i - 1) === a.charAt(j - 1)) {
+          matrix[i][j] = matrix[i - 1][j - 1];
+        } else {
+          matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, matrix[i][j - 1] + 1, matrix[i - 1][j] + 1);
+        }
+      }
+    }
+    return matrix[b.length][a.length];
+  }
+
+  function stripPlural(str) {
+    if (!str || str.length <= 3) return str;
+    if (str.endsWith('ies') && str.length > 4) return str.slice(0, -3) + 'y';
+    if (str.endsWith('es') && str.length > 4) return str.slice(0, -2);
+    if (str.endsWith('s') && !str.endsWith('ss')) return str.slice(0, -1);
+    return str;
   }
 
   function checkAnswer(userAns, expectedAns, acceptableAnswers = []) {
     if (!userAns) return false;
     const normUser = normalizeAnswer(userAns);
-    if (!normUser) return false;
+    const rawUser = String(userAns).trim().toLowerCase();
+    if (!normUser && !rawUser) return false;
 
     const targets = [expectedAns, ...(acceptableAnswers || [])].filter(Boolean);
     return targets.some(target => {
       const normTarget = normalizeAnswer(target);
       const rawTarget = String(target).trim().toLowerCase();
-      const rawUser = String(userAns).trim().toLowerCase();
-      return normUser === normTarget || rawUser === rawTarget;
+
+      if (rawUser === rawTarget || normUser === normTarget) return true;
+      if (normUser && normTarget && stripPlural(normUser) === stripPlural(normTarget)) return true;
+
+      if (normUser && normTarget) {
+        const dist = levenshteinDistance(normUser, normTarget);
+        const maxAllowedDist = normTarget.length >= 7 ? 2 : (normTarget.length >= 4 ? 1 : 0);
+        if (dist <= maxAllowedDist) return true;
+      }
+
+      return false;
     });
   }
 
@@ -90,17 +128,65 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTable();
   });
 
-  // Delegación de eventos para el botón "Ver Respuestas"
+  const btnModalDelete = document.getElementById('btn-modal-delete-exam');
+  let currentModalStudent = null;
+
+  async function resetStudentExam(username, name, examId) {
+    const confirmMsg = `⚠️ ¿Confirmas que deseas BORRAR de la base de datos el examen y progreso de:\n\n👤 ${name} (${username})\n📝 Practice Test ${examId}\n\nEl alumno podrá realizar el examen nuevamente desde cero.`;
+    if (!confirm(confirmMsg)) return;
+
+    try {
+      const res = await fetch('/api/admin/reset-student', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pin: currentPin, username, examId })
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert(`✅ Examen borrado correctamente para ${name}.`);
+        closeModal();
+        loadDashboard(currentPin);
+      } else {
+        alert(`⚠️ ${data.message || 'Error al borrar el examen.'}`);
+      }
+    } catch (err) {
+      console.error('Error borrando examen:', err);
+      alert('Error de conexión al intentar borrar el examen.');
+    }
+  }
+
+  // Delegación de eventos para la tabla
   tableBody.addEventListener('click', (e) => {
-    const btn = e.target.closest('.btn-view-answers');
-    if (btn) {
-      const username = btn.getAttribute('data-username');
+    const btnView = e.target.closest('.btn-view-answers');
+    if (btnView) {
+      const username = btnView.getAttribute('data-username');
       const student = allStudentsData.find(s => s.username === username);
       if (student) {
         openAnswersModal(student);
       }
+      return;
+    }
+
+    const btnReset = e.target.closest('.btn-reset-student');
+    if (btnReset) {
+      const username = btnReset.getAttribute('data-username');
+      const name = btnReset.getAttribute('data-name');
+      const examId = btnReset.getAttribute('data-examid');
+      resetStudentExam(username, name, examId);
     }
   });
+
+  if (btnModalDelete) {
+    btnModalDelete.addEventListener('click', () => {
+      if (currentModalStudent) {
+        resetStudentExam(
+          currentModalStudent.username,
+          `${currentModalStudent.firstName} ${currentModalStudent.lastName}`,
+          currentModalStudent.assignedExamId || 1
+        );
+      }
+    });
+  }
 
   // Cerrar Modal
   const closeModal = () => { answersModal.style.display = 'none'; };
@@ -190,8 +276,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const scoreText = st.autoScore !== null ? `<strong>${st.autoScore}/${st.maxAutoScore}</strong>` : '--';
       const hasAnswers = st.answers && Object.keys(st.answers).length > 0;
       const actionBtn = hasAnswers
-        ? `<button type="button" class="btn btn-outline btn-view-answers" data-username="${st.username}" style="padding: 6px 14px; font-size: 0.85rem; font-weight:700;">👁️ Ver Respuestas</button>`
-        : `<span style="color: #94a3b8; font-size: 0.85rem;">Sin respuestas</span>`;
+        ? `<button type="button" class="btn btn-outline btn-view-answers" data-username="${st.username}" style="padding: 6px 12px; font-size: 0.85rem; font-weight:700;">👁️ Respuestas</button>
+           <button type="button" class="btn btn-reset-student" data-username="${st.username}" data-name="${st.firstName} ${st.lastName}" data-examid="${st.assignedExamId || 1}" style="padding: 6px 10px; font-size: 0.82rem; font-weight:700; background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; border-radius: 6px; cursor: pointer; margin-left: 4px;" title="Borrar de la BD para permitir repetir">🗑️ Borrar</button>`
+        : (st.examStatus !== 'not_started'
+            ? `<button type="button" class="btn btn-reset-student" data-username="${st.username}" data-name="${st.firstName} ${st.lastName}" data-examid="${st.assignedExamId || 1}" style="padding: 6px 10px; font-size: 0.82rem; font-weight:700; background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; border-radius: 6px; cursor: pointer;" title="Borrar de la BD">🗑️ Borrar</button>`
+            : `<span style="color: #94a3b8; font-size: 0.85rem;">Sin actividad</span>`);
 
       html += `
         <tr style="border-bottom: 1px solid var(--border);">
@@ -220,6 +309,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Renderizado del Modal de Respuestas ────────────────────
   async function openAnswersModal(student) {
+    currentModalStudent = student;
+    if (btnModalDelete) {
+      if (student.examStatus !== 'not_started' || (student.answers && Object.keys(student.answers).length > 0)) {
+        btnModalDelete.style.display = 'inline-block';
+      } else {
+        btnModalDelete.style.display = 'none';
+      }
+    }
+
     modalStudentName.textContent = `${student.firstName} ${student.lastName}`;
     const statusText = student.examStatus === 'submitted' ? '✅ Examen Entregado' : (student.examStatus === 'in_progress' ? '💾 Examen En Progreso' : 'Sin Iniciar');
     const timeText = student.updatedAt ? ` | Último guardado: ${new Date(student.updatedAt).toLocaleString('es-CO')}` : '';

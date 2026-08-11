@@ -350,16 +350,36 @@ document.addEventListener('DOMContentLoaded', () => {
       const p = exam.parts.part6;
       html += `
         <div class="card">
-          <div class="part-header"><h3>${p.title}</h3><p>${p.instruction}</p></div>
+          <div class="part-header"><h3>${p.title}</h3><p>${p.instruction}</p></div>`;
+
+      if (p.scenes && p.scenes.length > 0) {
+        p.scenes.forEach((sc, idx) => {
+          html += `
+            <div style="${idx > 0 ? 'margin-top:36px;padding-top:28px;border-top:2px dashed #cbd5e1;' : ''}">
+              ${sc.title ? `<h4 style="font-size:1.2rem;color:var(--primary);margin-bottom:12px;font-weight:700;">${sc.title}</h4>` : ''}
+              ${imgMarkup(sc.imageUrl)}
+              ${sc.promptText ? `<p style="font-size:1rem;color:var(--text-muted);text-align:center;margin-bottom:20px;font-weight:600;">${sc.promptText}</p>` : ''}
+              ${(sc.questions || []).map(q => `
+                <div class="question-row">
+                  <div class="question-text">${q.num}. ${q.text}</div>
+                  <input type="text" name="${q.id}" id="${q.id}" class="input-field"
+                    placeholder="${q.placeholder || 'Write your answer…'}" autocomplete="off">
+                </div>`).join('')}
+            </div>`;
+        });
+      } else {
+        html += `
           ${imgMarkup(p.imageUrl)}
           ${p.promptText ? `<p style="font-size:1rem;color:var(--text-muted);text-align:center;margin-bottom:20px;font-weight:600;">${p.promptText}</p>` : ''}
-          ${p.questions.map(q => `
+          ${(p.questions || []).map(q => `
             <div class="question-row">
               <div class="question-text">${q.num}. ${q.text}</div>
               <input type="text" name="${q.id}" id="${q.id}" class="input-field"
                 placeholder="${q.placeholder || 'Write your answer…'}" autocomplete="off">
-            </div>`).join('')}
-        </div>`;
+            </div>`).join('')}`;
+      }
+
+      html += `</div>`;
     }
 
     container.innerHTML = html;

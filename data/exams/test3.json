@@ -230,20 +230,34 @@
     },
     "part6": {
       "title": "Part 6 – Look and read and write",
-      "instruction": "Look at the picture and answer the questions. Write full sentences or short descriptions on the lines.",
-      "imageUrl": "/images/part6_library_scene.jpg",
-      "promptText": "Look carefully at the school study room scene and answer all 10 questions.",
-      "questions": [
-        { "id": "p6_q1", "num": 1, "type": "complete", "text": "The man with a beard is wearing a green beret hat and blue ________.", "placeholder": "jeans / trousers" },
-        { "id": "p6_q2", "num": 2, "type": "complete", "text": "The girl writing at the round green table has got red ________.", "placeholder": "hair" },
-        { "id": "p6_q3", "num": 3, "type": "answer", "text": "What is the man in the green sweater doing?", "placeholder": "He is reading an open book." },
-        { "id": "p6_q4", "num": 4, "type": "answer", "text": "What is the girl with blonde hair in the red dress doing?", "placeholder": "She is looking at books on the bookshelf." },
-        { "id": "p6_q5", "num": 5, "type": "answer", "text": "What is on the yellow table in front of the boy?", "placeholder": "An open book, a bottle of water, and a CD case." },
-        { "id": "p6_q6", "num": 6, "type": "answer", "text": "What is lying on the floor under the green round table?", "placeholder": "An orange scarf / towel." },
-        { "id": "p6_q7", "num": 7, "type": "answer", "text": "What is the red-haired girl using to write on the piece of paper?", "placeholder": "She is writing with a green pencil." },
-        { "id": "p6_q8", "num": 8, "type": "answer", "text": "What color are the window blinds drawn halfway down?", "placeholder": "The blinds are green / light green." },
-        { "id": "p6_q9", "num": 9, "type": "sentence", "text": "Write a full sentence about the girl standing near the bookshelf.", "placeholder": "A girl in a red dress is standing near the tall bookshelf looking at books." },
-        { "id": "p6_q10", "num": 10, "type": "sentence", "text": "Write another sentence describing the boy reading at the yellow table.", "placeholder": "A boy with brown hair is reading a book at a yellow table with a bottle of water." }
+      "instruction": "Look at the pictures and answer the questions for each scene. Write full sentences or short descriptions on the lines.",
+      "scenes": [
+        {
+          "title": "Scene 1 – Playground Rainbow Wall Scene",
+          "imageUrl": "/images/part6_rainbow_wall.png",
+          "promptText": "Look carefully at the school garden painting scene and answer questions 1–6.",
+          "questions": [
+            { "id": "p6_s1_q1", "num": 1, "type": "complete", "text": "The boy painting the rainbow on the box has got blond ________.", "placeholder": "hair" },
+            { "id": "p6_s1_q2", "num": 2, "type": "complete", "text": "The girl in the blue t-shirt and pink skirt is holding a paint ________.", "placeholder": "tray / palette" },
+            { "id": "p6_s1_q3", "num": 3, "type": "answer", "text": "What is the boy in the purple shirt doing near the wooden ladder?", "placeholder": "He is taking a photo with his camera." },
+            { "id": "p6_s1_q4", "num": 4, "type": "answer", "text": "What color t-shirt is the boy painting green leaves wearing?", "placeholder": "He is wearing a blue t-shirt and jeans." },
+            { "id": "p6_s1_q5", "num": 5, "type": "answer", "text": "What is the girl with curly brown hair carrying on a tray?", "placeholder": "She is bringing a box of drinks / cups of juice." },
+            { "id": "p6_s1_q6", "num": 6, "type": "sentence", "text": "Write a full sentence about what the children are painting on the brick wall.", "placeholder": "The children are painting a large bright rainbow and a green tree on the wall." }
+          ]
+        },
+        {
+          "title": "Scene 2 – Study Room & Library Scene",
+          "imageUrl": "/images/part6_library_scene.jpg",
+          "promptText": "Look carefully at the study room / library scene and answer questions 7–12.",
+          "questions": [
+            { "id": "p6_s2_q7", "num": 7, "type": "complete", "text": "The man with a beard is wearing a green beret hat and blue ________.", "placeholder": "jeans / trousers" },
+            { "id": "p6_s2_q8", "num": 8, "type": "complete", "text": "The girl writing at the round green table has got red ________.", "placeholder": "hair" },
+            { "id": "p6_s2_q9", "num": 9, "type": "answer", "text": "What is the man in the green sweater doing?", "placeholder": "He is reading an open book." },
+            { "id": "p6_s2_q10", "num": 10, "type": "answer", "text": "What is the girl with blonde hair in the red dress doing?", "placeholder": "She is looking at books on the bookshelf." },
+            { "id": "p6_s2_q11", "num": 11, "type": "sentence", "text": "Write a full sentence about the girl standing near the bookshelf.", "placeholder": "A girl in a red dress is standing near the tall bookshelf looking at books." },
+            { "id": "p6_s2_q12", "num": 12, "type": "sentence", "text": "Write another sentence describing the boy reading at the yellow table.", "placeholder": "A boy with brown hair is reading a book at a yellow table with a bottle of water." }
+          ]
+        }
       ]
     }
   }

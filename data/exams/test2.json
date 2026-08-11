@@ -237,12 +237,12 @@
           "imageUrl": "/images/part6_bears_bathroom.png",
           "promptText": "Look closely at the bear family in the bathroom and answer questions 1–6.",
           "questions": [
-            { "id": "p6_s1_q1", "num": 1, "type": "complete", "text": "There are five white ________ hanging in the bathroom.", "placeholder": "towels" },
-            { "id": "p6_s1_q2", "num": 2, "type": "complete", "text": "The blue bear is drying his face with a small ________.", "placeholder": "towel" },
-            { "id": "p6_s1_q3", "num": 3, "type": "answer", "text": "What is the big brown bear doing behind the blue shower curtain?", "placeholder": "He is having a warm shower." },
-            { "id": "p6_s1_q4", "num": 4, "type": "answer", "text": "What is on the bathroom shelf under the rectangular mirror?", "placeholder": "There are two clear drinking glasses and a red toothbrush." },
-            { "id": "p6_s1_q5", "num": 5, "type": "answer", "text": "What are the two smallest bear cubs doing on the tiled floor?", "placeholder": "They are brushing their teeth with toothbrushes." },
-            { "id": "p6_s1_q6", "num": 6, "type": "sentence", "text": "Write a full sentence describing the toys floating in the bathtub.", "placeholder": "There is a red toy sailboat, two yellow ducks and a dolphin in the bath." }
+            { "id": "p6_s1_q1", "num": 1, "type": "complete", "text": "There are five white ________ hanging in the bathroom.", "placeholder": "Escribe tu respuesta aquí…" },
+            { "id": "p6_s1_q2", "num": 2, "type": "complete", "text": "The blue bear is drying his face with a small ________.", "placeholder": "Escribe tu respuesta aquí…" },
+            { "id": "p6_s1_q3", "num": 3, "type": "answer", "text": "What is the big brown bear doing behind the blue shower curtain?", "placeholder": "Escribe tu respuesta aquí…" },
+            { "id": "p6_s1_q4", "num": 4, "type": "answer", "text": "What is on the bathroom shelf under the rectangular mirror?", "placeholder": "Escribe tu respuesta aquí…" },
+            { "id": "p6_s1_q5", "num": 5, "type": "answer", "text": "What are the two smallest bear cubs doing on the tiled floor?", "placeholder": "Escribe tu respuesta aquí…" },
+            { "id": "p6_s1_q6", "num": 6, "type": "sentence", "text": "Write a full sentence describing the toys floating in the bathtub.", "placeholder": "Escribe tu respuesta aquí…" }
           ]
         },
         {
@@ -250,12 +250,12 @@
           "imageUrl": "/images/part6_hospital_room.jpg",
           "promptText": "Look closely at the hospital room scene and answer questions 7–12.",
           "questions": [
-            { "id": "p6_s2_q7", "num": 7, "type": "complete", "text": "The boy sitting in the bed has got a sling on his ________ arm.", "placeholder": "right / injured" },
-            { "id": "p6_s2_q8", "num": 8, "type": "complete", "text": "The doctor is holding a clipboard and wearing a white ________.", "placeholder": "coat / lab coat" },
-            { "id": "p6_s2_q9", "num": 9, "type": "answer", "text": "What is the boy lying in the bed on the left doing?", "placeholder": "He is listening to music with headphones." },
-            { "id": "p6_s2_q10", "num": 10, "type": "answer", "text": "What are the three visiting boys bringing into the hospital room?", "placeholder": "They are bringing colorful balloons and a birthday cake." },
-            { "id": "p6_s2_q11", "num": 11, "type": "sentence", "text": "Write a full sentence describing the three boys visiting their friend.", "placeholder": "Three boys are bringing colorful balloons and a birthday cake to visit their friend." },
-            { "id": "p6_s2_q12", "num": 12, "type": "sentence", "text": "Write another sentence about the view outside the hospital window.", "placeholder": "There are tall city buildings and a bright rainbow in the sky outside the window." }
+            { "id": "p6_s2_q7", "num": 7, "type": "complete", "text": "The boy sitting in the bed has got a sling on his ________ arm.", "placeholder": "Escribe tu respuesta aquí…" },
+            { "id": "p6_s2_q8", "num": 8, "type": "complete", "text": "The doctor is holding a clipboard and wearing a white ________.", "placeholder": "Escribe tu respuesta aquí…" },
+            { "id": "p6_s2_q9", "num": 9, "type": "answer", "text": "What is the boy lying in the bed on the left doing?", "placeholder": "Escribe tu respuesta aquí…" },
+            { "id": "p6_s2_q10", "num": 10, "type": "answer", "text": "What are the three visiting boys bringing into the hospital room?", "placeholder": "Escribe tu respuesta aquí…" },
+            { "id": "p6_s2_q11", "num": 11, "type": "sentence", "text": "Write a full sentence describing the three boys visiting their friend.", "placeholder": "Escribe tu respuesta aquí…" },
+            { "id": "p6_s2_q12", "num": 12, "type": "sentence", "text": "Write another sentence about the view outside the hospital window.", "placeholder": "Escribe tu respuesta aquí…" }
           ]
         }
       ]

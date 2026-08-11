@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
           ${p.questions.map(q => `
             <div class="question-row">
               <div class="question-text">${q.num}. ${q.text}</div>
-              <input type="text" name="${q.id}" id="${q.id}" class="input-field" placeholder="Write the correct word…" autocomplete="off">
+              <input type="text" name="${q.id}" id="${q.id}" class="input-field" placeholder="Escribe tu respuesta aquí…" autocomplete="off">
             </div>`).join('')}
         </div>`;
     }
@@ -280,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ${p.questions.map(q => `
               <div>
                 <label style="font-weight:700;font-size:0.9rem;">( ${q.num} ) Write the missing word:</label>
-                <input type="text" name="${q.id}" id="${q.id}" class="input-field" placeholder="Word…" autocomplete="off">
+                <input type="text" name="${q.id}" id="${q.id}" class="input-field" placeholder="Escribe tu respuesta aquí…" autocomplete="off">
               </div>`).join('')}
           </div>
           ${p.titleQuestion ? `
@@ -340,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
           ${p.questions.map(q => `
             <div class="question-row">
               <div class="question-text">${q.num}. ${q.text}</div>
-              <input type="text" name="${q.id}" id="${q.id}" class="input-field" placeholder="Write 1, 2 or 3 words…" autocomplete="off">
+              <input type="text" name="${q.id}" id="${q.id}" class="input-field" placeholder="Escribe tu respuesta aquí…" autocomplete="off">
             </div>`).join('')}
         </div>`;
     }
@@ -363,7 +363,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="question-row">
                   <div class="question-text">${q.num}. ${q.text}</div>
                   <input type="text" name="${q.id}" id="${q.id}" class="input-field"
-                    placeholder="${q.placeholder || 'Write your answer…'}" autocomplete="off">
+                    placeholder="${q.placeholder || 'Escribe tu respuesta aquí…'}" autocomplete="off">
                 </div>`).join('')}
             </div>`;
         });
@@ -375,7 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="question-row">
               <div class="question-text">${q.num}. ${q.text}</div>
               <input type="text" name="${q.id}" id="${q.id}" class="input-field"
-                placeholder="${q.placeholder || 'Write your answer…'}" autocomplete="off">
+                placeholder="${q.placeholder || 'Escribe tu respuesta aquí…'}" autocomplete="off">
             </div>`).join('')}`;
       }
 

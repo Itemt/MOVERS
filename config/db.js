@@ -72,6 +72,11 @@ async function getTursoClient() {
             submitted_at TEXT DEFAULT (datetime('now'))
           )`,
           args: []
+        },
+        {
+          // Evita submissions duplicadas si hay race condition en entorno serverless
+          sql: `CREATE UNIQUE INDEX IF NOT EXISTS idx_submissions_unique ON submissions(username, exam_id)`,
+          args: []
         }
       ], 'write');
 

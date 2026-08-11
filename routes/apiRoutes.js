@@ -41,7 +41,8 @@ router.post('/students/login', async (req, res) => {
     const store = await db.fetchStore();
     const student = store.students.find(s => s.username === cleanUser);
 
-    if (!student || cleanUser !== cleanPass) {
+    // La contraseña de cada alumno es su propio username (por diseño del examen)
+    if (!student || cleanPass !== student.username) {
       return res.status(401).json({ success: false, message: 'Usuario o contraseña incorrectos.' });
     }
 

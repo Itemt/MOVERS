@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let autoSaveInterval = null;
   let examIsSubmitted = false;
   let timerInterval = null;
-  const TIMER_SECONDS = 45 * 60; // 45 minutos
+  const EXAM_DURATION_FALLBACK_MINS = 80; // fallback si el JSON no tiene durationMinutes
 
   // ── Verificar login ──────────────────────────────────────────
   const rawStudent = localStorage.getItem('movers_student');
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Temporizador ─────────────────────────────────────────────
   function startTimer() {
-    const durationMins = examData?.durationMinutes || 80;
+    const durationMins = examData?.durationMinutes || EXAM_DURATION_FALLBACK_MINS;
     let remaining = durationMins * 60;
     const display = document.getElementById('timer-clock');
 

@@ -34,51 +34,39 @@ async function getTursoClient() {
       });
 
       // Crear tablas si no existen (idempotente)
-      await client.batch([
-        {
-          sql: `CREATE TABLE IF NOT EXISTS students (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            first_name TEXT NOT NULL,
-            last_name TEXT NOT NULL,
-            grade TEXT NOT NULL,
-            username TEXT UNIQUE,
-            assigned_exam_id INTEGER DEFAULT 1,
-            last_login_at TEXT,
-            created_at TEXT DEFAULT (datetime('now'))
-          )`,
-          args: []
-        },
-        {
-          sql: `CREATE TABLE IF NOT EXISTS progress (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL,
-            exam_id INTEGER NOT NULL,
-            raw_answers_json TEXT NOT NULL DEFAULT '{}',
-            status TEXT DEFAULT 'in_progress',
-            updated_at TEXT DEFAULT (datetime('now')),
-            UNIQUE(username, exam_id)
-          )`,
-          args: []
-        },
-        {
-          sql: `CREATE TABLE IF NOT EXISTS submissions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL,
-            exam_id INTEGER NOT NULL,
-            auto_score INTEGER DEFAULT 0,
-            max_auto_score INTEGER DEFAULT 0,
-            raw_answers_json TEXT NOT NULL DEFAULT '{}',
-            status TEXT DEFAULT 'submitted',
-            submitted_at TEXT DEFAULT (datetime('now'))
-          )`,
-          args: []
-        },
-        {
-          // Evita submissions duplicadas si hay race condition en entorno serverless
-          sql: `CREATE UNIQUE INDEX IF NOT EXISTS idx_submissions_unique ON submissions(username, exam_id)`,
-          args: []
-        }
-      ], 'write');
+      await client.execute(`CREATE TABLE IF NOT EXISTS students (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        first_name TEXT NOT NULL,
+        last_name TEXT NOT NULL,
+        grade TEXT NOT NULL,
+        username TEXT UNIQUE,
+        assigned_exam_id INTEGER DEFAULT 1,
+        last_login_at TEXT,
+        created_at TEXT DEFAULT (datetime('now'))
+      )`);
+
+      await client.execute(`CREATE TABLE IF NOT EXISTS progress (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT NOT NULL,
+        exam_id INTEGER NOT NULL,
+        raw_answers_json TEXT NOT NULL DEFAULT '{}',
+        status TEXT DEFAULT 'in_progress',
+        updated_at TEXT DEFAULT (datetime('now')),
+        UNIQUE(username, exam_id)
+      )`);
+
+      await client.execute(`CREATE TABLE IF NOT EXISTS submissions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT NOT NULL,
+        exam_id INTEGER NOT NULL,
+        auto_score INTEGER DEFAULT 0,
+        max_auto_score INTEGER DEFAULT 0,
+        raw_answers_json TEXT NOT NULL DEFAULT '{}',
+        status TEXT DEFAULT 'submitted',
+        submitted_at TEXT DEFAULT (datetime('now'))
+      )`);
+
+      await client.execute(`CREATE UNIQUE INDEX IF NOT EXISTS idx_submissions_unique ON submissions(username, exam_id)`);
 
       _tursoClient = client;
       _initFailed = false;

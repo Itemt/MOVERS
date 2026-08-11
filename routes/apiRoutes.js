@@ -222,17 +222,15 @@ router.post('/progress/save', async (req, res) => {
         return res.json({ success: false, alreadySubmitted: true, message: 'Este examen ya fue entregado.' });
       }
 
-      await turso.batch([
-        {
-          sql: 'DELETE FROM progress WHERE username = ? AND exam_id = ?',
-          args: [cleanUser, eId]
-        },
-        {
-          sql: `INSERT INTO progress (username, exam_id, raw_answers_json, status, updated_at)
-                VALUES (?, ?, ?, 'in_progress', ?)`,
-          args: [cleanUser, eId, answersJson, nowIso]
-        }
-      ], 'write');
+      await turso.execute({
+        sql: `INSERT INTO progress (username, exam_id, raw_answers_json, status, updated_at)
+              VALUES (?, ?, ?, 'in_progress', ?)
+              ON CONFLICT(username, exam_id) DO UPDATE SET
+                raw_answers_json = excluded.raw_answers_json,
+                status = excluded.status,
+                updated_at = excluded.updated_at`,
+        args: [cleanUser, eId, answersJson, nowIso]
+      });
     } else {
       // Fallback local
       const key = `${cleanUser}_${eId}`;
@@ -342,17 +340,15 @@ router.post('/exams/submit', async (req, res) => {
 
       // ── Paso 2: Actualizar progress a 'submitted'
       try {
-        await turso.batch([
-          {
-            sql: 'DELETE FROM progress WHERE username = ? AND exam_id = ?',
-            args: [cleanUser, eId]
-          },
-          {
-            sql: `INSERT INTO progress (username, exam_id, raw_answers_json, status, updated_at)
-                  VALUES (?, ?, ?, 'submitted', ?)`,
-            args: [cleanUser, eId, answersJson, nowIso]
-          }
-        ], 'write');
+        await turso.execute({
+          sql: `INSERT INTO progress (username, exam_id, raw_answers_json, status, updated_at)
+                VALUES (?, ?, ?, 'submitted', ?)
+                ON CONFLICT(username, exam_id) DO UPDATE SET
+                  raw_answers_json = excluded.raw_answers_json,
+                  status = excluded.status,
+                  updated_at = excluded.updated_at`,
+          args: [cleanUser, eId, answersJson, nowIso]
+        });
       } catch (progressErr) {
         console.warn('⚠️ No se pudo actualizar progress tras submit (no crítico):', progressErr.message);
       }

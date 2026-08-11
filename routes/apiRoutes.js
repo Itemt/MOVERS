@@ -324,31 +324,46 @@ router.post('/exams/submit', async (req, res) => {
     const answersJson = JSON.stringify(answers || {});
 
     if (turso) {
-      // Insertar submission y actualizar progress como submitted (batch atómico)
-      await turso.batch([
-        {
-          sql: `INSERT INTO submissions (username, exam_id, auto_score, max_auto_score, raw_answers_json, status, submitted_at)
-                VALUES (?, ?, ?, ?, ?, 'submitted', ?)`,
-          args: [cleanUser, eId, autoScore, maxAutoScore, answersJson, nowIso]
-        },
-        {
-          sql: 'DELETE FROM progress WHERE username = ? AND exam_id = ?',
-          args: [cleanUser, eId]
-        },
-        {
-          sql: `INSERT INTO progress (username, exam_id, raw_answers_json, status, updated_at)
-                VALUES (?, ?, ?, 'submitted', ?)`,
-          args: [cleanUser, eId, answersJson, nowIso]
-        }
-      ], 'write');
+      // ── Paso 1: Insertar submission (usa INSERT OR IGNORE para proteger el índice único)
+      // Si ya existiera por race condition, OR IGNORE la descarta sin fallar.
+      await turso.execute({
+        sql: `INSERT OR IGNORE INTO submissions
+              (username, exam_id, auto_score, max_auto_score, raw_answers_json, status, submitted_at)
+              VALUES (?, ?, ?, ?, ?, 'submitted', ?)`,
+        args: [cleanUser, eId, autoScore, maxAutoScore, answersJson, nowIso]
+      });
+
+      // ── Paso 2: Actualizar progress a 'submitted' (separado del INSERT submissions
+      //    para que un error aquí no cancele la entrega del alumno)
+      try {
+        await turso.batch([
+          {
+            sql: 'DELETE FROM progress WHERE username = ? AND exam_id = ?',
+            args: [cleanUser, eId]
+          },
+          {
+            sql: `INSERT INTO progress (username, exam_id, raw_answers_json, status, updated_at)
+                  VALUES (?, ?, ?, 'submitted', ?)`,
+            args: [cleanUser, eId, answersJson, nowIso]
+          }
+        ], 'write');
+      } catch (progressErr) {
+        // No crítico: el examen ya fue guardado en submissions.
+        // El progreso puede quedar desactualizado pero la entrega es válida.
+        console.warn('⚠️ No se pudo actualizar progress tras submit (no crítico):', progressErr.message);
+      }
     } else {
       // Fallback local
       await db.withLock(async () => {
         const store = await db.fetchStore();
-        store.submissions = (store.submissions || []).filter(
-          s => !(s.username === cleanUser && s.examId === eId)
+        // Evitar duplicados locales
+        const alreadyExists = (store.submissions || []).some(
+          s => s.username === cleanUser && s.examId === eId
         );
-        store.submissions.push({ id: Date.now(), username: cleanUser, examId: eId, autoScore, maxAutoScore, answers, submittedAt: nowIso, status: 'submitted' });
+        if (!alreadyExists) {
+          store.submissions = store.submissions || [];
+          store.submissions.push({ id: Date.now(), username: cleanUser, examId: eId, autoScore, maxAutoScore, answers, submittedAt: nowIso, status: 'submitted' });
+        }
         if (!store.progress) store.progress = {};
         store.progress[`${cleanUser}_${eId}`] = { answers, updatedAt: nowIso, status: 'submitted' };
         await db.saveStore(store);

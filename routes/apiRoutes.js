@@ -432,7 +432,7 @@ router.get('/admin/debug', async (req, res) => {
 
     const turso = await db.getTursoClient().catch(() => null);
     if (!turso) {
-      return res.json({ success: false, message: 'Sin conexión a Turso. Usando fallback local.', tursoConnected: false });
+      return res.json({ success: false, message: 'Sin conexión a Turso.', tursoConnected: false });
     }
 
     const [resStudents, resProgress, resSubmissions] = await Promise.all([
@@ -441,24 +441,48 @@ router.get('/admin/debug', async (req, res) => {
       turso.execute('SELECT id, username, exam_id, auto_score, max_auto_score, status, submitted_at FROM submissions ORDER BY id DESC LIMIT 40')
     ]);
 
+    // ── Test de escritura: INSERT → READ → DELETE
+    let writeTest = { attempted: false, insertOk: false, readOk: false, deleteOk: false, error: null };
+    try {
+      writeTest.attempted = true;
+      await turso.execute({
+        sql: `INSERT OR IGNORE INTO progress (username, exam_id, raw_answers_json, status, updated_at)
+              VALUES ('__debug_write_test__', 0, '{}', 'debug', ?)`,
+        args: [new Date().toISOString()]
+      });
+      writeTest.insertOk = true;
+
+      const readCheck = await turso.execute({
+        sql: `SELECT id FROM progress WHERE username = '__debug_write_test__' LIMIT 1`,
+        args: []
+      });
+      writeTest.readOk = readCheck.rows.length > 0;
+
+      await turso.execute({
+        sql: `DELETE FROM progress WHERE username = '__debug_write_test__'`,
+        args: []
+      });
+      writeTest.deleteOk = true;
+    } catch (writeErr) {
+      writeTest.error = writeErr.message;
+    }
+
     res.json({
       success: true,
       tursoConnected: true,
+      writeTest,
       counts: {
         students: resStudents.rows.length,
         progress: resProgress.rows.length,
         submissions: resSubmissions.rows.length
       },
-      students: resStudents.rows.map(r => ({
-        id: String(r.id), username: r.username, assignedExamId: String(r.assigned_exam_id)
-      })),
-      progress: resProgress.rows.map(r => ({
-        id: String(r.id), username: r.username, examId: String(r.exam_id), status: r.status, updatedAt: r.updated_at
-      })),
       submissions: resSubmissions.rows.map(r => ({
         id: String(r.id), username: r.username, examId: String(r.exam_id),
         autoScore: String(r.auto_score), maxAutoScore: String(r.max_auto_score),
         status: r.status, submittedAt: r.submitted_at
+      })),
+      progress: resProgress.rows.map(r => ({
+        id: String(r.id), username: r.username, examId: String(r.exam_id), status: r.status
       }))
     });
   } catch (err) {

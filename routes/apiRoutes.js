@@ -323,18 +323,24 @@ router.post('/exams/submit', async (req, res) => {
     const nowIso = new Date().toISOString();
     const answersJson = JSON.stringify(answers || {});
 
+    let _debug = { tursoNull: !turso, insertResult: null, insertError: null };
+
     if (turso) {
       // ── Paso 1: Insertar submission (usa INSERT OR IGNORE para proteger el índice único)
-      // Si ya existiera por race condition, OR IGNORE la descarta sin fallar.
-      await turso.execute({
-        sql: `INSERT OR IGNORE INTO submissions
-              (username, exam_id, auto_score, max_auto_score, raw_answers_json, status, submitted_at)
-              VALUES (?, ?, ?, ?, ?, 'submitted', ?)`,
-        args: [cleanUser, eId, autoScore, maxAutoScore, answersJson, nowIso]
-      });
+      try {
+        const insertRes = await turso.execute({
+          sql: `INSERT OR IGNORE INTO submissions
+                (username, exam_id, auto_score, max_auto_score, raw_answers_json, status, submitted_at)
+                VALUES (?, ?, ?, ?, ?, 'submitted', ?)`,
+          args: [cleanUser, eId, autoScore, maxAutoScore, answersJson, nowIso]
+        });
+        _debug.insertResult = { rowsAffected: insertRes.rowsAffected, lastInsertRowid: String(insertRes.lastInsertRowid) };
+      } catch (insertErr) {
+        _debug.insertError = insertErr.message;
+        throw insertErr; // re-lanzar para que el catch externo devuelva 500
+      }
 
-      // ── Paso 2: Actualizar progress a 'submitted' (separado del INSERT submissions
-      //    para que un error aquí no cancele la entrega del alumno)
+      // ── Paso 2: Actualizar progress a 'submitted'
       try {
         await turso.batch([
           {
@@ -348,15 +354,12 @@ router.post('/exams/submit', async (req, res) => {
           }
         ], 'write');
       } catch (progressErr) {
-        // No crítico: el examen ya fue guardado en submissions.
-        // El progreso puede quedar desactualizado pero la entrega es válida.
         console.warn('⚠️ No se pudo actualizar progress tras submit (no crítico):', progressErr.message);
       }
     } else {
       // Fallback local
       await db.withLock(async () => {
         const store = await db.fetchStore();
-        // Evitar duplicados locales
         const alreadyExists = (store.submissions || []).some(
           s => s.username === cleanUser && s.examId === eId
         );
@@ -370,7 +373,7 @@ router.post('/exams/submit', async (req, res) => {
       });
     }
 
-    res.json({ success: true, autoScore, maxAutoScore, message: '¡Examen entregado exitosamente!' });
+    res.json({ success: true, autoScore, maxAutoScore, message: '¡Examen entregado exitosamente!', _debug });
   } catch (err) {
     console.error('Error al entregar examen:', err.message);
     res.status(500).json({ success: false, message: 'Error al entregar el examen. Intenta de nuevo.' });
@@ -441,8 +444,10 @@ router.get('/admin/debug', async (req, res) => {
       turso.execute('SELECT id, username, exam_id, auto_score, max_auto_score, status, submitted_at FROM submissions ORDER BY id DESC LIMIT 40')
     ]);
 
-    // ── Test de escritura: INSERT → READ → DELETE
+    // ── Test de escritura en progress
     let writeTest = { attempted: false, insertOk: false, readOk: false, deleteOk: false, error: null };
+    // ── Test de escritura en submissions
+    let writeTestSub = { insertOk: false, readOk: false, deleteOk: false, rowsAffected: null, error: null };
     try {
       writeTest.attempted = true;
       await turso.execute({
@@ -451,26 +456,42 @@ router.get('/admin/debug', async (req, res) => {
         args: [new Date().toISOString()]
       });
       writeTest.insertOk = true;
-
       const readCheck = await turso.execute({
         sql: `SELECT id FROM progress WHERE username = '__debug_write_test__' LIMIT 1`,
         args: []
       });
       writeTest.readOk = readCheck.rows.length > 0;
-
-      await turso.execute({
-        sql: `DELETE FROM progress WHERE username = '__debug_write_test__'`,
-        args: []
-      });
+      await turso.execute({ sql: `DELETE FROM progress WHERE username = '__debug_write_test__'`, args: [] });
       writeTest.deleteOk = true;
     } catch (writeErr) {
       writeTest.error = writeErr.message;
+    }
+
+    try {
+      const subInsert = await turso.execute({
+        sql: `INSERT OR IGNORE INTO submissions
+              (username, exam_id, auto_score, max_auto_score, raw_answers_json, status, submitted_at)
+              VALUES ('__debug_sub_test__', 0, 0, 0, '{}', 'debug', ?)`,
+        args: [new Date().toISOString()]
+      });
+      writeTestSub.insertOk = true;
+      writeTestSub.rowsAffected = subInsert.rowsAffected;
+      const subRead = await turso.execute({
+        sql: `SELECT id FROM submissions WHERE username = '__debug_sub_test__' LIMIT 1`,
+        args: []
+      });
+      writeTestSub.readOk = subRead.rows.length > 0;
+      await turso.execute({ sql: `DELETE FROM submissions WHERE username = '__debug_sub_test__'`, args: [] });
+      writeTestSub.deleteOk = true;
+    } catch (subErr) {
+      writeTestSub.error = subErr.message;
     }
 
     res.json({
       success: true,
       tursoConnected: true,
       writeTest,
+      writeTestSub,
       counts: {
         students: resStudents.rows.length,
         progress: resProgress.rows.length,

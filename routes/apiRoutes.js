@@ -429,9 +429,25 @@ router.get('/admin/debug', async (req, res) => {
       return res.status(401).json({ success: false, message: 'PIN incorrecto.' });
     }
 
-    const turso = await db.getTursoClient().catch(() => null);
+    let turso = null;
+    let tursoErr = null;
+    try {
+      turso = await db.getTursoClient();
+    } catch (e) {
+      tursoErr = e.message;
+    }
+
     if (!turso) {
-      return res.json({ success: false, message: 'Sin conexión a Turso.', tursoConnected: false });
+      return res.json({
+        success: false,
+        message: 'Sin conexión a Turso.',
+        tursoConnected: false,
+        tursoError: tursoErr || 'process.env.TURSO_DATABASE_URL está vacío o indefinido.',
+        envVars: {
+          hasUrl: !!process.env.TURSO_DATABASE_URL,
+          hasToken: !!process.env.TURSO_AUTH_TOKEN
+        }
+      });
     }
 
     const [resStudents, resProgress, resSubmissions] = await Promise.all([

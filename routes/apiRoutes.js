@@ -307,18 +307,6 @@ router.post('/exams/submit', async (req, res) => {
     const cleanUser = username.trim().toLowerCase();
     const eId = parseInt(examId);
 
-    // Verificar que no haya entregado ya
-    const turso = await db.getTursoClient().catch(() => null);
-    if (turso) {
-      const resSub = await turso.execute({
-        sql: 'SELECT id FROM submissions WHERE username = ? AND exam_id = ? LIMIT 1',
-        args: [cleanUser, eId]
-      });
-      if (resSub.rows.length > 0) {
-        return res.json({ success: false, alreadySubmitted: true, message: 'Este examen ya fue entregado anteriormente.' });
-      }
-    }
-
     const exam = loadExamData(eId);
     if (!exam) {
       return res.status(404).json({ success: false, message: 'Examen no encontrado.' });
@@ -377,24 +365,33 @@ router.post('/exams/submit', async (req, res) => {
     const nowIso = new Date().toISOString();
     const answersJson = JSON.stringify(answers || {});
 
-    let _debug = { tursoNull: !turso, insertResult: null, insertError: null };
+    let _debug = { tursoNull: false, upsertResult: null, upsertError: null };
 
+    const turso = await db.getTursoClient().catch(() => null);
     if (turso) {
-      // ── Paso 1: Insertar submission (usa INSERT OR IGNORE para proteger el índice único)
+      _debug.tursoNull = false;
+
+      // ── UPSERT submissions: crea o sobreescribe la entrega anterior ──
       try {
-        const insertRes = await turso.execute({
-          sql: `INSERT OR IGNORE INTO submissions
+        const upsertRes = await turso.execute({
+          sql: `INSERT INTO submissions
                 (username, exam_id, auto_score, max_auto_score, raw_answers_json, status, submitted_at)
-                VALUES (?, ?, ?, ?, ?, 'submitted', ?)`,
+                VALUES (?, ?, ?, ?, ?, 'submitted', ?)
+                ON CONFLICT(username, exam_id) DO UPDATE SET
+                  auto_score       = excluded.auto_score,
+                  max_auto_score   = excluded.max_auto_score,
+                  raw_answers_json = excluded.raw_answers_json,
+                  status           = 'submitted',
+                  submitted_at     = excluded.submitted_at`,
           args: [cleanUser, eId, autoScore, maxAutoScore, answersJson, nowIso]
         });
-        _debug.insertResult = { rowsAffected: insertRes.rowsAffected, lastInsertRowid: String(insertRes.lastInsertRowid) };
-      } catch (insertErr) {
-        _debug.insertError = insertErr.message;
-        throw insertErr; // re-lanzar para que el catch externo devuelva 500
+        _debug.upsertResult = { rowsAffected: upsertRes.rowsAffected, lastInsertRowid: String(upsertRes.lastInsertRowid) };
+      } catch (upsertErr) {
+        _debug.upsertError = upsertErr.message;
+        throw upsertErr;
       }
 
-      // ── Paso 2: Actualizar progress a 'submitted'
+      // ── Actualizar progress a 'submitted' ──
       try {
         await turso.execute({
           sql: `INSERT INTO progress (username, exam_id, raw_answers_json, status, updated_at)
@@ -409,15 +406,19 @@ router.post('/exams/submit', async (req, res) => {
         console.warn('⚠️ No se pudo actualizar progress tras submit (no crítico):', progressErr.message);
       }
     } else {
-      // Fallback local
+      _debug.tursoNull = true;
+      // Fallback local — sobreescribir si ya existe
       await db.withLock(async () => {
         const store = await db.fetchStore();
-        const alreadyExists = (store.submissions || []).some(
+        store.submissions = store.submissions || [];
+        const existingIdx = store.submissions.findIndex(
           s => s.username === cleanUser && s.examId === eId
         );
-        if (!alreadyExists) {
-          store.submissions = store.submissions || [];
-          store.submissions.push({ id: Date.now(), username: cleanUser, examId: eId, autoScore, maxAutoScore, answers, submittedAt: nowIso, status: 'submitted' });
+        const entry = { id: Date.now(), username: cleanUser, examId: eId, autoScore, maxAutoScore, answers, submittedAt: nowIso, status: 'submitted' };
+        if (existingIdx >= 0) {
+          store.submissions[existingIdx] = entry;
+        } else {
+          store.submissions.push(entry);
         }
         if (!store.progress) store.progress = {};
         store.progress[`${cleanUser}_${eId}`] = { answers, updatedAt: nowIso, status: 'submitted' };

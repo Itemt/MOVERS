@@ -841,17 +841,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── 13. Botón: Entregar Examen ──────────────────────────────────
   document.getElementById('btn-submit-exam').addEventListener('click', async () => {
-    if (examIsSubmitted) return;
-
     pauseAllAudios();
 
     const answers = collectAnswers();
-    const totalInputs = document.querySelectorAll('#movers-exam-form input[type="text"], #movers-exam-form input[type="radio"]').length;
     const answeredCount = Object.keys(answers).length;
 
     let confirmMsg;
     if (answeredCount < 10) {
-      confirmMsg = `⚠️ Solo has respondido ${answeredCount} preguntas en total (Listening + Reading).\n¿Estás seguro de que deseas entregar? No podrás modificar tus respuestas después.`;
+      confirmMsg = `⚠️ Solo has respondido ${answeredCount} preguntas en total (Listening + Reading).\n¿Estás seguro de que deseas entregar?`;
     } else {
       confirmMsg = `📥 ¿Confirmas que deseas entregar tu examen a tu profesor?\nHas respondido ${answeredCount} preguntas (Listening y Reading & Writing).`;
     }
@@ -870,15 +867,9 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       const data = await res.json();
 
-      if (data.alreadySubmitted) {
-        alert('Este examen ya fue entregado anteriormente. Recarga la página para ver tus respuestas.');
-        window.location.reload();
-        return;
-      }
-
       if (data.success) {
         clearInterval(autoSaveInterval);
-        examIsSubmitted = true;
+        startAutoSave(); // reanudar autosave para guardar cambios posteriores
 
         // Calcular puntajes por sección para el modal
         let listeningCorrect = 0;
@@ -903,16 +894,18 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('res-total-score').textContent = `${data.autoScore} / ${data.maxAutoScore} pts`;
 
         document.getElementById('results-modal').style.display = 'flex';
+        btn.disabled = false;
+        btn.textContent = '📥 Entregar Examen';
       } else {
         alert(data.message || 'Error al entregar el examen. Intenta de nuevo.');
         btn.disabled = false;
-        btn.textContent = '📥 Entregar Examen Completo';
+        btn.textContent = '📥 Entregar Examen';
       }
     } catch (err) {
       console.error('Error entregando examen:', err);
       alert('Error de conexión. Guarda tu progreso y vuelve a intentarlo.');
       btn.disabled = false;
-      btn.textContent = '📥 Entregar Examen Completo';
+      btn.textContent = '📥 Entregar Examen';
     }
   });
 

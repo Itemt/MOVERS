@@ -294,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span style="background: var(--primary-light); color: var(--primary); padding: 4px 10px; border-radius: 8px;">${q.num}</span>
                         <span>${q.name}</span>
                       </div>
-                      ${q.hint ? `<span class="character-hint">(${q.hint})</span>` : ''}
+
                     </div>
                     <div class="mcq-options" style="margin-top: 10px;">
                       ${q.options.map(opt => {
@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span style="background: var(--primary-light); color: var(--primary); padding: 4px 10px; border-radius: 8px;">${q.num}</span>
                         <span>${q.name}</span>
                       </div>
-                      ${q.hint ? `<span class="character-hint">${q.hint}</span>` : ''}
+
                     </div>
                     <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px;">
                       Número en el dibujo:

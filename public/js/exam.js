@@ -299,9 +299,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="mcq-options" style="margin-top: 10px;">
                       ${q.options.map(opt => {
                         const letter = opt.substring(0, 1);
+                        const optId = `${q.id}_${letter}`;
                         return `
-                          <label class="mcq-option-label">
-                            <input type="radio" name="${q.id}" id="${q.id}_${letter}" value="${letter}">
+                          <label class="mcq-option-label" for="${optId}">
+                            <input type="radio" name="${q.id}" id="${optId}" value="${letter}">
                             <span>${opt}</span>
                           </label>
                         `;
@@ -325,12 +326,15 @@ document.addEventListener('DOMContentLoaded', () => {
                       Número en el dibujo:
                     </div>
                     <div class="number-selector-grid">
-                      ${numOptions.map(numVal => `
-                        <label class="number-pill-option">
-                          <input type="radio" name="${q.id}" id="${q.id}_num_${numVal}" value="${numVal}">
-                          <span class="number-pill-label">${numVal}</span>
-                        </label>
-                      `).join('')}
+                      ${numOptions.map(numVal => {
+                        const pillId = `${q.id}_num_${numVal}`;
+                        return `
+                          <label class="number-pill-option" for="${pillId}">
+                            <input type="radio" name="${q.id}" id="${pillId}" value="${numVal}">
+                            <span class="number-pill-label">${numVal}</span>
+                          </label>
+                        `;
+                      }).join('')}
                     </div>
                   </div>
                 `;

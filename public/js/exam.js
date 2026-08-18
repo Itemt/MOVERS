@@ -675,11 +675,52 @@ document.addEventListener('DOMContentLoaded', () => {
       const val = answers[id];
       document.querySelectorAll(`[name="${id}"]`).forEach(el => {
         if (el.type === 'radio') {
-          if (el.value === val) el.checked = true;
+          const isMatch = (el.value === val);
+          el.checked = isMatch;
+          const label = el.closest('.number-pill-option') || el.closest('.mcq-option-label');
+          if (label) {
+            if (isMatch) {
+              label.classList.add('is-selected');
+            } else {
+              label.classList.remove('is-selected');
+            }
+          }
         } else {
           el.value = val;
         }
       });
+    });
+  }
+
+  // Delegación de eventos para sincronizar clases activas en opciones seleccionadas
+  const formEl = document.getElementById('movers-exam-form');
+  if (formEl) {
+    formEl.addEventListener('change', (e) => {
+      if (e.target && e.target.type === 'radio') {
+        const name = e.target.name;
+        document.querySelectorAll(`input[name="${name}"]`).forEach(radio => {
+          const label = radio.closest('.number-pill-option') || radio.closest('.mcq-option-label');
+          if (label) {
+            if (radio.checked) {
+              label.classList.add('is-selected');
+            } else {
+              label.classList.remove('is-selected');
+            }
+          }
+        });
+      }
+    });
+
+    // Permitir clic directo en cualquier parte de la tarjeta o píldora
+    formEl.addEventListener('click', (e) => {
+      const pill = e.target.closest('.number-pill-option');
+      if (pill) {
+        const radio = pill.querySelector('input[type="radio"]');
+        if (radio && !radio.disabled) {
+          radio.checked = true;
+          radio.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      }
     });
   }
 

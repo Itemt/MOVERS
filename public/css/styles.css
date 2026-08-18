@@ -377,7 +377,16 @@ body {
   box-shadow: 0 3px 10px rgba(2, 132, 199, 0.18);
 }
 
-.mcq-option-label input[type="radio"]:checked + span {
+/* Cuando el formulario está bloqueado (examen entregado) — mantener visual */
+.mcq-option-label:has(input[type="radio"]:disabled:checked),
+.mcq-option-label:has(input[type="radio"][disabled]:checked) {
+  background: #e0f2fe !important;
+  border-color: #0284c7 !important;
+  color: #0369a1 !important;
+}
+
+.mcq-option-label input[type="radio"]:checked + span,
+.mcq-option-label input[type="radio"]:disabled:checked + span {
   color: #0369a1;
   font-weight: 800;
 }
@@ -746,7 +755,9 @@ body {
 
 .number-pill-option input[type="radio"]:checked + .number-pill-label,
 .number-pill-option:has(input[type="radio"]:checked) .number-pill-label,
-.number-pill-option.is-selected .number-pill-label {
+.number-pill-option.is-selected .number-pill-label,
+.number-pill-option input[type="radio"]:disabled:checked + .number-pill-label,
+.number-pill-option:has(input[type="radio"]:disabled:checked) .number-pill-label {
   background: #0284c7 !important;
   color: #ffffff !important;
   border-color: #0284c7 !important;

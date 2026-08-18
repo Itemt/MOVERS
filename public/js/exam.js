@@ -778,10 +778,21 @@ document.addEventListener('DOMContentLoaded', () => {
       fillAnswers(progressData.answers);
     }
 
-    // Deshabilitar inputs
-    document.querySelectorAll('#movers-exam-form input').forEach(el => {
-      el.disabled = true;
+    // Bloquear interacción SIN usar disabled (que rompe :checked visual en CSS/Safari)
+    // Usar pointer-events + readonly en el formulario completo
+    const form = document.getElementById('movers-exam-form');
+    if (form) {
+      form.style.pointerEvents = 'none';
+      form.style.userSelect = 'none';
+    }
+
+    // Para inputs de texto, usar readonly en lugar de disabled
+    document.querySelectorAll('#movers-exam-form input[type="text"], #movers-exam-form textarea').forEach(el => {
+      el.readOnly = true;
+      el.style.backgroundColor = '#f8fafc';
+      el.style.color = '#475569';
     });
+
     document.getElementById('action-bar').style.display = 'none';
   }
 
@@ -907,6 +918,17 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('res-listening-score').textContent = `${listeningCorrect} / ${listeningTotal} correctas`;
         document.getElementById('res-reading-score').textContent = `${readingCorrect} / ${readingTotal} correctas`;
         document.getElementById('res-total-score').textContent = `${data.autoScore} / ${data.maxAutoScore} pts`;
+
+        // Bloquear el formulario igual que setSubmittedMode
+        const form = document.getElementById('movers-exam-form');
+        if (form) {
+          form.style.pointerEvents = 'none';
+          form.style.userSelect = 'none';
+        }
+        document.querySelectorAll('#movers-exam-form input[type="text"], #movers-exam-form textarea').forEach(el => {
+          el.readOnly = true;
+          el.style.backgroundColor = '#f8fafc';
+        });
 
         document.getElementById('results-modal').style.display = 'flex';
       } else {

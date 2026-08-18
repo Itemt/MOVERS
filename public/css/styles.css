@@ -377,16 +377,7 @@ body {
   box-shadow: 0 3px 10px rgba(2, 132, 199, 0.18);
 }
 
-/* Cuando el formulario está bloqueado (examen entregado) — mantener visual */
-.mcq-option-label:has(input[type="radio"]:disabled:checked),
-.mcq-option-label:has(input[type="radio"][disabled]:checked) {
-  background: #e0f2fe !important;
-  border-color: #0284c7 !important;
-  color: #0369a1 !important;
-}
-
-.mcq-option-label input[type="radio"]:checked + span,
-.mcq-option-label input[type="radio"]:disabled:checked + span {
+.mcq-option-label input[type="radio"]:checked + span {
   color: #0369a1;
   font-weight: 800;
 }
@@ -743,7 +734,6 @@ body {
   color: var(--dark);
   transition: all 0.15s ease;
   box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-  pointer-events: none;
 }
 
 .number-pill-option:hover .number-pill-label {
@@ -755,9 +745,7 @@ body {
 
 .number-pill-option input[type="radio"]:checked + .number-pill-label,
 .number-pill-option:has(input[type="radio"]:checked) .number-pill-label,
-.number-pill-option.is-selected .number-pill-label,
-.number-pill-option input[type="radio"]:disabled:checked + .number-pill-label,
-.number-pill-option:has(input[type="radio"]:disabled:checked) .number-pill-label {
+.number-pill-option.is-selected .number-pill-label {
   background: #0284c7 !important;
   color: #ffffff !important;
   border-color: #0284c7 !important;

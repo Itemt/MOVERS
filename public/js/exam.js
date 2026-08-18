@@ -720,7 +720,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const pill = e.target.closest('.number-pill-option');
       if (pill) {
         const radio = pill.querySelector('input[type="radio"]');
-        if (radio && !radio.disabled) {
+        if (radio) {
           radio.checked = true;
           radio.dispatchEvent(new Event('change', { bubbles: true }));
         }

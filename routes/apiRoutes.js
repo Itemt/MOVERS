@@ -328,6 +328,15 @@ router.post('/exams/submit', async (req, res) => {
     let autoScore = 0;
     let maxAutoScore = 0;
 
+    // Sección Listening (Partes 1–3)
+    (exam.listening?.parts || []).forEach(part => {
+      (part.questions || []).forEach(q => {
+        maxAutoScore++;
+        const userVal = (answers[q.id] || '').trim();
+        if (checkAnswer(userVal, q.answer, q.acceptableAnswers)) autoScore++;
+      });
+    });
+
     // Parte 1 — completar palabra del banco
     (exam.parts.part1?.questions || []).forEach(q => {
       maxAutoScore++;

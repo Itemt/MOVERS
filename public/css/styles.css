@@ -358,6 +358,373 @@ body {
   z-index: 1000;
 }
 
+/* Section Switcher Tabs */
+.section-switcher-container {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 24px;
+  background: white;
+  padding: 8px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+.section-tab-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 20px;
+  border-radius: var(--radius-md);
+  border: 2px solid transparent;
+  background: #f8fafc;
+  color: var(--text-muted);
+  font-weight: 800;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.section-tab-btn:hover {
+  background: #f1f5f9;
+  color: var(--dark);
+}
+
+.section-tab-btn.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
+}
+
+.section-badge-counter {
+  background: rgba(255,255,255,0.25);
+  color: inherit;
+  font-size: 0.8rem;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+.section-tab-btn:not(.active) .section-badge-counter {
+  background: #e2e8f0;
+  color: var(--dark);
+}
+
+/* Mode Selection Welcome Screen */
+.section-selector-modal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 30px 0;
+}
+
+@media (max-width: 700px) {
+  .section-selector-modal {
+    grid-template-columns: 1fr;
+  }
+}
+
+.section-choice-card {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow);
+}
+
+.section-choice-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  box-shadow: 0 12px 28px rgba(2, 132, 199, 0.15);
+}
+
+.section-choice-card.highlight {
+  border-color: #38bdf8;
+  background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
+}
+
+.section-card-icon {
+  font-size: 3.2rem;
+  margin-bottom: 12px;
+}
+
+.section-card-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--dark);
+  margin-bottom: 8px;
+}
+
+.section-card-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+/* Audio Player Custom Component */
+.movers-audio-player {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  border-radius: var(--radius-lg);
+  padding: 18px 22px;
+  color: white;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.25);
+  margin: 20px 0 24px;
+  border: 1px solid #334155;
+}
+
+.audio-player-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.audio-track-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.audio-track-badge {
+  background: #0284c7;
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.audio-track-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #f8fafc;
+}
+
+.audio-status-pill {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.audio-status-pill.playing {
+  color: #38bdf8;
+}
+
+.audio-status-pill.playing::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: #38bdf8;
+  border-radius: 50%;
+  animation: pulse-dot 1.2s infinite;
+}
+
+@keyframes pulse-dot {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.7; }
+}
+
+.audio-controls-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.audio-btn {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: white;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1.1rem;
+  outline: none;
+}
+
+.audio-btn:hover {
+  background: rgba(255,255,255,0.25);
+  transform: scale(1.06);
+}
+
+.audio-btn-play {
+  width: 52px;
+  height: 52px;
+  background: #0284c7;
+  border: none;
+  font-size: 1.35rem;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
+}
+
+.audio-btn-play:hover {
+  background: #0369a1;
+  transform: scale(1.08);
+}
+
+.audio-btn-seek {
+  width: 40px;
+  height: 40px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  border-radius: var(--radius-md);
+  padding: 0 8px;
+}
+
+.audio-progress-container {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.audio-progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #334155;
+  border-radius: 6px;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.audio-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0284c7, #38bdf8);
+  border-radius: 6px;
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+.audio-time-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  font-family: monospace;
+}
+
+.audio-volume-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.audio-volume-slider {
+  width: 70px;
+  accent-color: #38bdf8;
+  cursor: pointer;
+}
+
+/* Number Selection Pills for Movers Listening */
+.number-selector-grid {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.number-pill-option {
+  position: relative;
+  cursor: pointer;
+}
+
+.number-pill-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.number-pill-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 46px;
+  height: 44px;
+  padding: 0 14px;
+  background: white;
+  border: 2px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--dark);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+}
+
+.number-pill-option:hover .number-pill-label {
+  border-color: #38bdf8;
+  background: #f0f9ff;
+  color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.number-pill-option input[type="radio"]:checked + .number-pill-label {
+  background: #0284c7;
+  color: white;
+  border-color: #0284c7;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
+  transform: scale(1.05);
+}
+
+/* Listening Match Character Box */
+.listening-character-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin-bottom: 14px;
+  transition: border-color 0.2s;
+}
+
+.listening-character-card:hover {
+  border-color: #cbd5e1;
+}
+
+.character-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.character-name-badge {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.character-hint {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
 /* Modal */
 .modal-overlay {
   position: fixed;
@@ -376,7 +743,18 @@ body {
 .modal-card {
   background: white;
   border-radius: var(--radius-lg);
-  max-width: 500px;
+  max-width: 550px;
   width: 100%;
   box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
+
+.exam-img-responsive {
+  width: 100%;
+  max-width: 720px;
+  height: auto;
+  border-radius: 12px;
+  border: 2px solid #cbd5e1;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease;
+}
+

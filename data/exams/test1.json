@@ -9,36 +9,128 @@
       "title": "Part 1 – Look and read",
       "instruction": "Choose the correct words and write them on the lines. There is one example.",
       "wordBank": [
-        { "word": "an island", "emoji": "🏝️" },
-        { "word": "a sandwich", "emoji": "🥪" },
-        { "word": "a nurse", "emoji": "👩‍⚕️" },
-        { "word": "a driver", "emoji": "🚗" },
-        { "word": "a band", "emoji": "🎸" },
-        { "word": "a city", "emoji": "🏙️" },
-        { "word": "tea", "emoji": "☕" },
-        { "word": "a field", "emoji": "🌾" },
-        { "word": "a library", "emoji": "📚" },
-        { "word": "a market", "emoji": "🛒" },
-        { "word": "a cinema", "emoji": "🍿" },
-        { "word": "a waterfall", "emoji": "🌊" },
-        { "word": "a shoulder", "emoji": "🦴" },
-        { "word": "a pilot", "emoji": "👨‍✈️" }
+        {
+          "word": "an island",
+          "emoji": "🏝️"
+        },
+        {
+          "word": "a sandwich",
+          "emoji": "🥪"
+        },
+        {
+          "word": "a nurse",
+          "emoji": "👩‍⚕️"
+        },
+        {
+          "word": "a driver",
+          "emoji": "🚗"
+        },
+        {
+          "word": "a band",
+          "emoji": "🎸"
+        },
+        {
+          "word": "a city",
+          "emoji": "🏙️"
+        },
+        {
+          "word": "tea",
+          "emoji": "☕"
+        },
+        {
+          "word": "a field",
+          "emoji": "🌾"
+        },
+        {
+          "word": "a library",
+          "emoji": "📚"
+        },
+        {
+          "word": "a market",
+          "emoji": "🛒"
+        },
+        {
+          "word": "a cinema",
+          "emoji": "🍿"
+        },
+        {
+          "word": "a waterfall",
+          "emoji": "🌊"
+        },
+        {
+          "word": "a shoulder",
+          "emoji": "🦴"
+        },
+        {
+          "word": "a pilot",
+          "emoji": "👨‍✈️"
+        }
       ],
       "example": {
         "text": "The people in this group sometimes sing or play guitars together on stage.",
         "answer": "a band"
       },
       "questions": [
-        { "id": "p1_q1", "num": 1, "text": "This person helps people who are sick or hurt in a hospital.", "answer": "a nurse" },
-        { "id": "p1_q2", "num": 2, "text": "Some people like to put milk or a slice of lemon in this hot drink.", "answer": "tea" },
-        { "id": "p1_q3", "num": 3, "text": "There are lots of tall buildings, cars, buses and people in this busy place.", "answer": "a city" },
-        { "id": "p1_q4", "num": 4, "text": "You can put cheese, tomatoes or meat between two slices of bread to make this.", "answer": "a sandwich" },
-        { "id": "p1_q5", "num": 5, "text": "This is part of a farm where farmers grow plants, vegetables or wheat.", "answer": "a field" },
-        { "id": "p1_q6", "num": 6, "text": "You go to this quiet place at school or in town to read and borrow books.", "answer": "a library" },
-        { "id": "p1_q7", "num": 7, "text": "People go to this place outdoors or in a big hall to buy fresh fruit, fish and vegetables.", "answer": "a market" },
-        { "id": "p1_q8", "num": 8, "text": "This piece of land has water all around it and you usually get there by boat.", "answer": "an island" },
-        { "id": "p1_q9", "num": 9, "text": "This person drives a bus, car or taxi to take people from one place to another.", "answer": "a driver" },
-        { "id": "p1_q10", "num": 10, "text": "You go to this dark building to sit with friends and watch movies on a big screen.", "answer": "a cinema" }
+        {
+          "id": "p1_q1",
+          "num": 1,
+          "text": "This person helps people who are sick or hurt in a hospital.",
+          "answer": "a nurse"
+        },
+        {
+          "id": "p1_q2",
+          "num": 2,
+          "text": "Some people like to put milk or a slice of lemon in this hot drink.",
+          "answer": "tea"
+        },
+        {
+          "id": "p1_q3",
+          "num": 3,
+          "text": "There are lots of tall buildings, cars, buses and people in this busy place.",
+          "answer": "a city"
+        },
+        {
+          "id": "p1_q4",
+          "num": 4,
+          "text": "You can put cheese, tomatoes or meat between two slices of bread to make this.",
+          "answer": "a sandwich"
+        },
+        {
+          "id": "p1_q5",
+          "num": 5,
+          "text": "This is part of a farm where farmers grow plants, vegetables or wheat.",
+          "answer": "a field"
+        },
+        {
+          "id": "p1_q6",
+          "num": 6,
+          "text": "You go to this quiet place at school or in town to read and borrow books.",
+          "answer": "a library"
+        },
+        {
+          "id": "p1_q7",
+          "num": 7,
+          "text": "People go to this place outdoors or in a big hall to buy fresh fruit, fish and vegetables.",
+          "answer": "a market"
+        },
+        {
+          "id": "p1_q8",
+          "num": 8,
+          "text": "This piece of land has water all around it and you usually get there by boat.",
+          "answer": "an island"
+        },
+        {
+          "id": "p1_q9",
+          "num": 9,
+          "text": "This person drives a bus, car or taxi to take people from one place to another.",
+          "answer": "a driver"
+        },
+        {
+          "id": "p1_q10",
+          "num": 10,
+          "text": "You go to this dark building to sit with friends and watch movies on a big screen.",
+          "answer": "a cinema"
+        }
       ]
     },
     "part2": {
@@ -56,73 +148,123 @@
       },
       "questions": [
         {
-          "id": "p2_q1", "num": 1,
+          "id": "p2_q1",
+          "num": 1,
           "speaker": "Paul",
           "question": "Did you see the film about pirates on TV last night?",
-          "options": ["A) Yes, so do I.", "B) Yes, it was great!", "C) Yes, that's him."],
+          "options": [
+            "A) Yes, so do I.",
+            "B) Yes, it was great!",
+            "C) Yes, that's him."
+          ],
           "answer": "B"
         },
         {
-          "id": "p2_q2", "num": 2,
+          "id": "p2_q2",
+          "num": 2,
           "speaker": "Paul",
           "question": "Which was your favourite pirate in the film?",
-          "options": ["A) I liked it best.", "B) She was a pirate.", "C) Ben Bluebeard."],
+          "options": [
+            "A) I liked it best.",
+            "B) She was a pirate.",
+            "C) Ben Bluebeard."
+          ],
           "answer": "C"
         },
         {
-          "id": "p2_q3", "num": 3,
+          "id": "p2_q3",
+          "num": 3,
           "speaker": "Paul",
           "question": "Was he the one with long, curly black hair?",
-          "options": ["A) No, he hasn't.", "B) Yes, that's right!", "C) He's got one."],
+          "options": [
+            "A) No, he hasn't.",
+            "B) Yes, that's right!",
+            "C) He's got one."
+          ],
           "answer": "B"
         },
         {
-          "id": "p2_q4", "num": 4,
+          "id": "p2_q4",
+          "num": 4,
           "speaker": "Paul",
           "question": "I really like films which are funny and exciting.",
-          "options": ["A) Me too.", "B) It's all right.", "C) Do they?"],
+          "options": [
+            "A) Me too.",
+            "B) It's all right.",
+            "C) Do they?"
+          ],
           "answer": "A"
         },
         {
-          "id": "p2_q5", "num": 5,
+          "id": "p2_q5",
+          "num": 5,
           "speaker": "Paul",
           "question": "How about going to see 'Treasure Train' at the cinema tomorrow?",
-          "options": ["A) It's nice.", "B) What a good idea!", "C) Fine, thank you."],
+          "options": [
+            "A) It's nice.",
+            "B) What a good idea!",
+            "C) Fine, thank you."
+          ],
           "answer": "B"
         },
         {
-          "id": "p2_q6", "num": 6,
+          "id": "p2_q6",
+          "num": 6,
           "speaker": "Paul",
           "question": "Let's ask Fred to come to the cinema with us.",
-          "options": ["A) OK, we can phone him.", "B) OK, that's Fred's.", "C) OK, he can ask us."],
+          "options": [
+            "A) OK, we can phone him.",
+            "B) OK, that's Fred's.",
+            "C) OK, he can ask us."
+          ],
           "answer": "A"
         },
         {
-          "id": "p2_q7", "num": 7,
+          "id": "p2_q7",
+          "num": 7,
           "speaker": "Paul",
           "question": "What time does the movie start tomorrow afternoon?",
-          "options": ["A) It started at three o'clock.", "B) At half past four.", "C) Yes, it's very late."],
+          "options": [
+            "A) It started at three o'clock.",
+            "B) At half past four.",
+            "C) Yes, it's very late."
+          ],
           "answer": "B"
         },
         {
-          "id": "p2_q8", "num": 8,
+          "id": "p2_q8",
+          "num": 8,
           "speaker": "Paul",
           "question": "Shall I buy the cinema tickets online tonight?",
-          "options": ["A) Yes, please, that would be great!", "B) Yes, I am buying them.", "C) No, I haven't got them."],
+          "options": [
+            "A) Yes, please, that would be great!",
+            "B) Yes, I am buying them.",
+            "C) No, I haven't got them."
+          ],
           "answer": "A"
         },
         {
-          "id": "p2_q9", "num": 9,
+          "id": "p2_q9",
+          "num": 9,
           "speaker": "Paul",
           "question": "How are we going to travel to the cinema tomorrow?",
-          "options": ["A) We can take the bus.", "B) Yes, we travelled by train.", "C) The cinema is near."],
+          "options": [
+            "A) We can take the bus.",
+            "B) Yes, we travelled by train.",
+            "C) The cinema is near."
+          ],
           "answer": "A"
         },
         {
-          "id": "p2_q10", "num": 10,
+          "id": "p2_q10",
+          "num": 10,
           "speaker": "Paul",
           "question": "Shall we buy some popcorn and drinks before the film starts?",
-          "options": ["A) Yes, I love popcorn!", "B) Popcorn was on table.", "C) No, I didn't buy it."],
+          "options": [
+            "A) Yes, I love popcorn!",
+            "B) Popcorn was on table.",
+            "C) No, I didn't buy it."
+          ],
           "answer": "A"
         }
       ]
@@ -131,31 +273,107 @@
       "title": "Part 3 – Complete the Story",
       "instruction": "Read the story. Choose a word from the box. Write the correct word next to numbers 1–10. There is one example.",
       "wordBox": [
-        { "word": "library", "emoji": "📚" },
-        { "word": "website", "emoji": "💻" },
-        { "word": "frightened", "emoji": "😨" },
-        { "word": "hopping", "emoji": "🦘" },
-        { "word": "cleverest", "emoji": "🧠" },
-        { "word": "surprised", "emoji": "😮" },
-        { "word": "ideas", "emoji": "💡" },
-        { "word": "bounce", "emoji": "🏀" },
-        { "word": "address", "emoji": "✉️" },
-        { "word": "pictures", "emoji": "🖼️" },
-        { "word": "stronger", "emoji": "💪" },
-        { "word": "teacher", "emoji": "👩‍🏫" }
+        {
+          "word": "library",
+          "emoji": "📚"
+        },
+        {
+          "word": "website",
+          "emoji": "💻"
+        },
+        {
+          "word": "frightened",
+          "emoji": "😨"
+        },
+        {
+          "word": "hopping",
+          "emoji": "🦘"
+        },
+        {
+          "word": "cleverest",
+          "emoji": "🧠"
+        },
+        {
+          "word": "surprised",
+          "emoji": "😮"
+        },
+        {
+          "word": "ideas",
+          "emoji": "💡"
+        },
+        {
+          "word": "bounce",
+          "emoji": "🏀"
+        },
+        {
+          "word": "address",
+          "emoji": "✉️"
+        },
+        {
+          "word": "pictures",
+          "emoji": "🖼️"
+        },
+        {
+          "word": "stronger",
+          "emoji": "💪"
+        },
+        {
+          "word": "teacher",
+          "emoji": "👩‍🏫"
+        }
       ],
       "storyText": "Jane loves reading about different animals in her school [example: library]. Last Friday, Jane's (1) ________ told the class to find interesting (2) ________ of wild animals on the computer. 'Look on the animal (3) ________ I told you about yesterday,' she said. 'Work with a friend. Choose a really strong animal but talk about your different (4) ________ first before writing.' Jane worked with Paul. 'Bears are great,' Paul said. 'Let's find a picture of a bear in a cold river. They're really good at catching fish! Or a lion? People are (5) ________ of those because of their loud roar. Let me show you a picture of a lion with its mouth open!' 'What about kangaroos?' Jane said. 'They have longer and much (6) ________ tails than bears or lions. It's their powerful tails that make them really good at (7) ________ across grasslands! Their back legs are the strongest, too.' Paul looked at Jane in admiration. 'OK! You're right again, Jane!' he said. 'You're the (8) ________ girl in our class!' Then Jane took out a notebook and carefully wrote down the website (9) ________ so she could show her parents at home. Her parents were very (10) ________ when they saw how far kangaroos could jump!",
       "questions": [
-        { "id": "p3_q1", "num": 1, "answer": "teacher" },
-        { "id": "p3_q2", "num": 2, "answer": "pictures" },
-        { "id": "p3_q3", "num": 3, "answer": "website" },
-        { "id": "p3_q4", "num": 4, "answer": "ideas" },
-        { "id": "p3_q5", "num": 5, "answer": "frightened" },
-        { "id": "p3_q6", "num": 6, "answer": "stronger" },
-        { "id": "p3_q7", "num": 7, "answer": "hopping" },
-        { "id": "p3_q8", "num": 8, "answer": "cleverest" },
-        { "id": "p3_q9", "num": 9, "answer": "address" },
-        { "id": "p3_q10", "num": 10, "answer": "surprised" }
+        {
+          "id": "p3_q1",
+          "num": 1,
+          "answer": "teacher"
+        },
+        {
+          "id": "p3_q2",
+          "num": 2,
+          "answer": "pictures"
+        },
+        {
+          "id": "p3_q3",
+          "num": 3,
+          "answer": "website"
+        },
+        {
+          "id": "p3_q4",
+          "num": 4,
+          "answer": "ideas"
+        },
+        {
+          "id": "p3_q5",
+          "num": 5,
+          "answer": "frightened"
+        },
+        {
+          "id": "p3_q6",
+          "num": 6,
+          "answer": "stronger"
+        },
+        {
+          "id": "p3_q7",
+          "num": 7,
+          "answer": "hopping"
+        },
+        {
+          "id": "p3_q8",
+          "num": 8,
+          "answer": "cleverest"
+        },
+        {
+          "id": "p3_q9",
+          "num": 9,
+          "answer": "address"
+        },
+        {
+          "id": "p3_q10",
+          "num": 10,
+          "answer": "surprised"
+        }
       ],
       "titleQuestion": {
         "id": "p3_q11",
@@ -184,16 +402,106 @@
         "Many children love dolphins because they are (10) ________ friendly and playful animals in the ocean."
       ],
       "questions": [
-        { "id": "p4_q1", "num": 1, "options": ["then", "that", "than"], "answer": "than" },
-        { "id": "p4_q2", "num": 2, "options": ["quick", "quickly", "quickest"], "answer": "quickly" },
-        { "id": "p4_q3", "num": 3, "options": ["out", "from", "up"], "answer": "out" },
-        { "id": "p4_q4", "num": 4, "options": ["which", "what", "who"], "answer": "who" },
-        { "id": "p4_q5", "num": 5, "options": ["swam", "swim", "swimming"], "answer": "swim" },
-        { "id": "p4_q6", "num": 6, "options": ["to", "at", "for"], "answer": "to" },
-        { "id": "p4_q7", "num": 7, "options": ["can", "must", "should"], "answer": "can" },
-        { "id": "p4_q8", "num": 8, "options": ["their", "its", "our"], "answer": "their" },
-        { "id": "p4_q9", "num": 9, "options": ["and", "but", "so"], "answer": "and" },
-        { "id": "p4_q10", "num": 10, "options": ["very", "more", "most"], "answer": "very" }
+        {
+          "id": "p4_q1",
+          "num": 1,
+          "options": [
+            "then",
+            "that",
+            "than"
+          ],
+          "answer": "than"
+        },
+        {
+          "id": "p4_q2",
+          "num": 2,
+          "options": [
+            "quick",
+            "quickly",
+            "quickest"
+          ],
+          "answer": "quickly"
+        },
+        {
+          "id": "p4_q3",
+          "num": 3,
+          "options": [
+            "out",
+            "from",
+            "up"
+          ],
+          "answer": "out"
+        },
+        {
+          "id": "p4_q4",
+          "num": 4,
+          "options": [
+            "which",
+            "what",
+            "who"
+          ],
+          "answer": "who"
+        },
+        {
+          "id": "p4_q5",
+          "num": 5,
+          "options": [
+            "swam",
+            "swim",
+            "swimming"
+          ],
+          "answer": "swim"
+        },
+        {
+          "id": "p4_q6",
+          "num": 6,
+          "options": [
+            "to",
+            "at",
+            "for"
+          ],
+          "answer": "to"
+        },
+        {
+          "id": "p4_q7",
+          "num": 7,
+          "options": [
+            "can",
+            "must",
+            "should"
+          ],
+          "answer": "can"
+        },
+        {
+          "id": "p4_q8",
+          "num": 8,
+          "options": [
+            "their",
+            "its",
+            "our"
+          ],
+          "answer": "their"
+        },
+        {
+          "id": "p4_q9",
+          "num": 9,
+          "options": [
+            "and",
+            "but",
+            "so"
+          ],
+          "answer": "and"
+        },
+        {
+          "id": "p4_q10",
+          "num": 10,
+          "options": [
+            "very",
+            "more",
+            "most"
+          ],
+          "answer": "very"
+        }
       ]
     },
     "part5": {
@@ -212,18 +520,114 @@
         }
       ],
       "questions": [
-        { "id": "p5_q1", "num": 1, "text": "Daisy's home was in a flat in the ________.", "acceptableAnswers": ["city", "the city"] },
-        { "id": "p5_q2", "num": 2, "text": "Daisy's family drove to the countryside every ________ to visit her grandparents.", "acceptableAnswers": ["weekend", "every weekend"] },
-        { "id": "p5_q3", "num": 3, "text": "Daisy's mother liked the farm because it was a ________ place.", "acceptableAnswers": ["quiet", "very quiet", "so quiet"] },
-        { "id": "p5_q4", "num": 4, "text": "Daisy enjoyed helping her grandfather take care of the ________.", "acceptableAnswers": ["animals", "farm animals"] },
-        { "id": "p5_q5", "num": 5, "text": "There were six noisy ________ parked outside on the farm.", "acceptableAnswers": ["trucks", "noisy trucks"] },
-        { "id": "p5_q6", "num": 6, "text": "Daisy's father couldn't work outside because it started to ________ heavily.", "acceptableAnswers": ["rain"] },
-        { "id": "p5_q7", "num": 7, "text": "Daisy suggested that her parents go inside and have ________ with Grandma.", "acceptableAnswers": ["tea", "a cup of tea"] },
-        { "id": "p5_q8", "num": 8, "text": "Daisy went outside to help Grandpa feed cows and wash ________.", "acceptableAnswers": ["sheep", "some sheep"] },
-        { "id": "p5_q9", "num": 9, "text": "Daisy gave the cows their dry ________ during the afternoon.", "acceptableAnswers": ["grass", "dry grass"] },
-        { "id": "p5_q10", "num": 10, "text": "Daisy carried heavy baskets of fresh ________ from the garden.", "acceptableAnswers": ["vegetables"] },
-        { "id": "p5_q11", "num": 11, "text": "Daisy felt ________ after working hard outside all afternoon.", "acceptableAnswers": ["tired but happy", "happy", "tired"] },
-        { "id": "p5_q12", "num": 12, "text": "Grandfather said Daisy was the best ________ in her family.", "acceptableAnswers": ["farmer", "best farmer"] }
+        {
+          "id": "p5_q1",
+          "num": 1,
+          "text": "Daisy's home was in a flat in the ________.",
+          "acceptableAnswers": [
+            "city",
+            "the city"
+          ]
+        },
+        {
+          "id": "p5_q2",
+          "num": 2,
+          "text": "Daisy's family drove to the countryside every ________ to visit her grandparents.",
+          "acceptableAnswers": [
+            "weekend",
+            "every weekend"
+          ]
+        },
+        {
+          "id": "p5_q3",
+          "num": 3,
+          "text": "Daisy's mother liked the farm because it was a ________ place.",
+          "acceptableAnswers": [
+            "quiet",
+            "very quiet",
+            "so quiet"
+          ]
+        },
+        {
+          "id": "p5_q4",
+          "num": 4,
+          "text": "Daisy enjoyed helping her grandfather take care of the ________.",
+          "acceptableAnswers": [
+            "animals",
+            "farm animals"
+          ]
+        },
+        {
+          "id": "p5_q5",
+          "num": 5,
+          "text": "There were six noisy ________ parked outside on the farm.",
+          "acceptableAnswers": [
+            "trucks",
+            "noisy trucks"
+          ]
+        },
+        {
+          "id": "p5_q6",
+          "num": 6,
+          "text": "Daisy's father couldn't work outside because it started to ________ heavily.",
+          "acceptableAnswers": [
+            "rain"
+          ]
+        },
+        {
+          "id": "p5_q7",
+          "num": 7,
+          "text": "Daisy suggested that her parents go inside and have ________ with Grandma.",
+          "acceptableAnswers": [
+            "tea",
+            "a cup of tea"
+          ]
+        },
+        {
+          "id": "p5_q8",
+          "num": 8,
+          "text": "Daisy went outside to help Grandpa feed cows and wash ________.",
+          "acceptableAnswers": [
+            "sheep",
+            "some sheep"
+          ]
+        },
+        {
+          "id": "p5_q9",
+          "num": 9,
+          "text": "Daisy gave the cows their dry ________ during the afternoon.",
+          "acceptableAnswers": [
+            "grass",
+            "dry grass"
+          ]
+        },
+        {
+          "id": "p5_q10",
+          "num": 10,
+          "text": "Daisy carried heavy baskets of fresh ________ from the garden.",
+          "acceptableAnswers": [
+            "vegetables"
+          ]
+        },
+        {
+          "id": "p5_q11",
+          "num": 11,
+          "text": "Daisy felt ________ after working hard outside all afternoon.",
+          "acceptableAnswers": [
+            "tired but happy",
+            "happy",
+            "tired"
+          ]
+        },
+        {
+          "id": "p5_q12",
+          "num": 12,
+          "text": "Grandfather said Daisy was the best ________ in her family.",
+          "acceptableAnswers": [
+            "farmer",
+            "best farmer"
+          ]
+        }
       ]
     },
     "part6": {
@@ -235,12 +639,48 @@
           "imageUrl": "/images/part6_garden.png",
           "promptText": "Look carefully at the garden scene and answer questions 1–6.",
           "questions": [
-            { "id": "p6_s1_q1", "num": 1, "type": "complete", "text": "The boy riding the yellow bicycle is wearing grey ________.", "placeholder": "Escribe tu respuesta aquí…" },
-            { "id": "p6_s1_q2", "num": 2, "type": "complete", "text": "One dog is brown and the other dog is ________.", "placeholder": "Escribe tu respuesta aquí…" },
-            { "id": "p6_s1_q3", "num": 3, "type": "answer", "text": "What is the girl in the black skirt carrying on her tray?", "placeholder": "Escribe tu respuesta aquí…" },
-            { "id": "p6_s1_q4", "num": 4, "type": "answer", "text": "Where are the bright flowers growing near the house?", "placeholder": "Escribe tu respuesta aquí…" },
-            { "id": "p6_s1_q5", "num": 5, "type": "answer", "text": "What is the brown dog doing in the small inflatable pool?", "placeholder": "Escribe tu respuesta aquí…" },
-            { "id": "p6_s1_q6", "num": 6, "type": "sentence", "text": "Write a full sentence describing the two children on the blue trampoline.", "placeholder": "Escribe tu respuesta aquí…" }
+            {
+              "id": "p6_s1_q1",
+              "num": 1,
+              "type": "complete",
+              "text": "The boy riding the yellow bicycle is wearing grey ________.",
+              "placeholder": "Escribe tu respuesta aquí…"
+            },
+            {
+              "id": "p6_s1_q2",
+              "num": 2,
+              "type": "complete",
+              "text": "One dog is brown and the other dog is ________.",
+              "placeholder": "Escribe tu respuesta aquí…"
+            },
+            {
+              "id": "p6_s1_q3",
+              "num": 3,
+              "type": "answer",
+              "text": "What is the girl in the black skirt carrying on her tray?",
+              "placeholder": "Escribe tu respuesta aquí…"
+            },
+            {
+              "id": "p6_s1_q4",
+              "num": 4,
+              "type": "answer",
+              "text": "Where are the bright flowers growing near the house?",
+              "placeholder": "Escribe tu respuesta aquí…"
+            },
+            {
+              "id": "p6_s1_q5",
+              "num": 5,
+              "type": "answer",
+              "text": "What is the brown dog doing in the small inflatable pool?",
+              "placeholder": "Escribe tu respuesta aquí…"
+            },
+            {
+              "id": "p6_s1_q6",
+              "num": 6,
+              "type": "sentence",
+              "text": "Write a full sentence describing the two children on the blue trampoline.",
+              "placeholder": "Escribe tu respuesta aquí…"
+            }
           ]
         },
         {
@@ -248,15 +688,569 @@
           "imageUrl": "/images/part6_pirates_beach.jpg",
           "promptText": "Look carefully at the pirate beach scene and answer questions 7–12.",
           "questions": [
-            { "id": "p6_s2_q7", "num": 7, "type": "complete", "text": "The dolphin is jumping out of the ________ near the shore.", "placeholder": "Escribe tu respuesta aquí…" },
-            { "id": "p6_s2_q8", "num": 8, "type": "complete", "text": "The monkey sitting on the sand is holding a slice of ________.", "placeholder": "Escribe tu respuesta aquí…" },
-            { "id": "p6_s2_q9", "num": 9, "type": "answer", "text": "What is the man sitting under the palm tree doing?", "placeholder": "Escribe tu respuesta aquí…" },
-            { "id": "p6_s2_q10", "num": 10, "type": "answer", "text": "Where is the old man with white hair pointing?", "placeholder": "Escribe tu respuesta aquí…" },
-            { "id": "p6_s2_q11", "num": 11, "type": "sentence", "text": "Write a full sentence about the monkey on the sand.", "placeholder": "Escribe tu respuesta aquí…" },
-            { "id": "p6_s2_q12", "num": 12, "type": "sentence", "text": "Write another sentence describing the pirate ship in the ocean.", "placeholder": "Escribe tu respuesta aquí…" }
+            {
+              "id": "p6_s2_q7",
+              "num": 7,
+              "type": "complete",
+              "text": "The dolphin is jumping out of the ________ near the shore.",
+              "placeholder": "Escribe tu respuesta aquí…"
+            },
+            {
+              "id": "p6_s2_q8",
+              "num": 8,
+              "type": "complete",
+              "text": "The monkey sitting on the sand is holding a slice of ________.",
+              "placeholder": "Escribe tu respuesta aquí…"
+            },
+            {
+              "id": "p6_s2_q9",
+              "num": 9,
+              "type": "answer",
+              "text": "What is the man sitting under the palm tree doing?",
+              "placeholder": "Escribe tu respuesta aquí…"
+            },
+            {
+              "id": "p6_s2_q10",
+              "num": 10,
+              "type": "answer",
+              "text": "Where is the old man with white hair pointing?",
+              "placeholder": "Escribe tu respuesta aquí…"
+            },
+            {
+              "id": "p6_s2_q11",
+              "num": 11,
+              "type": "sentence",
+              "text": "Write a full sentence about the monkey on the sand.",
+              "placeholder": "Escribe tu respuesta aquí…"
+            },
+            {
+              "id": "p6_s2_q12",
+              "num": 12,
+              "type": "sentence",
+              "text": "Write another sentence describing the pirate ship in the ocean.",
+              "placeholder": "Escribe tu respuesta aquí…"
+            }
           ]
         }
       ]
     }
+  },
+  "listening": {
+    "title": "Movers Listening Practice Test 1",
+    "instruction": "Listen to each audio track and answer the questions based on the picture.",
+    "parts": [
+      {
+        "id": "audio1",
+        "title": "Listening Part 1 – At the Shopping Mall",
+        "instruction": "Listen to the audio and look at the picture. Choose the correct number (1 to 5) for each person.",
+        "audioUrl": "/audio/listening/audio1.mp3",
+        "imageUrl": "/images/listening/shopping_mall.webp",
+        "example": {
+          "name": "Hana",
+          "description": "Girl coming out of the sports shop with red cap and basketball",
+          "answer": "6"
+        },
+        "questions": [
+          {
+            "id": "l_a1_q1",
+            "num": 1,
+            "name": "Jack",
+            "hint": "Eating popcorn in a yellow jacket",
+            "options": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "answer": "4"
+          },
+          {
+            "id": "l_a1_q2",
+            "num": 2,
+            "name": "Mrs. Hill",
+            "hint": "Woman near bakery holding a small cake box",
+            "options": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "answer": "5"
+          },
+          {
+            "id": "l_a1_q3",
+            "num": 3,
+            "name": "Tom",
+            "hint": "Boy running to the escalator",
+            "options": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "answer": "3"
+          },
+          {
+            "id": "l_a1_q4",
+            "num": 4,
+            "name": "Mr. Lee",
+            "hint": "Teacher holding a travel book near bakery",
+            "options": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "answer": "2"
+          },
+          {
+            "id": "l_a1_q5",
+            "num": 5,
+            "name": "Sophie",
+            "hint": "Girl taking photo with phone",
+            "options": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "answer": "1"
+          }
+        ],
+        "partNum": 1
+      },
+      {
+        "id": "audio2",
+        "title": "Listening Part 2 – At the Sports Centre",
+        "instruction": "Listen to the audio and look at the picture. Choose the correct number (1 to 5) for each person.",
+        "audioUrl": "/audio/listening/audio2.mp3",
+        "imageUrl": "/images/listening/sports_centre.webp",
+        "example": {
+          "name": "Vicki",
+          "description": "Girl playing basketball with long blonde curly hair",
+          "answer": "6"
+        },
+        "questions": [
+          {
+            "id": "l_a2_q1",
+            "num": 1,
+            "name": "Jack",
+            "hint": "Boy playing football in green t-shirt",
+            "options": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "answer": "3"
+          },
+          {
+            "id": "l_a2_q2",
+            "num": 2,
+            "name": "David",
+            "hint": "Boy playing football in red trousers",
+            "options": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "answer": "5"
+          },
+          {
+            "id": "l_a2_q3",
+            "num": 3,
+            "name": "Lily",
+            "hint": "Girl playing tennis in purple skirt",
+            "options": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "answer": "1"
+          },
+          {
+            "id": "l_a2_q4",
+            "num": 4,
+            "name": "Anna",
+            "hint": "Girl sitting under tree resting",
+            "options": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "answer": "4"
+          },
+          {
+            "id": "l_a2_q5",
+            "num": 5,
+            "name": "Kim",
+            "hint": "Girl watching basketball smiling near dog",
+            "options": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "answer": "2"
+          }
+        ],
+        "partNum": 2
+      },
+      {
+        "id": "audio3",
+        "title": "Listening Part 3 – A Day at the Zoo",
+        "instruction": "Listen to the audio and look at the picture. Choose the correct number (1 to 6) for each person.",
+        "audioUrl": "/audio/listening/audio3.mp3",
+        "imageUrl": "/images/listening/zoo_scene.webp",
+        "example": {
+          "name": "Tom",
+          "description": "Boy holding the zoo map wanting to see lions",
+          "answer": "2"
+        },
+        "questions": [
+          {
+            "id": "l_a3_q1",
+            "num": 1,
+            "name": "Emma",
+            "hint": "Girl feeding giraffe on little ladder",
+            "options": [
+              "1",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "answer": "1"
+          },
+          {
+            "id": "l_a3_q2",
+            "num": 2,
+            "name": "Mr. White",
+            "hint": "Teacher with camera in green hat",
+            "options": [
+              "1",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "answer": "4"
+          },
+          {
+            "id": "l_a3_q3",
+            "num": 3,
+            "name": "Ben",
+            "hint": "Boy eating ice cream",
+            "options": [
+              "1",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "answer": "5"
+          },
+          {
+            "id": "l_a3_q4",
+            "num": 4,
+            "name": "Lily",
+            "hint": "Girl drawing the elephant statue",
+            "options": [
+              "1",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "answer": "6"
+          },
+          {
+            "id": "l_a3_q5",
+            "num": 5,
+            "name": "Ms. Jones",
+            "hint": "Teacher carrying tray of sandwiches",
+            "options": [
+              "1",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "answer": "3"
+          }
+        ],
+        "partNum": 3
+      },
+      {
+        "id": "audio5",
+        "title": "Listening Part 4 – Painting the School Wall",
+        "instruction": "Listen to the audio and look at the picture. Match each person to what they are doing in the picture.",
+        "audioUrl": "/audio/listening/audio5.mp3",
+        "imageUrl": "/images/listening/painting_wall.png",
+        "example": {
+          "name": "John",
+          "description": "Boy on ladder painting rainbow with blue paint (example line in picture)",
+          "answer": "ladder"
+        },
+        "questions": [
+          {
+            "id": "l_a5_q1",
+            "num": 1,
+            "name": "Sally",
+            "options": [
+              "A) Standing on wooden box in pink dress, painting rainbow",
+              "B) Sitting on top of wall in red t-shirt",
+              "C) Carrying tray with bottles of paint",
+              "D) Taking photos with camera in purple shirt",
+              "E) Sitting on ground drinking with straw"
+            ],
+            "answer": "A"
+          },
+          {
+            "id": "l_a5_q2",
+            "num": 2,
+            "name": "Peter",
+            "options": [
+              "A) Standing on wooden box in pink dress, painting rainbow",
+              "B) Sitting on top of wall in red t-shirt and green trousers",
+              "C) Carrying tray with bottles of paint",
+              "D) Taking photos with camera in purple shirt",
+              "E) Sitting on ground drinking with straw"
+            ],
+            "answer": "B"
+          },
+          {
+            "id": "l_a5_q3",
+            "num": 3,
+            "name": "Jane",
+            "options": [
+              "A) Standing on wooden box in pink dress, painting rainbow",
+              "B) Sitting on top of wall in red t-shirt",
+              "C) Carrying tray with bottles of paint in green shirt and red skirt",
+              "D) Taking photos with camera in purple shirt",
+              "E) Sitting on ground drinking with straw"
+            ],
+            "answer": "C"
+          },
+          {
+            "id": "l_a5_q4",
+            "num": 4,
+            "name": "Jim",
+            "options": [
+              "A) Standing on wooden box in pink dress, painting rainbow",
+              "B) Sitting on top of wall in red t-shirt",
+              "C) Carrying tray with bottles of paint",
+              "D) Taking photos with camera in purple t-shirt and green shorts",
+              "E) Sitting on ground drinking with straw"
+            ],
+            "answer": "D"
+          },
+          {
+            "id": "l_a5_q5",
+            "num": 5,
+            "name": "Anna",
+            "options": [
+              "A) Standing on wooden box in pink dress, painting rainbow",
+              "B) Sitting on top of wall in red t-shirt",
+              "C) Carrying tray with bottles of paint",
+              "D) Taking photos with camera in purple shirt",
+              "E) Sitting on ground drinking with straw, tired in heat"
+            ],
+            "answer": "E"
+          }
+        ],
+        "partNum": 4
+      },
+      {
+        "id": "audio6",
+        "title": "Listening Part 5 – What did Sally do last week?",
+        "instruction": "Listen to the audio and look at the pictures. Match each day of the week to what Sally did.",
+        "audioUrl": "/audio/listening/audio6.mp3",
+        "imageUrl": "/images/listening/sally_week.png",
+        "example": {
+          "name": "Sunday",
+          "description": "Flew her new red and yellow kite in the park (shown with line in picture)",
+          "answer": "kite"
+        },
+        "questions": [
+          {
+            "id": "l_a6_q1",
+            "num": 1,
+            "name": "Thursday",
+            "hint": "What did Sally do on Thursday afternoon?",
+            "options": [
+              "A) Rode bikes with friends in the park wearing helmets",
+              "B) Ran in the field and played with two dogs",
+              "C) Drove into town in mum's purple car in the rain",
+              "D) Flew a red and yellow kite in the park",
+              "E) Walked with parents and white dog in warm coats on windy day",
+              "F) Walked down the street to the shop to buy fruit"
+            ],
+            "answer": "A"
+          },
+          {
+            "id": "l_a6_q2",
+            "num": 2,
+            "name": "Saturday",
+            "hint": "What did Sally do on Saturday?",
+            "options": [
+              "A) Rode bikes with friends in the park wearing helmets",
+              "B) Ran in the field and played with two dogs",
+              "C) Drove into town in mum's purple car in the rain",
+              "D) Flew a red and yellow kite in the park",
+              "E) Walked with parents and white dog in warm coats on windy day",
+              "F) Walked down the street to the shop to buy fruit"
+            ],
+            "answer": "F"
+          },
+          {
+            "id": "l_a6_q3",
+            "num": 3,
+            "name": "Wednesday",
+            "hint": "What did Sally do on Wednesday?",
+            "options": [
+              "A) Rode bikes with friends in the park wearing helmets",
+              "B) Ran in the field and played with two dogs",
+              "C) Drove into town in mum's purple car in the rain",
+              "D) Flew a red and yellow kite in the park",
+              "E) Walked with parents and white dog in warm coats on windy day",
+              "F) Walked down the street to the shop to buy fruit"
+            ],
+            "answer": "E"
+          },
+          {
+            "id": "l_a6_q4",
+            "num": 4,
+            "name": "Monday",
+            "hint": "What did Sally do on Monday?",
+            "options": [
+              "A) Rode bikes with friends in the park wearing helmets",
+              "B) Ran in the field and played with two dogs in sunshine",
+              "C) Drove into town in mum's purple car in the rain",
+              "D) Flew a red and yellow kite in the park",
+              "E) Walked with parents and white dog in warm coats on windy day",
+              "F) Walked down the street to the shop to buy fruit"
+            ],
+            "answer": "B"
+          },
+          {
+            "id": "l_a6_q5",
+            "num": 5,
+            "name": "Friday",
+            "hint": "What did Sally do on Friday when it rained all day?",
+            "options": [
+              "A) Rode bikes with friends in the park wearing helmets",
+              "B) Ran in the field and played with two dogs",
+              "C) Drove into town in mum's purple car in the rain",
+              "D) Flew a red and yellow kite in the park",
+              "E) Walked with parents and white dog in warm coats on windy day",
+              "F) Walked down the street to the shop to buy fruit"
+            ],
+            "answer": "C"
+          }
+        ],
+        "partNum": 5
+      },
+      {
+        "id": "audio7",
+        "title": "Listening Part 6 – Daisy at the Zoo (Notes)",
+        "type": "fill_in_the_blank",
+        "instruction": "Listen to the audio and look at the notebook. Complete the notes about Daisy's trip to the zoo.",
+        "audioUrl": "/audio/listening/audio7.mp3",
+        "imageUrl": "/images/listening/zoo_notebook.png",
+        "example": {
+          "name": "When did Daisy go?",
+          "description": "Daisy went on Tuesday",
+          "answer": "Tuesday"
+        },
+        "questions": [
+          {
+            "id": "l_a7_q1",
+            "num": 1,
+            "name": "How many kinds of animals:",
+            "prompt": "How many kinds of animals:",
+            "placeholder": "Write the number or word…",
+            "answer": "30",
+            "acceptableAnswers": [
+              "30",
+              "thirty",
+              "30 kinds",
+              "thirty kinds"
+            ]
+          },
+          {
+            "id": "l_a7_q2",
+            "num": 2,
+            "name": "Biggest animal:",
+            "prompt": "Biggest animal:",
+            "placeholder": "Write the animal…",
+            "answer": "elephant",
+            "acceptableAnswers": [
+              "elephant",
+              "the elephant",
+              "an elephant",
+              "elephants"
+            ]
+          },
+          {
+            "id": "l_a7_q3",
+            "num": 3,
+            "name": "Favourite animal:",
+            "prompt": "Favourite animal:",
+            "placeholder": "Write the animal…",
+            "answer": "panda",
+            "acceptableAnswers": [
+              "panda",
+              "the panda",
+              "a panda",
+              "pandas"
+            ]
+          },
+          {
+            "id": "l_a7_q4",
+            "num": 4,
+            "name": "Favourite animal's food:",
+            "prompt": "Favourite animal's food:",
+            "placeholder": "Write the food…",
+            "answer": "fruit",
+            "acceptableAnswers": [
+              "fruit",
+              "fruits",
+              "sweet fruit",
+              "sweet fruits"
+            ]
+          },
+          {
+            "id": "l_a7_q5",
+            "num": 5,
+            "name": "Name of zoo:",
+            "prompt": "Name of zoo:",
+            "suffix": "Zoo",
+            "placeholder": "Write the name…",
+            "answer": "Jungle",
+            "acceptableAnswers": [
+              "Jungle",
+              "jungle",
+              "The Jungle",
+              "the jungle"
+            ]
+          }
+        ],
+        "partNum": 6
+      }
+    ]
   }
 }

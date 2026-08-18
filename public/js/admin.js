@@ -341,6 +341,63 @@ document.addEventListener('DOMContentLoaded', () => {
     const answers = student.answers || {};
     let html = '';
 
+    // ── Sección Listening ──────────────────────────────────────────
+    if (exam.listening && exam.listening.parts && exam.listening.parts.length > 0) {
+      html += `
+        <div style="background: #eff6ff; border: 2px solid #93c5fd; border-radius: var(--radius-md); padding: 18px; margin-bottom: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
+            <h4 style="color: #1d4ed8; font-size: 1.2rem; margin: 0; font-weight: 800;">🎧 Sección Listening (${exam.listening.parts.length} Actividades)</h4>
+            <span style="background: #dbeafe; color: #1e40af; padding: 4px 12px; border-radius: 12px; font-size: 0.85rem; font-weight: 800;">Comprensión Auditiva</span>
+          </div>`;
+
+      exam.listening.parts.forEach((part, pIdx) => {
+        html += `
+          <div style="background: white; border: 1px solid #bfdbfe; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+            <div style="font-weight: 800; color: #1e3a8a; font-size: 1rem; margin-bottom: 4px;">
+              ${part.title || `Part ${pIdx + 1}`}
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">${part.instruction}</p>
+            ${part.imageUrl ? `<div style="text-align: center; margin-bottom: 12px;"><img src="${part.imageUrl}" style="max-width: 320px; border-radius: 8px; border: 1px solid #cbd5e1;"></div>` : ''}
+            <div style="display: flex; flex-direction: column; gap: 8px;">`;
+
+        (part.questions || []).forEach(q => {
+          const userVal = answers[q.id];
+          const isCorr = checkAnswer(userVal, q.answer, q.acceptableAnswers);
+          const statusBadge = userVal
+            ? (isCorr
+                ? `<span style="background: #dcfce7; color: #15803d; padding: 3px 10px; border-radius: 12px; font-weight: 700; font-size: 0.8rem;">✅ Correcta</span>`
+                : `<span style="background: #fee2e2; color: #b91c1c; padding: 3px 10px; border-radius: 12px; font-weight: 700; font-size: 0.8rem;">❌ Incorrecta</span>`)
+            : `<span style="background: #f1f5f9; color: #64748b; padding: 3px 10px; border-radius: 12px; font-size: 0.8rem;">⚪ Sin responder</span>`;
+
+          const targetOpt = q.options?.find(opt => opt.startsWith(q.answer)) || q.answer;
+          const userOpt = q.options?.find(opt => opt.startsWith(userVal)) || userVal;
+
+          html += `
+            <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px;">
+              <div style="font-weight: 700; font-size: 0.92rem; color: var(--dark); margin-bottom: 4px;">
+                <strong>${q.num}.</strong> ${q.name || q.text || `Pregunta ${q.num}`} ${q.hint ? `<span style="color:var(--text-muted); font-size:0.82rem;">(${q.hint})</span>` : ''}
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 0.88rem;">
+                <div>
+                  <strong>Respuesta Alumno:</strong> <span style="color: ${isCorr ? '#15803d' : '#b91c1c'}; font-weight: 700;">${userOpt || '(Vacío)'}</span>
+                  <span style="color: #64748b; font-size: 0.85rem; margin-left: 10px;">(Esperada: <strong>${targetOpt}</strong>)</span>
+                </div>
+                <div>${statusBadge}</div>
+              </div>
+            </div>`;
+        });
+
+        html += `</div></div>`;
+      });
+
+      html += `</div>`;
+    }
+
+    html += `
+      <div style="display: flex; align-items: center; gap: 10px; margin: 24px 0 16px;">
+        <h4 style="color: var(--dark); font-size: 1.2rem; font-weight: 800; margin: 0;">✍️ Sección Reading &amp; Writing (Partes 1–6)</h4>
+      </div>`;
+
     // Parte 1
     if (exam.parts.part1) {
       const p = exam.parts.part1;

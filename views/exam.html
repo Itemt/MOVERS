@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Examen Cambridge Movers A1 - Reading &amp; Writing</title>
-  <meta name="description" content="Examen oficial Cambridge English Movers A1 Reading and Writing para 4to grado.">
+  <title>Examen Cambridge Movers A1 - Listening &amp; Reading/Writing</title>
+  <meta name="description" content="Simulacro oficial Cambridge English Movers A1 con Listening y Reading & Writing para 4to grado.">
   <link rel="stylesheet" href="/css/styles.css">
-  <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✍️</text></svg>">
+  <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦘</text></svg>">
 </head>
 <body>
 
@@ -16,7 +16,7 @@
         <div class="logo-icon">MOVERS</div>
         <div class="logo-text">
           <h1>Cambridge English: Movers (A1)</h1>
-          <p>Reading &amp; Writing Test</p>
+          <p id="header-subtitle">Official Practice Exam</p>
         </div>
       </a>
 
@@ -30,7 +30,7 @@
     </div>
   </header>
 
-  <main class="container" style="margin-top: 30px;">
+  <main class="container" style="margin-top: 24px;">
 
     <!-- Banner: Examen ya entregado (oculto por defecto) -->
     <div id="submitted-banner" style="display:none; background: linear-gradient(135deg, #dcfce7, #bbf7d0); border: 2px solid #16a34a; border-radius: 14px; padding: 20px 28px; margin-bottom: 24px; text-align: center;">
@@ -39,18 +39,34 @@
       <p style="color: #166534; font-size: 0.95rem; margin-bottom: 10px;">Tu examen fue enviado exitosamente a tu profesor. Puedes revisar tus respuestas abajo.</p>
       <div style="background: white; border-radius: 10px; padding: 14px 20px; display: inline-block;">
         <span style="font-size: 1.1rem; font-weight: 700; color: #166534;">Puntaje automático: <span id="submitted-score">—</span></span>
-        <span style="font-size: 0.8rem; color: #6b7280; display: block; margin-top: 4px;">* La Parte 6 (escritura libre) la revisa tu profesor.</span>
+        <span style="font-size: 0.8rem; color: #6b7280; display: block; margin-top: 4px;">* La Parte 6 de Reading &amp; Writing (escritura libre) la revisa tu profesor.</span>
       </div>
     </div>
 
-    <!-- Barra de Estado -->
+    <!-- Barra de Estado del Examen -->
     <div class="exam-meta-bar">
       <div>
         <h2 style="font-size: 1.15rem; font-weight: 800; color: var(--dark);" id="exam-title-text">
           Cambridge A1 Movers
         </h2>
-        <span style="font-size: 0.85rem; color: var(--text-muted);">Reading &amp; Writing • Progreso guardado automáticamente cada 60 segundos.</span>
+        <span style="font-size: 0.85rem; color: var(--text-muted);" id="exam-meta-subtitle">
+          Listening &amp; Reading/Writing • Progreso guardado automáticamente cada 60s.
+        </span>
       </div>
+    </div>
+
+    <!-- Pestañas de Selección de Sección (Listening vs Reading & Writing) -->
+    <div class="section-switcher-container" id="section-switcher-bar">
+      <button type="button" class="section-tab-btn active" id="tab-btn-listening" data-section="listening">
+        <span>🎧</span>
+        <span>Listening</span>
+        <span class="section-badge-counter" id="listening-badge-count">3 Actividades</span>
+      </button>
+      <button type="button" class="section-tab-btn" id="tab-btn-reading" data-section="reading">
+        <span>✍️</span>
+        <span>Reading &amp; Writing</span>
+        <span class="section-badge-counter" id="reading-badge-count">6 Partes</span>
+      </button>
     </div>
 
     <!-- Banner de auto-guardado silencioso -->
@@ -58,12 +74,22 @@
       💾 Progreso guardado automáticamente — <span id="autosave-time"></span>
     </div>
 
-    <!-- CONTENEDOR PRINCIPAL DEL EXAMEN -->
+    <!-- CONTENEDOR PRINCIPAL DEL FORMULARIO -->
     <form id="movers-exam-form">
-      <div id="exam-questions-container">
+      
+      <!-- Contenedor Sección LISTENING -->
+      <div id="listening-section-container" class="exam-section-view">
+        <div style="text-align: center; padding: 60px; color: var(--text-muted);">
+          <div style="font-size: 2.5rem; margin-bottom: 12px;">🎧</div>
+          Cargando audios y preguntas de Listening...
+        </div>
+      </div>
+
+      <!-- Contenedor Sección READING & WRITING -->
+      <div id="reading-section-container" class="exam-section-view" style="display: none;">
         <div style="text-align: center; padding: 60px; color: var(--text-muted);">
           <div style="font-size: 2.5rem; margin-bottom: 12px;">📄</div>
-          Cargando preguntas del examen...
+          Cargando preguntas de Reading &amp; Writing...
         </div>
       </div>
 
@@ -73,12 +99,53 @@
           💾 Guardar Progreso
         </button>
         <button type="button" id="btn-submit-exam" class="btn btn-primary" style="flex: 1; padding: 14px;">
-          📥 Entregar Examen
+          📥 Entregar Examen Completo
         </button>
       </div>
     </form>
 
   </main>
+
+  <!-- Modal Inicial de Bienvenida y Selección de Sección -->
+  <div id="welcome-section-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-card" style="max-width: 650px; padding: 32px 28px; text-align: center;">
+      <div style="font-size: 3rem; margin-bottom: 10px;">🇬🇧 🦘 ✨</div>
+      <h2 style="font-size: 1.6rem; font-weight: 800; color: var(--dark); margin-bottom: 8px;">
+        ¡Bienvenido a tu Examen Cambridge Movers!
+      </h2>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px;">
+        ¿Por cuál sección deseas comenzar tu prueba hoy? Puedes alternar entre ambas en cualquier momento.
+      </p>
+
+      <div class="section-selector-modal" style="margin: 10px 0 20px;">
+        <div class="section-choice-card highlight" id="card-choice-listening">
+          <div>
+            <div class="section-card-icon">🎧</div>
+            <h3 class="section-card-title">Listening</h3>
+            <p class="section-card-desc">
+              Actividades de audio. Escucha las grabaciones, observa las imágenes y responde las preguntas.
+            </p>
+          </div>
+          <button type="button" class="btn btn-primary btn-block" style="padding: 12px;">
+            Comenzar con Listening 🎧
+          </button>
+        </div>
+
+        <div class="section-choice-card" id="card-choice-reading">
+          <div>
+            <div class="section-card-icon">✍️</div>
+            <h3 class="section-card-title">Reading &amp; Writing</h3>
+            <p class="section-card-desc">
+              6 partes de lectura y escritura. Completa palabras, diálogos y oraciones.
+            </p>
+          </div>
+          <button type="button" class="btn btn-outline btn-block" style="padding: 12px;">
+            Comenzar con Reading &amp; Writing ✍️
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Toast de notificación -->
   <div id="toast-msg" class="toast-msg">✅ Progreso guardado.</div>
@@ -90,18 +157,32 @@
       <h2 style="font-size: 1.8rem; font-weight: 800; color: var(--dark); margin-bottom: 10px;">
         ¡Examen Entregado!
       </h2>
-      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px;">
-        Tus respuestas de Reading &amp; Writing han sido enviadas a tu profesor.
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;">
+        Tus respuestas de <strong>Listening</strong> y <strong>Reading &amp; Writing</strong> han sido enviadas exitosamente a tu profesor.
       </p>
 
       <div style="background: var(--primary-light); border-radius: var(--radius-md); padding: 20px; margin-bottom: 24px; text-align: left; border: 1px solid #bae6fd;">
-        <h3 style="font-size: 1.1rem; color: var(--primary); margin-bottom: 12px;">Puntaje Automático (Partes 1–5):</h3>
+        <h3 style="font-size: 1.1rem; color: var(--primary); margin-bottom: 14px; font-weight: 800;">Resumen de Puntaje Automático:</h3>
+        
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 1rem; color: var(--dark);">
+          <span>🎧 Sección Listening (3 partes):</span>
+          <strong id="res-listening-score" style="color: #0369a1;">—</strong>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin-bottom: 14px; font-size: 1rem; color: var(--dark);">
+          <span>✍️ Reading &amp; Writing (Partes 1–5):</span>
+          <strong id="res-reading-score" style="color: #0369a1;">—</strong>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #bae6fd; margin: 12px 0;">
+
         <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 1.3rem; color: var(--dark);">
-          <span>Total Correctas:</span>
+          <span>🏆 Total Automático:</span>
           <span id="res-total-score" style="color: var(--primary);">—</span>
         </div>
-        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px;">
-          * La Parte 6 (escritura libre) será revisada por tu profesor en el Panel Docente.
+
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 12px; line-height: 1.4;">
+          * La Parte 6 de Reading &amp; Writing (producción escrita) será calificada por tu profesor en el Panel Docente.
         </p>
       </div>
 

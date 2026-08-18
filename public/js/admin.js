@@ -213,6 +213,10 @@ document.addEventListener('DOMContentLoaded', () => {
       authCard.style.display = 'none';
       dashboardContent.style.display = 'block';
       allStudentsData = data.students || [];
+
+      // Pre-cargar datos de exámenes para cálculo inmediato de puntajes separados
+      await Promise.all([1, 2, 3].map(id => getExamData(id)));
+
       renderTable();
       updateLastRefreshed();
 
@@ -254,11 +258,97 @@ document.addEventListener('DOMContentLoaded', () => {
     if (autoRefreshInterval) clearInterval(autoRefreshInterval);
   });
 
+  // ── Cálculo de Puntajes Separados (Listening vs Reading & Writing) ──
+  function computeScores(student) {
+    const exam = examsCache[student.assignedExamId || 1];
+    if (!exam || !student.answers || Object.keys(student.answers).length === 0) {
+      return {
+        listeningScore: null,
+        listeningMax: 30,
+        readingScore: null,
+        readingMax: 53,
+        totalScore: student.autoScore,
+        totalMax: student.maxAutoScore || 83
+      };
+    }
+
+    const answers = student.answers || {};
+    let lScore = 0;
+    let lMax = 0;
+    if (exam.listening && exam.listening.parts) {
+      exam.listening.parts.forEach(part => {
+        (part.questions || []).forEach(q => {
+          lMax++;
+          const userVal = answers[q.id];
+          if (checkAnswer(userVal, q.answer, q.acceptableAnswers)) lScore++;
+        });
+      });
+    }
+
+    let rScore = 0;
+    let rMax = 0;
+    if (exam.parts) {
+      (exam.parts.part1?.questions || []).forEach(q => { rMax++; if (checkAnswer(answers[q.id], q.answer)) rScore++; });
+      (exam.parts.part2?.questions || []).forEach(q => { rMax++; if ((answers[q.id] || '').trim().toUpperCase() === (q.answer || '').toUpperCase()) rScore++; });
+      (exam.parts.part3?.questions || []).forEach(q => { rMax++; if (checkAnswer(answers[q.id], q.answer)) rScore++; });
+      if (exam.parts.part3?.titleQuestion) { rMax++; if (checkAnswer(answers[exam.parts.part3.titleQuestion.id], exam.parts.part3.titleQuestion.answer)) rScore++; }
+      (exam.parts.part4?.questions || []).forEach(q => { rMax++; if (checkAnswer(answers[q.id], q.answer)) rScore++; });
+      (exam.parts.part5?.questions || []).forEach(q => { rMax++; if (checkAnswer(answers[q.id], q.answer, q.acceptableAnswers)) rScore++; });
+    }
+
+    return {
+      listeningScore: lScore,
+      listeningMax: lMax || 30,
+      readingScore: rScore,
+      readingMax: rMax || 53,
+      totalScore: lScore + rScore,
+      totalMax: (lMax + rMax) || 83
+    };
+  }
+
   function renderTable() {
     const filtered = allStudentsData.filter(st => (st.grade || '4to A') === currentGradeFilter);
 
+    // Calcular estadísticas del grado seleccionado
+    const totalCount = filtered.length;
+    let submittedCount = 0;
+    let inProgressCount = 0;
+    let sumListening = 0;
+    let countListening = 0;
+    let sumReading = 0;
+    let countReading = 0;
+
+    filtered.forEach(st => {
+      if (st.examStatus === 'submitted') submittedCount++;
+      if (st.examStatus === 'in_progress') inProgressCount++;
+
+      const scores = computeScores(st);
+      if (st.examStatus === 'submitted' || (st.answers && Object.keys(st.answers).length > 0)) {
+        if (scores.listeningScore !== null) {
+          sumListening += scores.listeningScore;
+          countListening++;
+        }
+        if (scores.readingScore !== null) {
+          sumReading += scores.readingScore;
+          countReading++;
+        }
+      }
+    });
+
+    const elTotal = document.getElementById('stat-total-students');
+    const elSub = document.getElementById('stat-submitted-count');
+    const elProg = document.getElementById('stat-progress-count');
+    const elListAvg = document.getElementById('stat-listening-avg');
+    const elReadAvg = document.getElementById('stat-reading-avg');
+
+    if (elTotal) elTotal.textContent = totalCount;
+    if (elSub) elSub.textContent = submittedCount;
+    if (elProg) elProg.textContent = inProgressCount;
+    if (elListAvg) elListAvg.textContent = countListening > 0 ? `${(sumListening / countListening).toFixed(1)} / 30` : '—';
+    if (elReadAvg) elReadAvg.textContent = countReading > 0 ? `${(sumReading / countReading).toFixed(1)} / 53` : '—';
+
     if (!filtered || filtered.length === 0) {
-      tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 20px;">No hay alumnos en el ${currentGradeFilter}.</td></tr>`;
+      tableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 20px;">No hay alumnos en el ${currentGradeFilter}.</td></tr>`;
       return;
     }
 
@@ -266,15 +356,28 @@ document.addEventListener('DOMContentLoaded', () => {
     filtered.forEach(st => {
       let badgeHtml = '';
       if (st.examStatus === 'submitted') {
-        badgeHtml = `<span style="background: var(--success-light); color: #047857; padding: 6px 14px; border-radius: 20px; font-weight: 800; font-size: 0.85rem;">✅ Entregado</span>`;
+        badgeHtml = `<span style="background: var(--success-light); color: #047857; padding: 4px 10px; border-radius: 20px; font-weight: 800; font-size: 0.82rem;">✅ Entregado</span>`;
       } else if (st.examStatus === 'in_progress') {
-        badgeHtml = `<span style="background: var(--warning-light); color: #b45309; padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 0.85rem;">💾 En Progreso (Guardado)</span>`;
+        badgeHtml = `<span style="background: var(--warning-light); color: #b45309; padding: 4px 10px; border-radius: 20px; font-weight: 700; font-size: 0.82rem;">💾 En Progreso</span>`;
       } else {
-        badgeHtml = `<span style="background: #f1f5f9; color: #64748b; padding: 6px 14px; border-radius: 20px; font-weight: 600; font-size: 0.85rem;">Sin Iniciar</span>`;
+        badgeHtml = `<span style="background: #f1f5f9; color: #64748b; padding: 4px 10px; border-radius: 20px; font-weight: 600; font-size: 0.82rem;">Sin Iniciar</span>`;
       }
 
-      const scoreText = st.autoScore !== null ? `<strong>${st.autoScore}/${st.maxAutoScore}</strong>` : '--';
+      const scores = computeScores(st);
       const hasAnswers = st.answers && Object.keys(st.answers).length > 0;
+
+      const listeningCell = hasAnswers
+        ? `<span style="background: #e0f2fe; color: #0369a1; font-weight: 800; padding: 4px 10px; border-radius: 12px; font-size: 0.9rem;">${scores.listeningScore} / ${scores.listeningMax}</span>`
+        : `<span style="color: #94a3b8; font-size: 0.85rem;">--</span>`;
+
+      const readingCell = hasAnswers
+        ? `<span style="background: #ede9fe; color: #5b21b6; font-weight: 800; padding: 4px 10px; border-radius: 12px; font-size: 0.9rem;">${scores.readingScore} / ${scores.readingMax}</span>`
+        : `<span style="color: #94a3b8; font-size: 0.85rem;">--</span>`;
+
+      const totalCell = hasAnswers
+        ? `<strong style="font-size: 1rem; color: var(--dark);">${scores.totalScore} / ${scores.totalMax}</strong>`
+        : `<span style="color: #94a3b8; font-size: 0.85rem;">--</span>`;
+
       const actionBtn = hasAnswers
         ? `<button type="button" class="btn btn-outline btn-view-answers" data-username="${st.username}" style="padding: 6px 12px; font-size: 0.85rem; font-weight:700;">👁️ Respuestas</button>
            <button type="button" class="btn btn-reset-student" data-username="${st.username}" data-name="${st.firstName} ${st.lastName}" data-examid="${st.assignedExamId || 1}" style="padding: 6px 10px; font-size: 0.82rem; font-weight:700; background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; border-radius: 6px; cursor: pointer; margin-left: 4px;" title="Borrar de la BD para permitir repetir">🗑️ Borrar</button>`
@@ -284,20 +387,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
       html += `
         <tr style="border-bottom: 1px solid var(--border);">
-          <td style="padding: 16px;">
-            <div style="font-weight: 700; color: var(--dark); font-size: 1rem;">${st.lastName} ${st.firstName}</div>
-            <div style="font-size: 0.8rem; color: var(--text-muted);">${st.username}</div>
+          <td style="padding: 12px 16px;">
+            <div style="font-weight: 700; color: var(--dark); font-size: 0.95rem;">${st.lastName} ${st.firstName}</div>
+            <div style="font-size: 0.78rem; color: var(--text-muted);">${st.username}</div>
           </td>
-          <td style="padding: 16px; text-align: center; font-weight: 700; color: var(--primary);">
-            📝 Practice Test ${st.assignedExamId || 1}
+          <td style="padding: 12px 16px; text-align: center; font-weight: 700; color: var(--primary);">
+            Test ${st.assignedExamId || 1}
           </td>
-          <td style="padding: 16px; text-align: center;">
+          <td style="padding: 12px 16px; text-align: center;">
             ${badgeHtml}
           </td>
-          <td style="padding: 16px; text-align: center; font-size: 1.1rem; color: var(--dark);">
-            ${scoreText}
+          <td style="padding: 12px 16px; text-align: center; background: #f8fafc;">
+            ${listeningCell}
           </td>
-          <td style="padding: 16px; text-align: center;">
+          <td style="padding: 12px 16px; text-align: center; background: #f8fafc;">
+            ${readingCell}
+          </td>
+          <td style="padding: 12px 16px; text-align: center;">
+            ${totalCell}
+          </td>
+          <td style="padding: 12px 16px; text-align: center; white-space: nowrap;">
             ${actionBtn}
           </td>
         </tr>
@@ -321,8 +430,8 @@ document.addEventListener('DOMContentLoaded', () => {
     modalStudentName.textContent = `${student.firstName} ${student.lastName}`;
     const statusText = student.examStatus === 'submitted' ? '✅ Examen Entregado' : (student.examStatus === 'in_progress' ? '💾 Examen En Progreso' : 'Sin Iniciar');
     const timeText = student.updatedAt ? ` | Último guardado: ${new Date(student.updatedAt).toLocaleString('es-CO')}` : '';
-    const scoreText = student.autoScore !== null ? ` | Puntaje Auto: ${student.autoScore}/${student.maxAutoScore}` : '';
-    modalStudentMeta.textContent = `${student.grade || '4to'} · Practice Test ${student.assignedExamId || 1} | ${statusText}${scoreText}${timeText}`;
+    
+    modalStudentMeta.textContent = `${student.grade || '4to'} · Practice Test ${student.assignedExamId || 1} | ${statusText}${timeText}`;
 
     modalAnswersBody.innerHTML = `
       <div style="text-align:center; padding:50px; color:var(--text-muted);">
@@ -339,15 +448,46 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const answers = student.answers || {};
-    let html = '';
+    const scores = computeScores(student);
+
+    let html = `
+      <!-- Banner de Resumen de Puntajes del Estudiante -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px;">
+        <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 12px; text-align: center;">
+          <div style="font-size: 0.78rem; font-weight: 700; color: #0369a1; text-transform: uppercase;">🎧 Listening</div>
+          <div style="font-size: 1.4rem; font-weight: 900; color: #0284c7;">${scores.listeningScore !== null ? `${scores.listeningScore} / ${scores.listeningMax}` : '--'}</div>
+        </div>
+        <div style="background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 8px; padding: 12px; text-align: center;">
+          <div style="font-size: 0.78rem; font-weight: 700; color: #4338ca; text-transform: uppercase;">✍️ Reading &amp; Writing</div>
+          <div style="font-size: 1.4rem; font-weight: 900; color: #4f46e5;">${scores.readingScore !== null ? `${scores.readingScore} / ${scores.readingMax}` : '--'}</div>
+        </div>
+        <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; text-align: center;">
+          <div style="font-size: 0.78rem; font-weight: 700; color: var(--dark); text-transform: uppercase;">🏆 Puntaje Auto Total</div>
+          <div style="font-size: 1.4rem; font-weight: 900; color: var(--dark);">${scores.totalScore !== null ? `${scores.totalScore} / ${scores.totalMax}` : '--'}</div>
+        </div>
+      </div>
+
+      <!-- Filtro Rápido de Secciones en el Modal -->
+      <div style="display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;" id="modal-section-filters">
+        <button type="button" class="btn btn-primary" id="btn-filter-all" style="padding: 8px 14px; font-size: 0.85rem;">
+          📋 Ver Todo el Examen
+        </button>
+        <button type="button" class="btn btn-outline" id="btn-filter-listening" style="padding: 8px 14px; font-size: 0.85rem;">
+          🎧 Solo Listening (6 Actividades)
+        </button>
+        <button type="button" class="btn btn-outline" id="btn-filter-reading" style="padding: 8px 14px; font-size: 0.85rem;">
+          ✍️ Solo Reading &amp; Writing (Partes 1–6)
+        </button>
+      </div>
+    `;
 
     // ── Sección Listening ──────────────────────────────────────────
     if (exam.listening && exam.listening.parts && exam.listening.parts.length > 0) {
       html += `
-        <div style="background: #eff6ff; border: 2px solid #93c5fd; border-radius: var(--radius-md); padding: 18px; margin-bottom: 24px;">
+        <div class="modal-section-container" id="modal-sec-listening" style="background: #eff6ff; border: 2px solid #93c5fd; border-radius: var(--radius-md); padding: 18px; margin-bottom: 24px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
             <h4 style="color: #1d4ed8; font-size: 1.2rem; margin: 0; font-weight: 800;">🎧 Sección Listening (${exam.listening.parts.length} Actividades)</h4>
-            <span style="background: #dbeafe; color: #1e40af; padding: 4px 12px; border-radius: 12px; font-size: 0.85rem; font-weight: 800;">Comprensión Auditiva</span>
+            <span style="background: #dbeafe; color: #1e40af; padding: 4px 12px; border-radius: 12px; font-size: 0.85rem; font-weight: 800;">Puntaje: ${scores.listeningScore !== null ? scores.listeningScore : 0}/${scores.listeningMax}</span>
           </div>`;
 
       exam.listening.parts.forEach((part, pIdx) => {
@@ -393,10 +533,13 @@ document.addEventListener('DOMContentLoaded', () => {
       html += `</div>`;
     }
 
+    // ── Sección Reading & Writing ──────────────────────────────────
     html += `
-      <div style="display: flex; align-items: center; gap: 10px; margin: 24px 0 16px;">
-        <h4 style="color: var(--dark); font-size: 1.2rem; font-weight: 800; margin: 0;">✍️ Sección Reading &amp; Writing (Partes 1–6)</h4>
-      </div>`;
+      <div class="modal-section-container" id="modal-sec-reading">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin: 24px 0 16px; flex-wrap: wrap; gap: 8px;">
+          <h4 style="color: var(--dark); font-size: 1.2rem; font-weight: 800; margin: 0;">✍️ Sección Reading &amp; Writing (Partes 1–6)</h4>
+          <span style="background: #ede9fe; color: #5b21b6; padding: 4px 12px; border-radius: 12px; font-size: 0.85rem; font-weight: 800;">Puntaje: ${scores.readingScore !== null ? scores.readingScore : 0}/${scores.readingMax}</span>
+        </div>`;
 
     // Parte 1
     if (exam.parts.part1) {
@@ -638,6 +781,45 @@ document.addEventListener('DOMContentLoaded', () => {
       html += `</div>`;
     }
 
+    html += `</div>`; // Cierre de #modal-sec-reading
+
     modalAnswersBody.innerHTML = html;
+
+    // Configurar interactividad de los filtros del modal
+    const btnAll = document.getElementById('btn-filter-all');
+    const btnList = document.getElementById('btn-filter-listening');
+    const btnRead = document.getElementById('btn-filter-reading');
+    const secList = document.getElementById('modal-sec-listening');
+    const secRead = document.getElementById('modal-sec-reading');
+
+    const updateFilterActive = (activeBtn) => {
+      [btnAll, btnList, btnRead].forEach(btn => {
+        if (btn) {
+          btn.className = (btn === activeBtn) ? 'btn btn-primary' : 'btn btn-outline';
+        }
+      });
+    };
+
+    if (btnAll) {
+      btnAll.onclick = () => {
+        updateFilterActive(btnAll);
+        if (secList) secList.style.display = 'block';
+        if (secRead) secRead.style.display = 'block';
+      };
+    }
+    if (btnList) {
+      btnList.onclick = () => {
+        updateFilterActive(btnList);
+        if (secList) secList.style.display = 'block';
+        if (secRead) secRead.style.display = 'none';
+      };
+    }
+    if (btnRead) {
+      btnRead.onclick = () => {
+        updateFilterActive(btnRead);
+        if (secList) secList.style.display = 'none';
+        if (secRead) secRead.style.display = 'block';
+      };
+    }
   }
 });
